@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
@@ -8,10 +8,47 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1.0"
     tools:context="com.example.dupriest.comp580_bam.MainMenu">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+    <TableRow
+        android:layout_weight = "0.5">
+        <Button
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "play"
+            android:textSize="30dp"
+            android:onClick="play"
+            />
+        <Button
+            android:id="@+id/create"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "create"
+            android:textSize="30dp"
+            />
+    </TableRow>
+    <TableRow
+        android:layout_weight = "0.5">
+        <Button
+            android:id="@+id/difficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "difficulty"
+            android:textSize="30dp"
+            />
+        <Button
+            android:id="@+id/test_controls"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "test controls"
+            android:textSize="30dp"
+            />
+    </TableRow>
+
+</TableLayout>
