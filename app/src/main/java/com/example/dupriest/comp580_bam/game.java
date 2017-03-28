@@ -1,6 +1,7 @@
 package com.example.dupriest.comp580_bam;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,23 +19,55 @@ public class game extends AppCompatActivity {
 
     String type;
     Timer timer;
+    ArrayList<String> queue;
+    String currentRoom;
+    String currentKey;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         type = getIntent().getData().toString();
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+        queue = new ArrayList<String>();
+        mediaPlayer = new MediaPlayer();
+
+        queue.add("dogbark,left");
+        queue.add("lotsofbats,right");
+        queue.add("magicbrew,action");
+        runRoom();
+        // Randomly add all rooms to the queue
+        // Then should add the "final" room
+
+    }
+
+    public void runRoom()
+    {
+        // currentRoom = queue.remove(0);
+        // currentKey = associated button, LEFT, RIGHT, ACTION
+        // get the media, play it
+        String[] current = queue.remove(0).split(",");
+        currentRoom = current[0];
+        currentKey = current[1];
+        int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
             @Override
-            public void run() {
-                // wait five seconds
-                Log.v("MEGAN DUPRIEST", "TIME IS UP!");
+            public void onCompletion(MediaPlayer mp)
+            {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // wait five seconds
+                        Log.v("MEGAN DUPRIEST", "TIME IS UP!");
 
+                    }
+                }, 5000);
             }
-        }, 5000);
-
-
+        });
     }
 
     public void pause(View view)
