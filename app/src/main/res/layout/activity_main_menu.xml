@@ -48,6 +48,7 @@
             android:layout_weight="0.5"
             android:text = "test controls"
             android:textSize="30dp"
+            android:onClick="play"
             />
     </TableRow>
 
