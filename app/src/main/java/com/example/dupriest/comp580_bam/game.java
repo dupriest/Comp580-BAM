@@ -24,6 +24,7 @@ public class game extends AppCompatActivity {
     boolean isPaused = false;
     boolean isPlaying = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,21 +63,31 @@ public class game extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp)
                 {
-                    isPlaying = false;
-                    timer = new CountDownTimer(10000, 100) {
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp)
+                        {
+                            isPlaying = false;
+                            timer = new CountDownTimer(10000, 100) {
 
-                        public void onTick(long millisUntilFinished) {
-                            timeLeft = millisUntilFinished;
+                                public void onTick(long millisUntilFinished) {
+                                    timeLeft = millisUntilFinished;
+                                }
+
+                                public void onFinish() {
+                                    actNow = false;
+                                    timeLeft = 0;
+                                    Log.v("MEGAN DUPRIEST", "TOO LATE!");
+                                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                                    mediaPlayer.start();
+
+                                }
+                            }.start();
+                            actNow = true;
                         }
-
-                        public void onFinish() {
-                            actNow = false;
-                            timeLeft = 0;
-                            Log.v("MEGAN DUPRIEST", "TOO LATE!");
-
-                        }
-                    }.start();
-                    actNow = true;
+                    });
                 }
             });
 
@@ -84,6 +95,8 @@ public class game extends AppCompatActivity {
         else
         {
             Log.v("MEGAN DUPRIEST", "YOU ARE A WINNER! CONGRATS!");
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.fanfare);
+            mediaPlayer.start();
         }
     }
 
@@ -180,11 +193,22 @@ public class game extends AppCompatActivity {
             if(currentKey.equals(text))
             {
                 Log.v("MEGAN DUPRIEST", "YAY YOU MADE IT!");
-                runRoom();
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.shortfanfare);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        runRoom();
+                    }
+                });
+
             }
             else
             {
                 Log.v("MEGAN DUPRIEST", "OOPS WRONG BUTTON PRESS!");
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                mediaPlayer.start();
             }
 
         }
