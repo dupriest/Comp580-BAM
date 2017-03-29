@@ -89,6 +89,7 @@
         android:layout_alignParentLeft="true"
         android:textSize = "50dp"
         android:visibility="visible"
+        android:onClick="buttonClick"
         />
 
     <Button
@@ -102,5 +103,6 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:visibility="visible"
+        android:onClick="buttonClick"
         />
 </RelativeLayout>

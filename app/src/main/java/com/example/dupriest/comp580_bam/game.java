@@ -2,27 +2,27 @@ package com.example.dupriest.comp580_bam;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.ActionBar;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class game extends AppCompatActivity {
 
     String type;
-    Timer timer;
+    CountDownTimer timer;
     ArrayList<String> queue;
     String currentRoom;
     String currentKey;
     MediaPlayer mediaPlayer;
+    boolean actNow;
+    long timeLeft;
+    boolean isPaused = false;
+    boolean isPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class game extends AppCompatActivity {
         type = getIntent().getData().toString();
         queue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
+        actNow = false;
 
         queue.add("dogbark,left");
         queue.add("lotsofbats,right");
@@ -46,33 +47,58 @@ public class game extends AppCompatActivity {
         // currentRoom = queue.remove(0);
         // currentKey = associated button, LEFT, RIGHT, ACTION
         // get the media, play it
-        String[] current = queue.remove(0).split(",");
-        currentRoom = current[0];
-        currentKey = current[1];
-        int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        if(!queue.isEmpty())
+        {
+            actNow = false;
+            String[] current = queue.remove(0).split(",");
+            currentRoom = current[0];
+            currentKey = current[1];
+            int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+            mediaPlayer.start();
+            isPlaying = true;
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
-            @Override
-            public void onCompletion(MediaPlayer mp)
-            {
-                timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        // wait five seconds
-                        Log.v("MEGAN DUPRIEST", "TIME IS UP!");
+                @Override
+                public void onCompletion(MediaPlayer mp)
+                {
+                    isPlaying = false;
+                    timer = new CountDownTimer(10000, 100) {
 
-                    }
-                }, 5000);
-            }
-        });
+                        public void onTick(long millisUntilFinished) {
+                            timeLeft = millisUntilFinished;
+                        }
+
+                        public void onFinish() {
+                            actNow = false;
+                            timeLeft = 0;
+                            Log.v("MEGAN DUPRIEST", "TOO LATE!");
+
+                        }
+                    }.start();
+                    actNow = true;
+                }
+            });
+
+        }
+        else
+        {
+            Log.v("MEGAN DUPRIEST", "YOU ARE A WINNER! CONGRATS!");
+        }
     }
 
     public void pause(View view)
     {
         // stuff will happen to pause the game itself
+        if(isPlaying)
+        {
+            mediaPlayer.pause();
+            isPaused = true;
+        }
+        if(timeLeft > 0)
+        {
+            timer.cancel();
+        }
         Button pause = (Button)view;
         Button mainmenu = (Button)findViewById(R.id.mainmenu);
         Button resume = (Button)(Button)findViewById(R.id.resume);
@@ -89,13 +115,37 @@ public class game extends AppCompatActivity {
         action.setVisibility(action.INVISIBLE);
         pause.setVisibility(pause.INVISIBLE);
 
-
-
-
     }
 
     public void resume(View view)
     {
+        if(isPaused)
+        {
+            mediaPlayer.start();
+            isPaused = false;
+            isPlaying = true;
+        }
+
+        if(timeLeft > 0)
+        {
+            isPlaying = false;
+            timer = new CountDownTimer(timeLeft, 100) {
+
+                public void onTick(long millisUntilFinished) {
+                    timeLeft = millisUntilFinished;
+                }
+
+                public void onFinish() {
+                    actNow = false;
+                    timeLeft = 0;
+                    Log.v("MEGAN DUPRIEST", "TOO LATE!");
+
+                }
+            }.start();
+            actNow = true;
+        }
+
+
         Button resume = (Button)view;
         Button mainmenu = (Button)findViewById(R.id.mainmenu);
 
@@ -120,7 +170,24 @@ public class game extends AppCompatActivity {
 
     public void buttonClick(View view)
     {
-        timer.cancel();
-        Log.v("MEGAN DUPRIEST", "YAY YOU MADE IT!");
+        Button b = (Button)view;
+        String text = (String)b.getText();
+        if(actNow)
+        {
+            timer.cancel();
+            Log.v("CURRENT_KEY", currentKey);
+            Log.v("ButtonClick", text);
+            if(currentKey.equals(text))
+            {
+                Log.v("MEGAN DUPRIEST", "YAY YOU MADE IT!");
+                runRoom();
+            }
+            else
+            {
+                Log.v("MEGAN DUPRIEST", "OOPS WRONG BUTTON PRESS!");
+            }
+
+        }
+
     }
 }
