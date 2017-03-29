@@ -34,10 +34,13 @@ public class game extends AppCompatActivity {
         mediaPlayer = new MediaPlayer();
         actNow = false;
 
-        queue.add("dogbark,left");
-        queue.add("lotsofbats,right");
-        queue.add("magicbrew,action");
-        runRoom();
+        if(type.equals("play"))
+        {
+            queue.add("dogbark,left");
+            queue.add("lotsofbats,right");
+            queue.add("magicbrew,action");
+            runRoom();
+        }
         // Randomly add all rooms to the queue
         // Then should add the "final" room
 

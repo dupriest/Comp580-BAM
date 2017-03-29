@@ -21,6 +21,8 @@
             android:text = "play"
             android:textSize="30dp"
             android:onClick="play"
+            android:textColor="@color/white"
+            android:background="@color/red"
             />
         <Button
             android:id="@+id/create"
@@ -29,6 +31,8 @@
             android:layout_weight="0.5"
             android:text = "create"
             android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
             />
     </TableRow>
     <TableRow
@@ -40,6 +44,8 @@
             android:layout_weight="0.5"
             android:text = "difficulty"
             android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@color/purple"
             />
         <Button
             android:id="@+id/test_controls"
@@ -49,6 +55,8 @@
             android:text = "test controls"
             android:textSize="30dp"
             android:onClick="play"
+            android:textColor="@color/white"
+            android:background="@color/green"
             />
     </TableRow>
 
