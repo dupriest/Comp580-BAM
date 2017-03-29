@@ -27,6 +27,9 @@ public class game extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // NOTE: Turn off TalkBack Settings: "Speak Usage Hints"
+        // NOTE: Change TalkBack volume to lower (50% or 25%)
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         type = getIntent().getData().toString();
@@ -59,6 +62,18 @@ public class game extends AppCompatActivity {
             currentKey = current[1];
             int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+            if(currentKey.equals("left"))
+            {
+                mediaPlayer.setVolume(1,0);
+            }
+            else if(currentKey.equals("right"))
+            {
+                mediaPlayer.setVolume(0,1);
+            }
+            else
+            {
+                mediaPlayer.setVolume(1,1);
+            }
             mediaPlayer.start();
             isPlaying = true;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -67,6 +82,7 @@ public class game extends AppCompatActivity {
                 public void onCompletion(MediaPlayer mp)
                 {
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+                    mediaPlayer.setVolume(1,1);
                     mediaPlayer.start();
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
@@ -84,6 +100,7 @@ public class game extends AppCompatActivity {
                                     timeLeft = 0;
                                     Log.v("MEGAN DUPRIEST", "TOO LATE!");
                                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                                    mediaPlayer.setVolume(1,1);
                                     mediaPlayer.start();
 
                                 }
@@ -99,6 +116,7 @@ public class game extends AppCompatActivity {
         {
             Log.v("MEGAN DUPRIEST", "YOU ARE A WINNER! CONGRATS!");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.fanfare);
+            mediaPlayer.setVolume(1,1);
             mediaPlayer.start();
         }
     }
@@ -155,6 +173,9 @@ public class game extends AppCompatActivity {
                     actNow = false;
                     timeLeft = 0;
                     Log.v("MEGAN DUPRIEST", "TOO LATE!");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
 
                 }
             }.start();
@@ -197,11 +218,13 @@ public class game extends AppCompatActivity {
             {
                 Log.v("MEGAN DUPRIEST", "YAY YOU MADE IT!");
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.shortfanfare);
+                mediaPlayer.setVolume(1,1);
                 mediaPlayer.start();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                     @Override
                     public void onCompletion(MediaPlayer mp) {
+                        actNow = false;
                         runRoom();
                     }
                 });
@@ -209,8 +232,10 @@ public class game extends AppCompatActivity {
             }
             else
             {
+                actNow = false;
                 Log.v("MEGAN DUPRIEST", "OOPS WRONG BUTTON PRESS!");
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                mediaPlayer.setVolume(1,1);
                 mediaPlayer.start();
             }
 
