@@ -42,18 +42,23 @@ public class game extends AppCompatActivity {
 
         if(type.equals("play"))
         {
-            queue.add("dogbark,left");
-            queue.add("lotsofbats,right");
-            queue.add("magicbrew,action");
+            Field[] fields = R.raw.class.getFields();
+
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.substring(0,4).equals("room"))
+                {
+                    queue.add(name);
+                }
+
+            }
+            //queue.add("room_dogbark_left,left");
+            //queue.add("room_lotsofbats_right,right");
+            //queue.add("room_magicbrew_action,action");
             runRoom();
         }
-        Field[] fields = R.raw.class.getFields();
 
-        for (int i = 0; i < fields.length - 1; i++) {
-            String name = fields[i].getName();
-            Log.v("MEGAN DUPRIEST", name);
-
-        }
         // Randomly add all rooms to the queue
         // Then should add the "final" room
 
@@ -67,9 +72,8 @@ public class game extends AppCompatActivity {
         if(!queue.isEmpty())
         {
             actNow = false;
-            String[] current = queue.remove(0).split(",");
-            currentRoom = current[0];
-            currentKey = current[1];
+            currentRoom = queue.remove(0);
+            currentKey = currentRoom.split("_")[2];
             int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
             if(currentKey.equals("left"))
