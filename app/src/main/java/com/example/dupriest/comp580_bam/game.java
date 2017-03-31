@@ -24,7 +24,9 @@ public class game extends AppCompatActivity {
     String currentIntro;
     String currentRoom;
     String currentKey;
+    String currentSoundDirection;
     MediaPlayer mediaPlayer;
+    MediaPlayer menuSound;
     boolean actNow;
     long timeLeft;
     boolean isPaused = false;
@@ -43,6 +45,7 @@ public class game extends AppCompatActivity {
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
+        menuSound = new MediaPlayer();
         actNow = false;
 
         if(type.equals("play"))
@@ -89,32 +92,38 @@ public class game extends AppCompatActivity {
             currentIntro = introQueue.remove(0);
             currentRoom = queue.remove(0);
             currentKey = currentRoom.split("_")[2];
+            currentSoundDirection = currentRoom.split("_")[3];
             if(currentKey.equals("leftright"))
             {
                 int num = (int)Math.round(Math.random());
                 if(num == 0)
                 {
                     currentKey = "left";
+                    if(currentSoundDirection.equals("leftright"))
+                    {
+                        currentSoundDirection = "left";
+                    }
+                    else if(currentSoundDirection.equals("rightleft"))
+                    {
+                        currentSoundDirection = "right";
+                    }
                 }
                 else
                 {
                     currentKey = "right";
+
+                    if(currentSoundDirection.equals("leftright"))
+                    {
+                        currentSoundDirection = "right";
+                    }
+                    else if(currentSoundDirection.equals("rightleft"))
+                    {
+                        currentSoundDirection = "left";
+                    }
                 }
             }
             int id = getResources().getIdentifier(currentIntro,"raw", getPackageName());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
-            /**if(currentKey.equals("left"))
-            {
-                mediaPlayer.setVolume(1,0);
-            }
-            else if(currentKey.equals("right"))
-            {
-                mediaPlayer.setVolume(0,1);
-            }
-            else
-            {
-                mediaPlayer.setVolume(1,1);
-            }**/
             mediaPlayer.start();
             isPlaying = true;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -124,11 +133,11 @@ public class game extends AppCompatActivity {
                 {
                     int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
-                    if(currentKey.equals("left"))
+                    if(currentSoundDirection.equals("left"))
                     {
                         mediaPlayer.setVolume(1,0);
                     }
-                    else if(currentKey.equals("right"))
+                    else if(currentSoundDirection.equals("right"))
                     {
                         mediaPlayer.setVolume(0,1);
                     }
@@ -157,30 +166,6 @@ public class game extends AppCompatActivity {
                         }
                     }.start();
                     actNow = true;
-                    /**
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp)
-                        {
-                            isPlaying = false;
-                            timer = new CountDownTimer(10000, 100) {
-
-                                public void onTick(long millisUntilFinished) {
-                                    timeLeft = millisUntilFinished;
-                                }
-
-                                public void onFinish() {
-                                    actNow = false;
-                                    timeLeft = 0;
-                                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
-                                    mediaPlayer.setVolume(1,1);
-                                    mediaPlayer.start();
-
-                                }
-                            }.start();
-                            actNow = true;
-                        }
-                    });**/
                 }
             });
 
@@ -207,11 +192,6 @@ public class game extends AppCompatActivity {
             timer.cancel();
         }
         Button pause = (Button)view;
-        Button mainmenu = (Button)findViewById(R.id.mainmenu);
-        Button resume = (Button)(Button)findViewById(R.id.resume);
-
-        mainmenu.setVisibility(mainmenu.VISIBLE);
-        resume.setVisibility(resume.VISIBLE);
 
         Button left = (Button)findViewById(R.id.left);
         Button right = (Button)findViewById(R.id.right);
@@ -221,6 +201,21 @@ public class game extends AppCompatActivity {
         right.setVisibility(right.INVISIBLE);
         action.setVisibility(action.INVISIBLE);
         pause.setVisibility(pause.INVISIBLE);
+        menuSound = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+        menuSound.start();
+        menuSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        {
+
+            @Override
+            public void onCompletion(MediaPlayer mp)
+            {
+                Button mainmenu = (Button)findViewById(R.id.mainmenu);
+                Button resume = (Button)(Button)findViewById(R.id.resume);
+                mainmenu.setVisibility(mainmenu.VISIBLE);
+                resume.setVisibility(resume.VISIBLE);
+            }
+        });
+
 
     }
 
