@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
@@ -23,6 +25,7 @@ public class game extends AppCompatActivity {
     long timeLeft;
     boolean isPaused = false;
     boolean isPlaying = false;
+    String state = "game"; // can be game or menu
 
 
     @Override
@@ -43,6 +46,13 @@ public class game extends AppCompatActivity {
             queue.add("lotsofbats,right");
             queue.add("magicbrew,action");
             runRoom();
+        }
+        Field[] fields = R.raw.class.getFields();
+
+        for (int i = 0; i < fields.length - 1; i++) {
+            String name = fields[i].getName();
+            Log.v("MEGAN DUPRIEST", name);
+
         }
         // Randomly add all rooms to the queue
         // Then should add the "final" room
@@ -98,7 +108,6 @@ public class game extends AppCompatActivity {
                                 public void onFinish() {
                                     actNow = false;
                                     timeLeft = 0;
-                                    Log.v("MEGAN DUPRIEST", "TOO LATE!");
                                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
                                     mediaPlayer.setVolume(1,1);
                                     mediaPlayer.start();
@@ -114,7 +123,6 @@ public class game extends AppCompatActivity {
         }
         else
         {
-            Log.v("MEGAN DUPRIEST", "YOU ARE A WINNER! CONGRATS!");
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.fanfare);
             mediaPlayer.setVolume(1,1);
             mediaPlayer.start();
@@ -124,6 +132,7 @@ public class game extends AppCompatActivity {
     public void pause(View view)
     {
         // stuff will happen to pause the game itself
+        state = "menu";
         if(isPlaying)
         {
             mediaPlayer.pause();
@@ -153,6 +162,7 @@ public class game extends AppCompatActivity {
 
     public void resume(View view)
     {
+        state = "game";
         if(isPaused)
         {
             mediaPlayer.start();
@@ -172,7 +182,6 @@ public class game extends AppCompatActivity {
                 public void onFinish() {
                     actNow = false;
                     timeLeft = 0;
-                    Log.v("MEGAN DUPRIEST", "TOO LATE!");
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
                     mediaPlayer.setVolume(1,1);
                     mediaPlayer.start();
@@ -212,11 +221,11 @@ public class game extends AppCompatActivity {
         if(actNow)
         {
             timer.cancel();
-            Log.v("CURRENT_KEY", currentKey);
-            Log.v("ButtonClick", text);
+            timeLeft = 0;
+            actNow = false;
+
             if(currentKey.equals(text))
             {
-                Log.v("MEGAN DUPRIEST", "YAY YOU MADE IT!");
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.shortfanfare);
                 mediaPlayer.setVolume(1,1);
                 mediaPlayer.start();
@@ -224,7 +233,6 @@ public class game extends AppCompatActivity {
 
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        actNow = false;
                         runRoom();
                     }
                 });
@@ -232,8 +240,6 @@ public class game extends AppCompatActivity {
             }
             else
             {
-                actNow = false;
-                Log.v("MEGAN DUPRIEST", "OOPS WRONG BUTTON PRESS!");
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
                 mediaPlayer.setVolume(1,1);
                 mediaPlayer.start();
@@ -241,5 +247,53 @@ public class game extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if(isPlaying && !isPaused)
+        {
+            mediaPlayer.pause();
+            isPaused = true;
+        }
+        if(timeLeft > 0)
+        {
+            timer.cancel();
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if(isPaused && state.equals("game"))
+        {
+            mediaPlayer.start();
+            isPaused = false;
+            isPlaying = true;
+        }
+
+        if(timeLeft > 0 && state.equals("game"))
+        {
+            isPlaying = false;
+            timer = new CountDownTimer(timeLeft, 100) {
+
+                public void onTick(long millisUntilFinished) {
+                    timeLeft = millisUntilFinished;
+                }
+
+                public void onFinish() {
+                    actNow = false;
+                    timeLeft = 0;
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+
+                }
+            }.start();
+            actNow = true;
+        }
     }
 }
