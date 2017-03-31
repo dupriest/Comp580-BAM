@@ -2,6 +2,7 @@ package com.example.dupriest.comp580_bam;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -159,9 +160,10 @@ public class game extends AppCompatActivity {
                             isPlaying = false;
                             actNow = false;
                             timeLeft = 0;
-                            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
-                            mediaPlayer.setVolume(1,1);
-                            mediaPlayer.start();
+                            Uri myUri = Uri.parse("failure");
+                            Intent X = new Intent(game.this, endgame.class);
+                            X.setData(myUri);
+                            startActivity(X);
 
                         }
                     }.start();
@@ -172,9 +174,10 @@ public class game extends AppCompatActivity {
         }
         else
         {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.fanfare);
-            mediaPlayer.setVolume(1,1);
-            mediaPlayer.start();
+            Uri myUri = Uri.parse("success");
+            Intent X = new Intent(this, endgame.class);
+            X.setData(myUri);
+            startActivity(X);
         }
     }
 
@@ -239,11 +242,15 @@ public class game extends AppCompatActivity {
                 }
 
                 public void onFinish() {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    isPlaying = false;
                     actNow = false;
                     timeLeft = 0;
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
-                    mediaPlayer.setVolume(1,1);
-                    mediaPlayer.start();
+                    Uri myUri = Uri.parse("failure");
+                    Intent X = new Intent(game.this, endgame.class);
+                    X.setData(myUri);
+                    startActivity(X);
 
                 }
             }.start();
@@ -281,6 +288,7 @@ public class game extends AppCompatActivity {
         {
             mediaPlayer.stop();
             mediaPlayer.release();
+            isPlaying = false;
             timer.cancel();
             timeLeft = 0;
             actNow = false;
@@ -301,9 +309,10 @@ public class game extends AppCompatActivity {
             }
             else
             {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
-                mediaPlayer.setVolume(1,1);
-                mediaPlayer.start();
+                Uri myUri = Uri.parse("failure");
+                Intent X = new Intent(this, endgame.class);
+                X.setData(myUri);
+                startActivity(X);
             }
 
         }
