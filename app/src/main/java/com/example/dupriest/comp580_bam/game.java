@@ -11,13 +11,17 @@ import android.widget.Button;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 public class game extends AppCompatActivity {
 
     String type;
     CountDownTimer timer;
+    ArrayList<String> introQueue;
     ArrayList<String> queue;
+    String currentIntro;
     String currentRoom;
     String currentKey;
     MediaPlayer mediaPlayer;
@@ -37,6 +41,7 @@ public class game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         type = getIntent().getData().toString();
         queue = new ArrayList<String>();
+        introQueue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
         actNow = false;
 
@@ -47,12 +52,19 @@ public class game extends AppCompatActivity {
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
-                if(name.substring(0,4).equals("room"))
+                if(name.length() >= 4 && name.substring(0,4).equals("room"))
                 {
                     queue.add(name);
                 }
+                else if(name.length() >= 5 && name.substring(0,5).equals("intro"))
+                {
+                    introQueue.add(name);
+                }
 
             }
+            long seed = System.nanoTime();
+            Collections.shuffle(queue, new Random(seed));
+            Collections.shuffle(introQueue, new Random(seed));
             //queue.add("room_dogbark_left,left");
             //queue.add("room_lotsofbats_right,right");
             //queue.add("room_magicbrew_action,action");
@@ -66,17 +78,32 @@ public class game extends AppCompatActivity {
 
     public void runRoom()
     {
+        // Give a description of the room from NO PARTICULAR DIRECTION
+        // Once the description ends, a short soundtrack from one ear or another will play that's sound effect
         // currentRoom = queue.remove(0);
         // currentKey = associated button, LEFT, RIGHT, ACTION
         // get the media, play it
         if(!queue.isEmpty())
         {
             actNow = false;
+            currentIntro = introQueue.remove(0);
             currentRoom = queue.remove(0);
             currentKey = currentRoom.split("_")[2];
-            int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
+            if(currentKey.equals("leftright"))
+            {
+                int num = (int)Math.round(Math.random());
+                if(num == 0)
+                {
+                    currentKey = "left";
+                }
+                else
+                {
+                    currentKey = "right";
+                }
+            }
+            int id = getResources().getIdentifier(currentIntro,"raw", getPackageName());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
-            if(currentKey.equals("left"))
+            /**if(currentKey.equals("left"))
             {
                 mediaPlayer.setVolume(1,0);
             }
@@ -87,7 +114,7 @@ public class game extends AppCompatActivity {
             else
             {
                 mediaPlayer.setVolume(1,1);
-            }
+            }**/
             mediaPlayer.start();
             isPlaying = true;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -95,9 +122,42 @@ public class game extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp)
                 {
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
-                    mediaPlayer.setVolume(1,1);
+                    int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                    if(currentKey.equals("left"))
+                    {
+                        mediaPlayer.setVolume(1,0);
+                    }
+                    else if(currentKey.equals("right"))
+                    {
+                        mediaPlayer.setVolume(0,1);
+                    }
+                    else
+                    {
+                        mediaPlayer.setVolume(1,1);
+                    }
+                    mediaPlayer.setLooping(true);
                     mediaPlayer.start();
+                    timer = new CountDownTimer(10000, 100) {
+
+                        public void onTick(long millisUntilFinished) {
+                            timeLeft = millisUntilFinished;
+                        }
+
+                        public void onFinish() {
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                            isPlaying = false;
+                            actNow = false;
+                            timeLeft = 0;
+                            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
+                            mediaPlayer.setVolume(1,1);
+                            mediaPlayer.start();
+
+                        }
+                    }.start();
+                    actNow = true;
+                    /**
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp)
@@ -120,7 +180,7 @@ public class game extends AppCompatActivity {
                             }.start();
                             actNow = true;
                         }
-                    });
+                    });**/
                 }
             });
 
@@ -224,6 +284,8 @@ public class game extends AppCompatActivity {
         String text = (String)b.getText();
         if(actNow)
         {
+            mediaPlayer.stop();
+            mediaPlayer.release();
             timer.cancel();
             timeLeft = 0;
             actNow = false;
@@ -281,7 +343,6 @@ public class game extends AppCompatActivity {
 
         if(timeLeft > 0 && state.equals("game"))
         {
-            isPlaying = false;
             timer = new CountDownTimer(timeLeft, 100) {
 
                 public void onTick(long millisUntilFinished) {
@@ -289,6 +350,8 @@ public class game extends AppCompatActivity {
                 }
 
                 public void onFinish() {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
                     actNow = false;
                     timeLeft = 0;
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
