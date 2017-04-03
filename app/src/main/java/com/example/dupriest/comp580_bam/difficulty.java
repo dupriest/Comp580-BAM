@@ -56,7 +56,6 @@ public class difficulty extends AppCompatActivity {
     {
         Button b = (Button)view;
         String id = getResources().getResourceName(b.getId());
-        Log.v("MEGAN DUPRIEST", id);
         int start = id.length()-6;
         int end = id.length()-1;
         if(id.substring(start,end).equals("lives"))

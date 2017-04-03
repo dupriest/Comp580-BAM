@@ -170,7 +170,7 @@ public class game extends AppCompatActivity {
                                 isPlaying = false;
                                 actNow = false;
                                 timeLeft = 0;
-                                Uri myUri = Uri.parse("failure");
+                                Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                                 Intent X = new Intent(game.this, endgame.class);
                                 X.setData(myUri);
                                 startActivity(X);
@@ -185,7 +185,7 @@ public class game extends AppCompatActivity {
         }
         else
         {
-            Uri myUri = Uri.parse("success");
+            Uri myUri = Uri.parse("success" + " " + String.valueOf(lives) + " " + String.valueOf(time));
             Intent X = new Intent(this, endgame.class);
             X.setData(myUri);
             startActivity(X);
@@ -260,7 +260,7 @@ public class game extends AppCompatActivity {
                     timeLeft = 0;
                     // eventually play unique 'failure' sound for each scenario
                     // also only end game when lives == 0
-                    Uri myUri = Uri.parse("failure");
+                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                     Intent X = new Intent(game.this, endgame.class);
                     X.setData(myUri);
                     startActivity(X);
@@ -289,7 +289,9 @@ public class game extends AppCompatActivity {
 
     public void mainmenu(View view)
     {
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
         Intent X = new Intent(this, MainMenu.class);
+        X.setData(myUri);
         startActivity(X);
     }
 
@@ -328,7 +330,7 @@ public class game extends AppCompatActivity {
             {
                 // also only end game when lives == 0
                 // eventually play unique 'failure' sound for each scenario
-                Uri myUri = Uri.parse("failure");
+                Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                 Intent X = new Intent(this, endgame.class);
                 X.setData(myUri);
                 startActivity(X);

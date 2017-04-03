@@ -21,11 +21,11 @@ public class MainMenu extends AppCompatActivity {
         lives = -1; // infinity
         time = -1; // no time limit
         Uri uri = getIntent().getData();
-        Log.v("MEGAN DUPRIEST", String.valueOf(uri==null));
+
         if(!(uri==null))
         {
             info = uri.toString().split(" ");
-            Log.v("MEGAN DUPRIEST", info[0] + ", " + info[1]);
+
             lives = Integer.parseInt(info[0]);
             time = Integer.parseInt(info[1]);
         }
@@ -57,13 +57,16 @@ public class MainMenu extends AppCompatActivity {
             text = text + "time = 2 seconds";
         }
         difficulty.setText(text);
-        Log.v("MEGAN DUPRIEST", "lives = " + String.valueOf(lives) + ", time = " + String.valueOf(time));
     }
 
     void play(View view)
     {
         Button button = (Button)view;
         String text = (String)button.getText();
+        if(text.equals("test controls"))
+        {
+            text = "test";
+        }
         Uri myUri = Uri.parse(text + " " + String.valueOf(lives) + " " + String.valueOf(time));
         Intent X = new Intent(this, game.class);
         X.setData(myUri);
@@ -72,7 +75,6 @@ public class MainMenu extends AppCompatActivity {
 
     void difficulty(View view)
     {
-        Log.v("BOYFRIEND", "Hey baby, as you are working just know you are beautiful.  Love you :)");
         Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
         Intent X = new Intent(this, difficulty.class);
         X.setData(myUri);

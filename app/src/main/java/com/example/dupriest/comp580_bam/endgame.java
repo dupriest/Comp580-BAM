@@ -11,12 +11,19 @@ public class endgame extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
     String type;
+    String[] info;
+    int lives;
+    int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endgame);
-        type = getIntent().getData().toString();
+        info = getIntent().getData().toString().split(" ");
+        type = info[0];
+        lives = Integer.parseInt(info[1]);
+        time = Integer.parseInt(info[2]);
+
         if(type.equals("success"))
         {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.fanfare);
@@ -33,7 +40,7 @@ public class endgame extends AppCompatActivity {
     {
         mediaPlayer.stop();
         mediaPlayer.release();
-        Uri myUri = Uri.parse("play");
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
         Intent X = new Intent(this, MainMenu.class);
         X.setData(myUri);
         startActivity(X);
@@ -43,7 +50,7 @@ public class endgame extends AppCompatActivity {
     {
         mediaPlayer.stop();
         mediaPlayer.release();
-        Uri myUri = Uri.parse("play");
+        Uri myUri = Uri.parse("play" + " " + String.valueOf(lives) + " " + String.valueOf(time));
         Intent X = new Intent(this, game.class);
         X.setData(myUri);
         startActivity(X);
