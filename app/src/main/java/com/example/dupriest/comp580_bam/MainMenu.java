@@ -29,6 +29,34 @@ public class MainMenu extends AppCompatActivity {
             lives = Integer.parseInt(info[0]);
             time = Integer.parseInt(info[1]);
         }
+        Button difficulty = (Button)findViewById(R.id.difficulty);
+        String text = "difficulty\n";
+        if(lives == -1)
+        {
+            text = text + "lives = unlimited";
+        }
+        else if(lives == 5)
+        {
+            text = text + "lives = 5";
+        }
+        else if(lives == 1)
+        {
+            text = text + "lives = 1";
+        }
+        text = text + "\n";
+        if(time == -1)
+        {
+            text = text + "time = unlimited";
+        }
+        if(time == 10000)
+        {
+            text = text + "time = 10 seconds";
+        }
+        if(time == 2000)
+        {
+            text = text + "time = 2 seconds";
+        }
+        difficulty.setText(text);
         Log.v("MEGAN DUPRIEST", "lives = " + String.valueOf(lives) + ", time = " + String.valueOf(time));
     }
 
