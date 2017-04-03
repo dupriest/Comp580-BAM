@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class game extends AppCompatActivity {
 
+    String[] info;
     String type;
     CountDownTimer timer;
     ArrayList<String> introQueue;
@@ -33,6 +34,8 @@ public class game extends AppCompatActivity {
     boolean isPaused = false;
     boolean isPlaying = false;
     String state = "game"; // can be game or menu
+    int time;
+    int lives;
 
 
     @Override
@@ -42,7 +45,11 @@ public class game extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        type = getIntent().getData().toString();
+
+        info = getIntent().getData().toString().split(" ");
+        type = info[0];
+        lives = Integer.parseInt(info[1]);
+        time = Integer.parseInt(info[2]);
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
@@ -69,15 +76,8 @@ public class game extends AppCompatActivity {
             long seed = System.nanoTime();
             Collections.shuffle(queue, new Random(seed));
             Collections.shuffle(introQueue, new Random(seed));
-            //queue.add("room_dogbark_left,left");
-            //queue.add("room_lotsofbats_right,right");
-            //queue.add("room_magicbrew_action,action");
             runRoom();
         }
-
-        // Randomly add all rooms to the queue
-        // Then should add the "final" room
-
     }
 
     public void runRoom()
@@ -148,25 +148,28 @@ public class game extends AppCompatActivity {
                     }
                     mediaPlayer.setLooping(true);
                     mediaPlayer.start();
-                    timer = new CountDownTimer(10000, 100) {
+                    if(time > -1)
+                    {
+                        timer = new CountDownTimer(time, 100) {
 
-                        public void onTick(long millisUntilFinished) {
-                            timeLeft = millisUntilFinished;
-                        }
+                            public void onTick(long millisUntilFinished) {
+                                timeLeft = millisUntilFinished;
+                            }
 
-                        public void onFinish() {
-                            mediaPlayer.stop();
-                            mediaPlayer.release();
-                            isPlaying = false;
-                            actNow = false;
-                            timeLeft = 0;
-                            Uri myUri = Uri.parse("failure");
-                            Intent X = new Intent(game.this, endgame.class);
-                            X.setData(myUri);
-                            startActivity(X);
+                            public void onFinish() {
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                isPlaying = false;
+                                actNow = false;
+                                timeLeft = 0;
+                                Uri myUri = Uri.parse("failure");
+                                Intent X = new Intent(game.this, endgame.class);
+                                X.setData(myUri);
+                                startActivity(X);
 
-                        }
-                    }.start();
+                            }
+                        }.start();
+                    }
                     actNow = true;
                 }
             });
@@ -247,6 +250,8 @@ public class game extends AppCompatActivity {
                     isPlaying = false;
                     actNow = false;
                     timeLeft = 0;
+                    // eventually play unique 'failure' sound for each scenario
+                    // also only end game when lives == 0
                     Uri myUri = Uri.parse("failure");
                     Intent X = new Intent(game.this, endgame.class);
                     X.setData(myUri);
@@ -289,12 +294,16 @@ public class game extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayer.release();
             isPlaying = false;
-            timer.cancel();
+            if(time > -1)
+            {
+                timer.cancel();
+            }
             timeLeft = 0;
             actNow = false;
 
             if(currentKey.equals(text))
             {
+                // eventually play unique 'short fanfare' for each scenario
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.shortfanfare);
                 mediaPlayer.setVolume(1,1);
                 mediaPlayer.start();
@@ -309,6 +318,8 @@ public class game extends AppCompatActivity {
             }
             else
             {
+                // also only end game when lives == 0
+                // eventually play unique 'failure' sound for each scenario
                 Uri myUri = Uri.parse("failure");
                 Intent X = new Intent(this, endgame.class);
                 X.setData(myUri);

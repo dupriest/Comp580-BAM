@@ -28,7 +28,11 @@
         <activity
             android:name=".endgame"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity android:name=".difficulty"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

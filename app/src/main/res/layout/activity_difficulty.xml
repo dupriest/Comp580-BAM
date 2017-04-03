@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_difficulty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.dupriest.comp580_bam.difficulty">
+    <TableLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+        <TableRow>
+            <Button
+                android:id="@+id/lives1"
+                android:layout_weight="0.3"
+                android:text = "infinite lives"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/lives2"
+                android:layout_weight="0.3"
+                android:text = "five lives"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/lives3"
+                android:layout_weight="0.3"
+                android:text = "you only live once"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                />
+        </TableRow>
+
+        <TableRow
+            android:paddingTop="10dp"
+            >
+            <Button
+                android:id="@+id/times1"
+                android:layout_weight="0.3"
+                android:text = "no time limit"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/times2"
+                android:layout_weight="0.3"
+                android:text = "slow reaction"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/times3"
+                android:layout_weight="0.3"
+                android:text = "fast reaction"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "save and return to main menu"
+        android:layout_alignParentBottom="true"
+        android:onClick="save"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@color/purple"
+        />
+</RelativeLayout>

@@ -46,6 +46,7 @@
             android:textSize="30dp"
             android:textColor="@color/white"
             android:background="@color/purple"
+            android:onClick="difficulty"
             />
         <Button
             android:id="@+id/test_controls"
