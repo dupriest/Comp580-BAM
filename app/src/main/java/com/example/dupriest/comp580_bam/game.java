@@ -43,6 +43,14 @@ public class game extends AppCompatActivity {
         // NOTE: Turn off TalkBack Settings: "Speak Usage Hints"
         // NOTE: Change TalkBack volume to lower (50% or 25%)
 
+        //THOUGHTS: Maybe game beeps for the number of lives that you have
+        // Maybe instead of pressing buttons you can tilt the controller??
+        // That'd remove the element of button pressing. You could be really fast response.
+        // Maybe you'd be able to turn it off and on
+        // Scorekeeping
+        // Challenge a friend to beat your game / beat your high score?
+        // Then that version of the game would also list the user and high score of that user
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
