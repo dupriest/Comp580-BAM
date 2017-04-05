@@ -21,7 +21,6 @@ public class MainMenu extends AppCompatActivity {
         lives = -1; // infinity
         time = -1; // no time limit
         Uri uri = getIntent().getData();
-
         if(!(uri==null))
         {
             info = uri.toString().split(" ");
@@ -29,32 +28,29 @@ public class MainMenu extends AppCompatActivity {
             lives = Integer.parseInt(info[0]);
             time = Integer.parseInt(info[1]);
         }
+        setDifficultyText();
+    }
+
+    void setDifficultyText()
+    {
         Button difficulty = (Button)findViewById(R.id.difficulty);
         String text = "difficulty\n";
         if(lives == -1)
         {
             text = text + "lives = unlimited";
         }
-        else if(lives == 5)
+        else
         {
-            text = text + "lives = 5";
-        }
-        else if(lives == 1)
-        {
-            text = text + "lives = 1";
+            text = text + "lives = " + String.valueOf(lives);
         }
         text = text + "\n";
         if(time == -1)
         {
             text = text + "time = unlimited";
         }
-        if(time == 10000)
+        else
         {
-            text = text + "time = 10 seconds";
-        }
-        if(time == 2000)
-        {
-            text = text + "time = 2 seconds";
+            text = text + "time = " + String.valueOf(time / 1000) +  " seconds";
         }
         difficulty.setText(text);
     }
