@@ -95,7 +95,7 @@ public class game extends AppCompatActivity {
         // currentRoom = queue.remove(0);
         // currentKey = associated button, LEFT, RIGHT, ACTION
         // get the media, play it
-        if(!queue.isEmpty())
+        if(!(queue.isEmpty()))
         {
             actNow = false;
             currentIntro = introQueue.remove(0);
@@ -170,10 +170,23 @@ public class game extends AppCompatActivity {
                                 isPlaying = false;
                                 actNow = false;
                                 timeLeft = 0;
-                                Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
-                                Intent X = new Intent(game.this, endgame.class);
-                                X.setData(myUri);
-                                startActivity(X);
+                                if(lives > 0)
+                                {
+                                    lives = lives - 1;
+                                }
+                                if(lives == 0)
+                                {
+                                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                                    Intent X = new Intent(game.this, endgame.class);
+                                    X.setData(myUri);
+                                    startActivity(X);
+                                }
+                                else
+                                {
+                                    introQueue.add(0, currentIntro);
+                                    queue.add(0, currentRoom);
+                                    runRoom();
+                                }
 
                             }
                         }.start();
@@ -258,12 +271,23 @@ public class game extends AppCompatActivity {
                     isPlaying = false;
                     actNow = false;
                     timeLeft = 0;
-                    // eventually play unique 'failure' sound for each scenario
-                    // also only end game when lives == 0
-                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
-                    Intent X = new Intent(game.this, endgame.class);
-                    X.setData(myUri);
-                    startActivity(X);
+                    if(lives > 0)
+                    {
+                        lives = lives - 1;
+                    }
+                    if(lives == 0)
+                    {
+                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                        Intent X = new Intent(game.this, endgame.class);
+                        X.setData(myUri);
+                        startActivity(X);
+                    }
+                    else
+                    {
+                        introQueue.add(0, currentIntro);
+                        queue.add(0, currentRoom);
+                        runRoom();
+                    }
 
                 }
             }.start();
@@ -328,12 +352,23 @@ public class game extends AppCompatActivity {
             }
             else
             {
-                // also only end game when lives == 0
-                // eventually play unique 'failure' sound for each scenario
-                Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
-                Intent X = new Intent(this, endgame.class);
-                X.setData(myUri);
-                startActivity(X);
+                if(lives > 0)
+                {
+                    lives = lives - 1;
+                }
+                if(lives == 0)
+                {
+                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                    Intent X = new Intent(game.this, endgame.class);
+                    X.setData(myUri);
+                    startActivity(X);
+                }
+                else
+                {
+                    introQueue.add(0, currentIntro);
+                    queue.add(0, currentRoom);
+                    runRoom();
+                }
             }
 
         }
@@ -379,9 +414,23 @@ public class game extends AppCompatActivity {
                     mediaPlayer.release();
                     actNow = false;
                     timeLeft = 0;
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.failure);
-                    mediaPlayer.setVolume(1,1);
-                    mediaPlayer.start();
+                    if(lives > 0)
+                    {
+                        lives = lives - 1;
+                    }
+                    if(lives == 0)
+                    {
+                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                        Intent X = new Intent(game.this, endgame.class);
+                        X.setData(myUri);
+                        startActivity(X);
+                    }
+                    else
+                    {
+                        introQueue.add(0, currentIntro);
+                        queue.add(0, currentRoom);
+                        runRoom();
+                    }
 
                 }
             }.start();
