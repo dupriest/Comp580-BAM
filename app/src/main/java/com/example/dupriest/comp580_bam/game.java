@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class game extends AppCompatActivity {
     String state = "game"; // can be game or menu
     int time;
     int lives;
+    int failures;
 
 
     @Override
@@ -57,6 +59,13 @@ public class game extends AppCompatActivity {
         info = getIntent().getData().toString().split(" ");
         type = info[0];
         lives = Integer.parseInt(info[1]);
+        failures = 0;
+
+        if(lives >= 0)
+        {
+            TextView t = (TextView)findViewById(R.id.lives);
+            t.setText("LIVES = " + String.valueOf(lives));
+        }
         time = Integer.parseInt(info[2]);
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
@@ -170,11 +179,16 @@ public class game extends AppCompatActivity {
                                 isPlaying = false;
                                 actNow = false;
                                 timeLeft = 0;
-                                if(lives > 0)
+                                if(lives-failures > 0)
                                 {
-                                    lives = lives - 1;
+                                    failures = failures + 1;
                                 }
-                                if(lives == 0)
+                                if(lives-failures >= 0)
+                                {
+                                    TextView t = (TextView)findViewById(R.id.lives);
+                                    t.setText("LIVES = " + String.valueOf(lives-failures));
+                                }
+                                if(lives-failures == 0)
                                 {
                                     Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                                     Intent X = new Intent(game.this, endgame.class);
@@ -271,11 +285,16 @@ public class game extends AppCompatActivity {
                     isPlaying = false;
                     actNow = false;
                     timeLeft = 0;
-                    if(lives > 0)
+                    if(lives-failures > 0)
                     {
-                        lives = lives - 1;
+                        failures = failures + 1;
                     }
-                    if(lives == 0)
+                    if(lives-failures >= 0)
+                    {
+                        TextView t = (TextView)findViewById(R.id.lives);
+                        t.setText("LIVES = " + String.valueOf(lives-failures));
+                    }
+                    if(lives-failures == 0)
                     {
                         Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                         Intent X = new Intent(game.this, endgame.class);
@@ -352,11 +371,16 @@ public class game extends AppCompatActivity {
             }
             else
             {
-                if(lives > 0)
+                if(lives-failures > 0)
                 {
-                    lives = lives - 1;
+                    failures = failures + 1;
                 }
-                if(lives == 0)
+                if(lives-failures >= 0)
+                {
+                    TextView t = (TextView)findViewById(R.id.lives);
+                    t.setText("LIVES = " + String.valueOf(lives-failures));
+                }
+                if(lives-failures == 0)
                 {
                     Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                     Intent X = new Intent(game.this, endgame.class);
@@ -414,11 +438,16 @@ public class game extends AppCompatActivity {
                     mediaPlayer.release();
                     actNow = false;
                     timeLeft = 0;
-                    if(lives > 0)
+                    if(lives-failures > 0)
                     {
-                        lives = lives - 1;
+                        failures = failures + 1;
                     }
-                    if(lives == 0)
+                    if(lives-failures >= 0)
+                    {
+                        TextView t = (TextView)findViewById(R.id.lives);
+                        t.setText("LIVES = " + String.valueOf(lives-failures));
+                    }
+                    if(lives-failures == 0)
                     {
                         Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
                         Intent X = new Intent(game.this, endgame.class);
