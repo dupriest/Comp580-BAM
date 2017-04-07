@@ -1,6 +1,11 @@
 package com.example.dupriest.comp580_bam;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.CountDownTimer;
@@ -14,10 +19,11 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 
-public class game extends AppCompatActivity {
+public class game extends AppCompatActivity implements SensorEventListener {
 
     String[] info;
     String type;
@@ -39,6 +45,9 @@ public class game extends AppCompatActivity {
     int lives;
     int failures;
     String control;
+    private SensorManager sm;
+    private Sensor s;
+    private List<Sensor> l;
 
 
     @Override
@@ -77,6 +86,22 @@ public class game extends AppCompatActivity {
 
         if(type.equals("play"))
         {
+            if(control.equals("screentilt"))
+            {
+                Button left = (Button)findViewById(R.id.left);
+                Button right = (Button)findViewById(R.id.right);
+                Button action = (Button)(Button)findViewById(R.id.action);
+
+                left.setVisibility(left.INVISIBLE);
+                right.setVisibility(right.INVISIBLE);
+                action.setVisibility(action.INVISIBLE);
+
+                sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+                l = sm.getSensorList(Sensor.TYPE_ALL);
+                s = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+                sm.registerListener(this, s, 1000000);
+            }
+
             Field[] fields = R.raw.class.getFields();
 
             for (int i = 0; i < fields.length - 1; i++)
@@ -97,6 +122,47 @@ public class game extends AppCompatActivity {
             Collections.shuffle(introQueue, new Random(seed));
             runRoom();
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event)
+    {
+        if (sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE) == null)
+        {
+            Log.v("MEGAN DUPRIEST", "SENSOR NOT AVAILABLE!!");
+        }
+        else
+        {
+            int tolerance = 4;
+            View view = null;
+            if(event.values[0] < (tolerance*-1))
+            {
+                Log.v("MEGAN DUPRIEST", "LEFT!");
+                view = findViewById(R.id.left);
+
+            }
+            else if(event.values[0] > tolerance)
+            {
+                Log.v("MEGAN DUPRIEST", "RIGHT!");
+                view = findViewById(R.id.right);
+
+            }
+            else if(event.values[1] < (tolerance*-1))
+            {
+                Log.v("MEGAN DUPRIEST", "ACTION!");
+                view = findViewById(R.id.action);
+            }
+            if(view != null)
+            {
+                buttonClick(view);
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
+        // do nothing
     }
 
     public void runRoom()
@@ -225,6 +291,10 @@ public class game extends AppCompatActivity {
     {
         // stuff will happen to pause the game itself
         state = "menu";
+        if(control.equals("screentilt") && type.equals("play"))
+        {
+            sm.unregisterListener(this);
+        }
         if(isPlaying)
         {
             mediaPlayer.pause();
@@ -265,6 +335,10 @@ public class game extends AppCompatActivity {
     public void resume(View view)
     {
         state = "game";
+        if(control.equals("screentilt") && type.equals("play"))
+        {
+            sm.registerListener(this, s, 1000000);
+        }
         if(isPaused)
         {
             mediaPlayer.start();
@@ -322,13 +396,16 @@ public class game extends AppCompatActivity {
         mainmenu.setVisibility(mainmenu.INVISIBLE);
         resume.setVisibility(resume.INVISIBLE);
 
-        Button left = (Button)findViewById(R.id.left);
-        Button right = (Button)findViewById(R.id.right);
-        Button action = (Button)(Button)findViewById(R.id.action);
         Button pause = (Button)(Button)findViewById(R.id.pause);
-        left.setVisibility(left.VISIBLE);
-        right.setVisibility(right.VISIBLE);
-        action.setVisibility(action.VISIBLE);
+        if(control.equals("buttons"))
+        {
+            Button left = (Button)findViewById(R.id.left);
+            Button right = (Button)findViewById(R.id.right);
+            Button action = (Button)(Button)findViewById(R.id.action);
+            left.setVisibility(left.VISIBLE);
+            right.setVisibility(right.VISIBLE);
+            action.setVisibility(action.VISIBLE);
+        }
         pause.setVisibility(pause.VISIBLE);
     }
 
@@ -405,6 +482,10 @@ public class game extends AppCompatActivity {
     protected void onPause()
     {
         super.onPause();
+        if(control.equals("screentilt") && type.equals("play"))
+        {
+            sm.unregisterListener(this);
+        }
         if(isPlaying && !isPaused)
         {
             mediaPlayer.pause();
@@ -420,6 +501,10 @@ public class game extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
+        if(control.equals("screentilt") && type.equals("play"))
+        {
+            sm.registerListener(this, s, 1000000);
+        }
         if(isPaused && state.equals("game"))
         {
             mediaPlayer.start();
