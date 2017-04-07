@@ -1,6 +1,8 @@
 package com.example.dupriest.comp580_bam;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,27 +12,26 @@ import android.widget.Button;
 
 public class MainMenu extends AppCompatActivity {
 
-    String[] info;
     int lives;
     int time;
     String control;
+    Context context;
+    SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        lives = -1; // infinity
-        time = -1; // no time limit
-        control = "buttons"; // use buttons to control game
-        Uri uri = getIntent().getData();
-        if(!(uri==null))
-        {
-            info = uri.toString().split(" ");
 
-            lives = Integer.parseInt(info[0]);
-            time = Integer.parseInt(info[1]);
-            control = info[2];
-        }
+        context = getApplicationContext();
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        lives = sharedPref.getInt("lives", -1);
+        // default = infinity
+        time = sharedPref.getInt("time", -1);
+        // default = no time limit
+        control = sharedPref.getString("control", "buttons");
+        // default = use buttons to control game
         setDifficultyText();
     }
 
@@ -62,21 +63,35 @@ public class MainMenu extends AppCompatActivity {
     {
         Button button = (Button)view;
         String text = (String)button.getText();
+
         if(text.equals("test controls"))
         {
             text = "test";
         }
-        Uri myUri = Uri.parse(text + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("type", text);
+        editor.commit();
         Intent X = new Intent(this, game.class);
-        X.setData(myUri);
         startActivity(X);
     }
 
     void difficulty(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, difficulty.class);
-        X.setData(myUri);
         startActivity(X);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        lives = sharedPref.getInt("lives", -1);
+        // default = infinity
+        time = sharedPref.getInt("time", -1);
+        // default = no time limit
+        control = sharedPref.getString("control", "buttons");
+        setDifficultyText();
     }
 }

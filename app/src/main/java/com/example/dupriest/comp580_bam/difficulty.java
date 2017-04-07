@@ -1,6 +1,8 @@
 package com.example.dupriest.comp580_bam;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ public class difficulty extends AppCompatActivity {
     HashMap<Integer, String> livesMap;
     HashMap<Integer, String> timeMap;
     HashMap<String, String> controlMap;
+    Context context;
+    SharedPreferences sharedPref;
 
 
     @Override
@@ -41,10 +45,15 @@ public class difficulty extends AppCompatActivity {
         controlMap.put("buttons", "control1");
         controlMap.put("screentilt", "control2");
 
-        info = getIntent().getData().toString().split(" ");
-        lives = Integer.parseInt(info[0]);
-        time = Integer.parseInt(info[1]);
-        control = info[2];
+        context = getApplicationContext();
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        lives = sharedPref.getInt("lives", -1);
+        // default = infinity
+        time = sharedPref.getInt("time", -1);
+        // default = no time limit
+        control = sharedPref.getString("control", "buttons");
+        // default = use buttons to control game
+
         timeButton = (Button)findViewById(getResources().getIdentifier(timeMap.get(time),"id", getPackageName()));
         livesButton = (Button)findViewById(getResources().getIdentifier(livesMap.get(lives),"id", getPackageName()));
         controlButton = (Button)findViewById(getResources().getIdentifier(controlMap.get(control),"id", getPackageName()));
@@ -55,9 +64,12 @@ public class difficulty extends AppCompatActivity {
 
     void save(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("lives", lives);
+        editor.putInt("time", time);
+        editor.putString("control", control);
+        editor.commit();
         Intent X = new Intent(this, MainMenu.class);
-        X.setData(myUri);
         startActivity(X);
     }
 

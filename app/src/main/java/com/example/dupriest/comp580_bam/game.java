@@ -2,12 +2,12 @@ package com.example.dupriest.comp580_bam;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +25,6 @@ import java.util.Random;
 
 public class game extends AppCompatActivity implements SensorEventListener {
 
-    String[] info;
     String type;
     CountDownTimer timer;
     ArrayList<String> introQueue;
@@ -43,11 +42,12 @@ public class game extends AppCompatActivity implements SensorEventListener {
     String state = "game"; // can be game or menu
     int time;
     int lives;
-    int failures;
     String control;
     private SensorManager sm;
     private Sensor s;
     private List<Sensor> l;
+    Context context;
+    SharedPreferences sharedPref;
 
 
     @Override
@@ -66,36 +66,44 @@ public class game extends AppCompatActivity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        info = getIntent().getData().toString().split(" ");
-        type = info[0];
-        lives = Integer.parseInt(info[1]);
-        failures = 0;
+        context = getApplicationContext();
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        type = sharedPref.getString("type", "play");
+        lives = sharedPref.getInt("lives", -1);
+        // default = infinity
+        time = sharedPref.getInt("time", -1);
+        // default = no time limit
+        control = sharedPref.getString("control", "buttons");
+        // default = use buttons to control game
 
         if(lives >= 0)
         {
             TextView t = (TextView)findViewById(R.id.lives);
             t.setText("LIVES = " + String.valueOf(lives));
         }
-        time = Integer.parseInt(info[2]);
-        control = info[3];
+
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
         menuSound = new MediaPlayer();
         actNow = false;
 
+        if(control.equals("screentilt"))
+        {
+            Button left = (Button)findViewById(R.id.left);
+            Button right = (Button)findViewById(R.id.right);
+            Button action = (Button)(Button)findViewById(R.id.action);
+
+            left.setVisibility(left.INVISIBLE);
+            right.setVisibility(right.INVISIBLE);
+            action.setVisibility(action.INVISIBLE);
+        }
+
         if(type.equals("play"))
         {
             if(control.equals("screentilt"))
             {
-                Button left = (Button)findViewById(R.id.left);
-                Button right = (Button)findViewById(R.id.right);
-                Button action = (Button)(Button)findViewById(R.id.action);
-
-                left.setVisibility(left.INVISIBLE);
-                right.setVisibility(right.INVISIBLE);
-                action.setVisibility(action.INVISIBLE);
-
                 sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
                 l = sm.getSensorList(Sensor.TYPE_ALL);
                 s = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -247,20 +255,22 @@ public class game extends AppCompatActivity implements SensorEventListener {
                                 isPlaying = false;
                                 actNow = false;
                                 timeLeft = 0;
-                                if(lives-failures > 0)
+                                if(lives > 0)
                                 {
-                                    failures = failures + 1;
+                                    lives = lives - 1;
                                 }
-                                if(lives-failures >= 0)
+                                if(lives >= 0)
                                 {
                                     TextView t = (TextView)findViewById(R.id.lives);
-                                    t.setText("LIVES = " + String.valueOf(lives-failures));
+                                    t.setText("LIVES = " + String.valueOf(lives));
                                 }
-                                if(lives-failures == 0)
+                                if(lives == 0)
                                 {
-                                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+                                    // endgame failure
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putString("endgame", "failure");
+                                    editor.commit();
                                     Intent X = new Intent(game.this, endgame.class);
-                                    X.setData(myUri);
                                     startActivity(X);
                                 }
                                 else
@@ -280,9 +290,11 @@ public class game extends AppCompatActivity implements SensorEventListener {
         }
         else
         {
-            Uri myUri = Uri.parse("success" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+            // endgame success
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("endgame", "success");
+            editor.commit();
             Intent X = new Intent(this, endgame.class);
-            X.setData(myUri);
             startActivity(X);
         }
     }
@@ -361,20 +373,22 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     isPlaying = false;
                     actNow = false;
                     timeLeft = 0;
-                    if(lives-failures > 0)
+                    if(lives > 0)
                     {
-                        failures = failures + 1;
+                        lives = lives - 1;
                     }
-                    if(lives-failures >= 0)
+                    if(lives >= 0)
                     {
                         TextView t = (TextView)findViewById(R.id.lives);
-                        t.setText("LIVES = " + String.valueOf(lives-failures));
+                        t.setText("LIVES = " + String.valueOf(lives));
                     }
-                    if(lives-failures == 0)
+                    if(lives == 0)
                     {
-                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+                        // endgame failure
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("endgame", "failure");
+                        editor.commit();
                         Intent X = new Intent(game.this, endgame.class);
-                        X.setData(myUri);
                         startActivity(X);
                     }
                     else
@@ -411,9 +425,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
     public void mainmenu(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, MainMenu.class);
-        X.setData(myUri);
         startActivity(X);
     }
 
@@ -450,20 +462,22 @@ public class game extends AppCompatActivity implements SensorEventListener {
             }
             else
             {
-                if(lives-failures > 0)
+                if(lives > 0)
                 {
-                    failures = failures + 1;
+                    lives = lives - 1;
                 }
-                if(lives-failures >= 0)
+                if(lives >= 0)
                 {
                     TextView t = (TextView)findViewById(R.id.lives);
-                    t.setText("LIVES = " + String.valueOf(lives-failures));
+                    t.setText("LIVES = " + String.valueOf(lives));
                 }
-                if(lives-failures == 0)
+                if(lives == 0)
                 {
-                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+                    // endgame failure
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("endgame", "failure");
+                    editor.commit();
                     Intent X = new Intent(game.this, endgame.class);
-                    X.setData(myUri);
                     startActivity(X);
                 }
                 else
@@ -525,20 +539,22 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     mediaPlayer.release();
                     actNow = false;
                     timeLeft = 0;
-                    if(lives-failures > 0)
+                    if(lives > 0)
                     {
-                        failures = failures + 1;
+                        lives = lives - 1;
                     }
-                    if(lives-failures >= 0)
+                    if(lives >= 0)
                     {
                         TextView t = (TextView)findViewById(R.id.lives);
-                        t.setText("LIVES = " + String.valueOf(lives-failures));
+                        t.setText("LIVES = " + String.valueOf(lives));
                     }
-                    if(lives-failures == 0)
+                    if(lives == 0)
                     {
-                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
+                        // endgame failure
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("endgame", "failure");
+                        editor.commit();
                         Intent X = new Intent(game.this, endgame.class);
-                        X.setData(myUri);
                         startActivity(X);
                     }
                     else

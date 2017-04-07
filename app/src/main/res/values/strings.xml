@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">COMP580-BAM</string>
+    <string name="preference_file_key">comp580bampreferences</string>
 </resources>
