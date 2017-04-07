@@ -15,10 +15,13 @@ public class difficulty extends AppCompatActivity {
     String[] info;
     int lives;
     int time;
+    String control;
     Button timeButton;
     Button livesButton;
+    Button controlButton;
     HashMap<Integer, String> livesMap;
     HashMap<Integer, String> timeMap;
+    HashMap<String, String> controlMap;
 
 
     @Override
@@ -34,19 +37,25 @@ public class difficulty extends AppCompatActivity {
         timeMap.put(-1, "times1");
         timeMap.put(10000, "times2");
         timeMap.put(2000, "times3");
+        controlMap = new HashMap<String, String>();
+        controlMap.put("buttons", "control1");
+        controlMap.put("screentilt", "control2");
 
         info = getIntent().getData().toString().split(" ");
         lives = Integer.parseInt(info[0]);
         time = Integer.parseInt(info[1]);
+        control = info[2];
         timeButton = (Button)findViewById(getResources().getIdentifier(timeMap.get(time),"id", getPackageName()));
         livesButton = (Button)findViewById(getResources().getIdentifier(livesMap.get(lives),"id", getPackageName()));
+        controlButton = (Button)findViewById(getResources().getIdentifier(controlMap.get(control),"id", getPackageName()));
         timeButton.setBackgroundResource(R.color.black);
         livesButton.setBackgroundResource(R.color.black);
+        controlButton.setBackgroundResource(R.color.black);
     }
 
     void save(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, MainMenu.class);
         X.setData(myUri);
         startActivity(X);
@@ -79,7 +88,7 @@ public class difficulty extends AppCompatActivity {
                 lives = 1;
             }
         }
-        else
+        else if(id.substring(start, end).equals("times"))
         {
             timeButton.setBackgroundResource(R.color.blue);
             timeButton = b;
@@ -98,6 +107,20 @@ public class difficulty extends AppCompatActivity {
             if(id.substring(end,id.length()).equals("3"))
             {
                 time = 2000;
+            }
+        }
+        else
+        {
+            controlButton.setBackgroundResource(R.color.green);
+            controlButton = b;
+            controlButton.setBackgroundResource(R.color.black);
+            if(id.substring(end, id.length()).equals("1"))
+            {
+                control = "buttons";
+            }
+            else
+            {
+                control = "screentilt";
             }
         }
     }

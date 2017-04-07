@@ -38,6 +38,7 @@ public class game extends AppCompatActivity {
     int time;
     int lives;
     int failures;
+    String control;
 
 
     @Override
@@ -67,6 +68,7 @@ public class game extends AppCompatActivity {
             t.setText("LIVES = " + String.valueOf(lives));
         }
         time = Integer.parseInt(info[2]);
+        control = info[3];
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
         mediaPlayer = new MediaPlayer();
@@ -190,7 +192,7 @@ public class game extends AppCompatActivity {
                                 }
                                 if(lives-failures == 0)
                                 {
-                                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
                                     Intent X = new Intent(game.this, endgame.class);
                                     X.setData(myUri);
                                     startActivity(X);
@@ -212,7 +214,7 @@ public class game extends AppCompatActivity {
         }
         else
         {
-            Uri myUri = Uri.parse("success" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+            Uri myUri = Uri.parse("success" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
             Intent X = new Intent(this, endgame.class);
             X.setData(myUri);
             startActivity(X);
@@ -296,7 +298,7 @@ public class game extends AppCompatActivity {
                     }
                     if(lives-failures == 0)
                     {
-                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
                         Intent X = new Intent(game.this, endgame.class);
                         X.setData(myUri);
                         startActivity(X);
@@ -332,7 +334,7 @@ public class game extends AppCompatActivity {
 
     public void mainmenu(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, MainMenu.class);
         X.setData(myUri);
         startActivity(X);
@@ -382,7 +384,7 @@ public class game extends AppCompatActivity {
                 }
                 if(lives-failures == 0)
                 {
-                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                    Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
                     Intent X = new Intent(game.this, endgame.class);
                     X.setData(myUri);
                     startActivity(X);
@@ -449,7 +451,7 @@ public class game extends AppCompatActivity {
                     }
                     if(lives-failures == 0)
                     {
-                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+                        Uri myUri = Uri.parse("failure" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
                         Intent X = new Intent(game.this, endgame.class);
                         X.setData(myUri);
                         startActivity(X);

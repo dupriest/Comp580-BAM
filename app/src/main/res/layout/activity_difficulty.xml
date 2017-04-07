@@ -78,6 +78,29 @@
                 android:background="@color/blue"
                 />
         </TableRow>
+        <TableRow
+            android:paddingTop="10dp"
+            >
+            <Button
+                android:id="@+id/control1"
+                android:layout_weight="0.5"
+                android:text = "buttons"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/control2"
+                android:layout_weight="0.5"
+                android:text = "screen tilt"
+                android:onClick="change"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                />
+        </TableRow>
     </TableLayout>
 
     <Button

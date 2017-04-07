@@ -14,6 +14,7 @@ public class endgame extends AppCompatActivity {
     String[] info;
     int lives;
     int time;
+    String control;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class endgame extends AppCompatActivity {
         type = info[0];
         lives = Integer.parseInt(info[1]);
         time = Integer.parseInt(info[2]);
+        control = info[3];
 
         if(type.equals("success"))
         {
@@ -40,7 +42,7 @@ public class endgame extends AppCompatActivity {
     {
         mediaPlayer.stop();
         mediaPlayer.release();
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, MainMenu.class);
         X.setData(myUri);
         startActivity(X);
@@ -50,7 +52,7 @@ public class endgame extends AppCompatActivity {
     {
         mediaPlayer.stop();
         mediaPlayer.release();
-        Uri myUri = Uri.parse("play" + " " + String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse("play" + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, game.class);
         X.setData(myUri);
         startActivity(X);

@@ -13,6 +13,7 @@ public class MainMenu extends AppCompatActivity {
     String[] info;
     int lives;
     int time;
+    String control;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         lives = -1; // infinity
         time = -1; // no time limit
+        control = "buttons"; // use buttons to control game
         Uri uri = getIntent().getData();
         if(!(uri==null))
         {
@@ -27,6 +29,7 @@ public class MainMenu extends AppCompatActivity {
 
             lives = Integer.parseInt(info[0]);
             time = Integer.parseInt(info[1]);
+            control = info[2];
         }
         setDifficultyText();
     }
@@ -63,7 +66,7 @@ public class MainMenu extends AppCompatActivity {
         {
             text = "test";
         }
-        Uri myUri = Uri.parse(text + " " + String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse(text + " " + String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, game.class);
         X.setData(myUri);
         startActivity(X);
@@ -71,7 +74,7 @@ public class MainMenu extends AppCompatActivity {
 
     void difficulty(View view)
     {
-        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time));
+        Uri myUri = Uri.parse(String.valueOf(lives) + " " + String.valueOf(time) + " " + control);
         Intent X = new Intent(this, difficulty.class);
         X.setData(myUri);
         startActivity(X);
