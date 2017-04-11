@@ -65,6 +65,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        setTitle("TEST CONTROLS");
 
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -102,6 +103,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
         if(type.equals("play"))
         {
+            setTitle("PLAY");
             if(control.equals("screentilt"))
             {
                 sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -303,6 +305,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
     {
         // stuff will happen to pause the game itself
         state = "menu";
+        setTitle("PAUSE MENU");
         if(control.equals("screentilt") && type.equals("play"))
         {
             sm.unregisterListener(this);
@@ -347,6 +350,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
     public void resume(View view)
     {
         state = "game";
+        setTitle("PLAY");
         if(control.equals("screentilt") && type.equals("play"))
         {
             sm.registerListener(this, s, 1000000);

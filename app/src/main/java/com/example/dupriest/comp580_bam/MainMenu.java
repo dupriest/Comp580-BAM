@@ -82,6 +82,12 @@ public class MainMenu extends AppCompatActivity {
         startActivity(X);
     }
 
+    void create(View view)
+    {
+        Intent X = new Intent(this, create.class);
+        startActivity(X);
+    }
+
     @Override
     public void onResume()
     {

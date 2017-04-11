@@ -32,6 +32,7 @@ public class difficulty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
+        setTitle("DIFFICULTY");
 
         livesMap = new HashMap<Integer, String>();
         livesMap.put(-1, "lives1");

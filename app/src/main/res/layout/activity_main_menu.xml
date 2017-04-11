@@ -33,6 +33,7 @@
             android:textSize="30dp"
             android:textColor="@color/white"
             android:background="@color/blue"
+            android:onClick="create"
             />
     </TableRow>
     <TableRow
