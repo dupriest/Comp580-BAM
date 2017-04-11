@@ -32,9 +32,10 @@ public class MainMenu extends AppCompatActivity {
         // default = no time limit
         control = sharedPref.getString("control", "buttons");
         // default = use buttons to control game
-        setDifficultyText();
+        //setDifficultyText();
     }
 
+    /*
     void setDifficultyText()
     {
         Button difficulty = (Button)findViewById(R.id.difficulty);
@@ -58,7 +59,7 @@ public class MainMenu extends AppCompatActivity {
         }
         difficulty.setText(text);
     }
-
+    */
     void play(View view)
     {
         Button button = (Button)view;
@@ -98,6 +99,6 @@ public class MainMenu extends AppCompatActivity {
         time = sharedPref.getInt("time", -1);
         // default = no time limit
         control = sharedPref.getString("control", "buttons");
-        setDifficultyText();
+        //setDifficultyText();
     }
 }

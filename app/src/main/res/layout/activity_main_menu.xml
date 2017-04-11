@@ -47,7 +47,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.5"
             android:text = "difficulty"
-            android:textSize="22dp"
+            android:textSize="30dp"
             android:textColor="@color/white"
             android:background="@color/purple"
             android:layout_marginRight="10dp"

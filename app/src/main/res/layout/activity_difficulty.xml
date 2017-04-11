@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_difficulty"
     android:layout_width="match_parent"
@@ -9,108 +9,63 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dupriest.comp580_bam.difficulty">
-    <TableLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
+
+    <TableRow
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.5"
         >
-        <TableRow>
-            <Button
-                android:id="@+id/lives1"
-                android:layout_weight="0.3"
-                android:text = "infinite lives"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/red"
-                android:layout_marginRight="10dp"
-                />
-            <Button
-                android:id="@+id/lives2"
-                android:layout_weight="0.3"
-                android:text = "five lives"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/red"
-                android:layout_marginRight="10dp"
-                />
-            <Button
-                android:id="@+id/lives3"
-                android:layout_weight="0.3"
-                android:text = "you only live once"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/red"
-                />
+        <Button
+            android:id="@+id/lives"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "lives"
+            android:onClick="change"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:layout_marginRight="10dp"
+            />
+        <Button
+            android:id="@+id/time"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:text = "time"
+            android:onClick="change"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+
+            />
+
         </TableRow>
 
         <TableRow
-            android:paddingTop="10dp"
+            android:layout_weight="0.5"
             >
             <Button
-                android:id="@+id/times1"
-                android:layout_weight="0.3"
-                android:text = "no time limit"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/blue"
-                android:layout_marginRight="10dp"
-                />
-            <Button
-                android:id="@+id/times2"
-                android:layout_weight="0.3"
-                android:text = "slow reaction"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/blue"
-                android:layout_marginRight="10dp"
-                />
-            <Button
-                android:id="@+id/times3"
-                android:layout_weight="0.3"
-                android:text = "fast reaction"
-                android:onClick="change"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:background="@color/blue"
-                />
-        </TableRow>
-        <TableRow
-            android:paddingTop="10dp"
-            >
-            <Button
-                android:id="@+id/control1"
+                android:id="@+id/control"
+                android:layout_height="fill_parent"
                 android:layout_weight="0.5"
-                android:text = "buttons"
+                android:text = "control"
                 android:onClick="change"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:textColor="@color/white"
                 android:background="@color/green"
                 android:layout_marginRight="10dp"
                 />
             <Button
-                android:id="@+id/control2"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:text = "back"
+                android:onClick="save"
                 android:layout_weight="0.5"
-                android:text = "screen tilt"
-                android:onClick="change"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/purple"
                 />
-        </TableRow>
-    </TableLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "save and return to main menu"
-        android:layout_alignParentBottom="true"
-        android:onClick="save"
-        android:textSize="30dp"
-        android:textColor="@color/white"
-        android:background="@color/purple"
-        />
-</RelativeLayout>
+        </TableRow>
+
+
+
+</TableLayout>
