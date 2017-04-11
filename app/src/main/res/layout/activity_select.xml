@@ -23,6 +23,8 @@
                 android:background="@color/red"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.3"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 />
             <Button
                 android:id="@+id/slot2"
@@ -32,6 +34,8 @@
                 android:background="@color/blue"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.3"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 />
             <Button
                 android:id="@+id/delete"
@@ -40,6 +44,8 @@
                 android:textColor="@color/white"
                 android:background="@color/green"
                 android:layout_weight="0.3"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 />
         </TableRow>
     </TableLayout>
@@ -54,6 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="back"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         />
 
 </RelativeLayout>

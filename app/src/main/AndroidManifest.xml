@@ -37,7 +37,10 @@
             android:name=".create"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".select"></activity>
+        <activity android:name=".select"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ public class select extends AppCompatActivity {
 
     void back(View view)
     {
-        Intent X = new Intent(this, MainMenu.class);
+        Intent X = new Intent(this, create.class);
         startActivity(X);
     }
 }

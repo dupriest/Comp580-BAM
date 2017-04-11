@@ -27,6 +27,7 @@ public class create extends AppCompatActivity {
         Button b = (Button)view;
         Uri myUri = Uri.parse((String)b.getText());
         Intent X = new Intent(this, select.class);
+        X.setData(myUri);
         startActivity(X);
     }
 }
