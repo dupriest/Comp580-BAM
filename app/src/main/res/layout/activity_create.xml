@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_create"
     android:layout_width="match_parent"
@@ -10,61 +10,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dupriest.comp580_bam.create">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TableRow>
+        <TableRow
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            >
             <Button
+                android:layout_height="fill_parent"
                 android:id="@+id/slot1"
                 android:text="slot 1"
                 android:textSize="40dp"
                 android:textColor="@color/white"
                 android:background="@color/red"
                 android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.5"
                 android:onClick="select"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                />
-            <Button
-                android:id="@+id/slot2"
-                android:text="slot 2"
-                android:textSize="40dp"
-                android:textColor="@color/white"
-                android:background="@color/blue"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:onClick="select"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+
                 />
             <Button
                 android:id="@+id/slot3"
+                android:layout_height="fill_parent"
                 android:text="slot 3"
                 android:textSize="40dp"
                 android:textColor="@color/white"
-                android:background="@color/green"
-                android:layout_weight="0.3"
+                android:background="@color/blue"
+                android:layout_weight="0.5"
                 android:onClick="select"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+
                 />
         </TableRow>
-    </TableLayout>
+        <TableRow
+            android:layout_weight="0.5"
+            >
+            <Button
+                android:id="@+id/slot2"
+                android:layout_height="fill_parent"
+                android:text="slot 2"
+                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_weight="0.5"
+                android:onClick="select"
+                android:layout_marginRight="10dp"
 
-    <Button
-        android:id="@+id/back"
-        android:text="back"
-        android:textSize="40dp"
-        android:textColor="@color/white"
-        android:background="@color/purple"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:onClick="back"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        />
+                />
+            <Button
+                android:id="@+id/back"
+                android:layout_height="fill_parent"
+                android:text="back"
+                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:background="@color/purple"
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
+                android:onClick="back"
 
-</RelativeLayout>
+                />
+        </TableRow>
+</TableLayout>
