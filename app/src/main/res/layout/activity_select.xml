@@ -16,7 +16,7 @@
         android:layout_marginBottom="10dp"
         >
             <Button
-                android:id="@+id/slot1"
+                android:id="@+id/edit"
                 android:text="edit"
                 android:textSize="40dp"
                 android:textColor="@color/white"
@@ -24,10 +24,11 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.5"
                 android:layout_height="fill_parent"
+                android:onClick="edit"
 
                 />
             <Button
-                android:id="@+id/slot2"
+                android:id="@+id/play"
                 android:text="play"
                 android:textSize="40dp"
                 android:textColor="@color/white"

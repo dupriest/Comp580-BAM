@@ -23,4 +23,11 @@ public class select extends AppCompatActivity {
         Intent X = new Intent(this, create.class);
         startActivity(X);
     }
+
+    void edit(View view)
+    {
+        Intent X = new Intent(this, edit.class);
+        startActivity(X);
+    }
+
 }

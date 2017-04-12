@@ -37,10 +37,14 @@
             android:name=".create"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".select"
+        <activity
+            android:name=".select"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            ></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".edit"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
