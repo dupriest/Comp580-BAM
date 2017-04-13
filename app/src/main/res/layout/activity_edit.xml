@@ -72,6 +72,7 @@
             android:layout_height="fill_parent"
             android:contentDescription="add or change current room"
             android:layout_marginRight="10dp"
+            android:onClick="add"
             />
         <TextView
             android:id="@+id/roomName"
@@ -97,6 +98,7 @@
             android:background="@color/green"
             android:layout_height="fill_parent"
             android:contentDescription="save current setup"
+            android:onClick="save"
             />
     </TableRow>
 
@@ -115,6 +117,7 @@
             android:layout_height="fill_parent"
             android:contentDescription="remove contents of current room"
             android:layout_marginRight="10dp"
+            android:onClick="remove"
             />
         <Button
             android:id="@+id/play"
@@ -127,6 +130,7 @@
             android:textColor="@color/white"
             android:contentDescription="play room audio"
             android:layout_marginRight="10dp"
+            android:onClick="play"
             />
         <Button
             android:id="@+id/back"
