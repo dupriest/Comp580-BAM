@@ -18,6 +18,7 @@
         android:layout_marginBottom="10dp"
         >
         <Button
+            android:id="@+id/prevRoom"
             android:layout_height="match_parent"
             android:layout_width="fill_parent"
             android:layout_weight="0.3"
@@ -30,16 +31,19 @@
             android:onClick="prevRoom"
             />
         <TextView
+            android:id="@+id/roomNum"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:text="Room 1 - Name of Room"
+            android:text="Room 1"
+            android:gravity="center"
             android:textColor="@color/white"
             android:background="@color/blue"
             android:textSize="30sp"
             android:layout_marginRight="10dp"
             />
         <Button
+            android:id="@+id/nextRoom"
             android:layout_height="match_parent"
             android:layout_width="fill_parent"
             android:layout_weight="0.3"
@@ -70,11 +74,13 @@
             android:layout_marginRight="10dp"
             />
         <TextView
+            android:id="@+id/roomName"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
-            android:text="Description of the room or other important info"
-            android:textSize="20sp"
+            android:text="Name of room"
+            android:gravity="center"
+            android:textSize="30sp"
             android:textColor="@color/white"
             android:background="@color/blue"
             android:layout_marginRight="10dp"
@@ -111,6 +117,7 @@
             android:layout_marginRight="10dp"
             />
         <Button
+            android:id="@+id/play"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text="play"
