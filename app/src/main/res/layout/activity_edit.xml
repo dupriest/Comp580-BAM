@@ -14,154 +14,40 @@
         android:layout_weight="0.85"
         android:layout_marginBottom="10dp"
         >
-        <ScrollView
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            >
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                    />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-                <TableRow
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_weight="1"
-                        android:text="texthere"
-                        android:textSize="30dp"
-                        android:textColor="@color/white"
-                        android:background="@color/blue"
-                        android:padding="2dp"
-                        />
-                </TableRow>
-
-            </TableLayout>
-        </ScrollView>
-        <TableLayout
-            android:layout_width="match_parent"
+        <Button
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            >
+            android:layout_weight="0.05"
+            android:text="&lt;"
+            android:textSize="100sp"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"
+            android:contentDescription="previous room"
+            />
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/blue">
 
-            <TableRow>
-                <TextView
-                    android:id="@+id/currentroom"
-                    android:text="Hello World!"
-                    android:textSize="30dp"
-                    />
-            </TableRow>
-            <TableRow>
-                <ScrollView
-                    android:layout_width="match_parent"
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text=""/>
-                </ScrollView>
-            </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Room 1 - Name of Room"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                />
 
-        </TableLayout>
+
+        </RelativeLayout>
+        <Button
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:text="&gt;"
+            android:textSize="100sp"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"
+            android:contentDescription="next room"
+            />
+
     </TableRow>
     <TableRow
         android:layout_weight="0.15"
