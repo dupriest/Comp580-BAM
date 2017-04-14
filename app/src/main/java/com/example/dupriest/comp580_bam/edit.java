@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -24,6 +25,7 @@ public class edit extends AppCompatActivity {
 
     int roomNum;
     String roomString;
+    String originalRoomString;
 
     TextView textNum;
     TextView textName;
@@ -35,7 +37,7 @@ public class edit extends AppCompatActivity {
     SharedPreferences sharedPref;
     ArrayList<String> introQueue;
     ArrayList<String> queue;
-    String[] sorts = {"All, A-G, H-M, N-S, T-Z, USER MADE"};
+    String[] sorts = {"ALL PREMADE", "ORIGINAL", "A TO G PREMADE", "H TO M PREMADE", "N TO S PREMADE", "T TO Z PREMADE", "USER MADE"};
     ArrayList<String> choices;
 
     int currentChoice;
@@ -57,7 +59,7 @@ public class edit extends AppCompatActivity {
 
         roomNum = 0; // display roomNum + 1
         currentChoice = 0;
-        currentSort = 0;
+        currentSort = -1;
 
         textNum = (TextView)findViewById(R.id.roomNum);
         textName = (TextView)findViewById(R.id.roomName);
@@ -72,7 +74,18 @@ public class edit extends AppCompatActivity {
         isPlaying = false;
 
         context = getApplicationContext();
-        sharedPref = context.getSharedPreferences(getString(R.string.slot1_file_key), Context.MODE_PRIVATE);
+        if(slot.equals("EDIT SLOT 1"))
+        {
+            sharedPref = context.getSharedPreferences(getString(R.string.slot1_file_key), Context.MODE_PRIVATE);
+        }
+        else if(slot.equals("EDIT SLOT 2"))
+        {
+            sharedPref = context.getSharedPreferences(getString(R.string.slot2_file_key), Context.MODE_PRIVATE);
+        }
+        else
+        {
+            sharedPref = context.getSharedPreferences(getString(R.string.slot3_file_key), Context.MODE_PRIVATE);
+        }
 
         String key;
         for(int i = 0; i < 20; i++)
@@ -132,8 +145,7 @@ public class edit extends AppCompatActivity {
     {
         if(isPlaying)
         {
-            mediaPlayer.stop();
-            isPlaying = false;
+            play(findViewById(R.id.play));
         }
         if(roomNum > 0)
         {
@@ -147,8 +159,7 @@ public class edit extends AppCompatActivity {
     {
         if(isPlaying)
         {
-            mediaPlayer.stop();
-            isPlaying = false;
+            play(findViewById(R.id.play));
         }
         if(roomNum < 19)
         {
@@ -162,8 +173,7 @@ public class edit extends AppCompatActivity {
     {
         if(isPlaying)
         {
-            mediaPlayer.stop();
-            isPlaying = false;
+            play(findViewById(R.id.play));
         }
         roomString = "empty";
         queue.set(roomNum, roomString);
@@ -175,12 +185,16 @@ public class edit extends AppCompatActivity {
     {
         // TODO: add interface which allows the user to select which room to put in
         // Pause the mediaPlayer if playing, stop it if it changes
+        if(isPlaying)
+        {
+            play(findViewById(R.id.play));
+        }
+        currentChoice = 0;
+        currentSort = -1;
+        originalRoomString = roomString;
         mainMenu.setVisibility(mainMenu.INVISIBLE);
         addMenu.setVisibility(addMenu.VISIBLE);
-        sort(null);
-        Button b = (Button)findViewById(R.id.select);
-        roomString = choices.get(currentChoice);
-        b.setText("select\n" + getRoomName(roomString));
+        sort(findViewById(R.id.sort));
         //addMenu.getVisibility();
     }
 
@@ -192,14 +206,14 @@ public class edit extends AppCompatActivity {
             mediaPlayer.stop();
             isPlaying = false;
             Button b = (Button)view;
-            b.setText("play room\nsound");
+            b.setText("play");
         }
         else
         {
             if(!getRoomIntroString(roomString).equals("empty"))
             {
                 Button b = (Button)view;
-                b.setText("pause\n");
+                b.setText("pause");
                 int id = getResources().getIdentifier(getRoomIntroString(roomString), "raw", getPackageName());
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
                 mediaPlayer.start();
@@ -224,7 +238,7 @@ public class edit extends AppCompatActivity {
                                 {
 
                                     Button b2 = (Button) findViewById(R.id.sound);
-                                    b2.setText("play room\nsound");
+                                    b2.setText("play");
                                 }
                                 isPlaying = false;
                             }
@@ -238,6 +252,12 @@ public class edit extends AppCompatActivity {
     public void save(View view)
     {
         // TODO: uses SharedPref to save values in queue and introQueue to the file
+        if(isPlaying)
+        {
+            play(findViewById(R.id.play));
+        }
+        Button back = (Button)findViewById(R.id.back);
+        back.setClickable(false);
         SharedPreferences.Editor editor = sharedPref.edit();
         String key;
         for(int i = 0; i < 20; i++)
@@ -248,6 +268,14 @@ public class edit extends AppCompatActivity {
             editor.putString(key, introQueue.get(i));
         }
         editor.commit();
+        back.setClickable(true);
+        Context context = getApplicationContext();
+        CharSequence text = "GAME SAVED!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
     }
 
     public void back(View view)
@@ -255,8 +283,7 @@ public class edit extends AppCompatActivity {
         // TODO: Add question that asks if the user would like to save before exiting
         if(isPlaying)
         {
-            mediaPlayer.stop();
-            isPlaying = false;
+            play(findViewById(R.id.play));
         }
         Intent X = new Intent(this, select.class);
         startActivity(X);
@@ -265,6 +292,10 @@ public class edit extends AppCompatActivity {
     public void sort(View view)
     {
         //TODO: create sort function
+        if(isPlaying)
+        {
+            play(findViewById(R.id.sound));
+        }
         if(currentSort < sorts.length-1)
         {
             currentSort = currentSort + 1;
@@ -273,24 +304,115 @@ public class edit extends AppCompatActivity {
         {
             currentSort = 0;
         }
+        currentChoice = 0;
 
         Field[] fields = R.raw.class.getFields();
+        choices = new ArrayList<>();
 
-        for (int i = 0; i < fields.length - 1; i++)
+        if(sorts[currentSort].equals("ALL PREMADE"))
         {
-            String name = fields[i].getName();
-            if(name.length() >= 4 && name.substring(0,4).equals("room"))
+            Button b = (Button)view;
+            b.setText("sort\nall premade");
+            for (int i = 0; i < fields.length - 1; i++)
             {
-                choices.add(name);
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room"))
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        if(sorts[currentSort].equals("ORIGINAL"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\noriginal");
+            choices.add(originalRoomString);
+        }
+        else if(sorts[currentSort].equals("A TO G PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\na to g premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("h") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("H TO M PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nh to m premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("h") >= 0 && name.substring(5,6).compareTo("n") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("N TO S PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nn to s premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("n") >= 0 && name.substring(5,6).compareTo("t") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("T TO Z PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nt to z premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("t") >= 0 && name.substring(5,6).compareTo("z") <= 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("USER MADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nuser made");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 5 && name.substring(0,5).equals("uroom"))
+                {
+                    choices.add(name);
+                }
             }
         }
         Collections.sort(choices);
 
+        if(!choices.isEmpty()) {
+            roomString = choices.get(currentChoice);
+        }
+        else
+        {
+            roomString = "empty";
+        }
+        Button b = (Button) findViewById(R.id.select);
+        b.setText("select\n" + getRoomName(roomString));
     }
 
     public void selectRoom(View view)
     {
         //TODO: create selectRoom function
+        if(isPlaying)
+        {
+            play(findViewById(R.id.sound));
+        }
         if(currentChoice < choices.size()-1)
         {
             currentChoice = currentChoice + 1;
@@ -299,14 +421,25 @@ public class edit extends AppCompatActivity {
         {
             currentChoice = 0;
         }
-        roomString = choices.get(currentChoice);
-        Button b = (Button)findViewById(R.id.select);
+        if(!choices.isEmpty()) {
+            roomString = choices.get(currentChoice);
+        }
+        else
+        {
+            roomString = "empty";
+        }
+        Button b = (Button) findViewById(R.id.select);
         b.setText("select\n" + getRoomName(roomString));
+
     }
 
     public void closeAddMenu(View view)
     {
         //TODO: create closeAddMenu function
+        if(isPlaying)
+        {
+            play(findViewById(R.id.sound));
+        }
         queue.set(roomNum, roomString);
         introQueue.set(roomNum, getRoomIntroString(roomString));
         setTextName();
