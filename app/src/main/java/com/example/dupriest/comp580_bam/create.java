@@ -1,6 +1,8 @@
 package com.example.dupriest.comp580_bam;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,9 +27,12 @@ public class create extends AppCompatActivity {
     void select(View view)
     {
         Button b = (Button)view;
-        Uri myUri = Uri.parse((String)b.getText());
         Intent X = new Intent(this, select.class);
-        X.setData(myUri);
         startActivity(X);
+        Context context = getApplicationContext();
+        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("slot", (String)b.getText());
+        editor.commit();
     }
 }

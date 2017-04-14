@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_edit"
     android:layout_width="match_parent"
@@ -11,135 +11,202 @@
     android:orientation="horizontal"
     tools:context="com.example.dupriest.comp580_bam.edit">
 
-
-    <TableRow
-        android:layout_height="fill_parent"
-        android:layout_weight="0.3"
-        android:layout_marginBottom="10dp"
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addMenu"
+        android:visibility="invisible"
         >
-        <Button
-            android:id="@+id/prevRoom"
-            android:layout_height="match_parent"
-            android:layout_width="fill_parent"
-            android:layout_weight="0.3"
-            android:text="&lt;"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:contentDescription="previous room"
-            android:layout_marginRight="10dp"
-            android:onClick="prevRoom"
-            />
-        <TextView
-            android:id="@+id/roomNum"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:text="Room 1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/blue"
-            android:textSize="30sp"
-            android:layout_marginRight="10dp"
-            />
-        <Button
-            android:id="@+id/nextRoom"
-            android:layout_height="match_parent"
-            android:layout_width="fill_parent"
-            android:layout_weight="0.3"
-            android:text="&gt;"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:contentDescription="next room"
-            android:onClick="nextRoom"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_height="fill_parent"
-        android:layout_weight="0.3"
-        android:layout_marginBottom="10dp"
+        <TableRow
+            android:layout_weight = "0.5"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/sort"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "sort\nall"
+                android:textSize="30dp"
+                android:onClick="sort"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/select"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "select\nname of room"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:onClick="selectRoom"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_weight = "0.5">
+            <Button
+                android:id="@+id/sound"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "play room\nsound"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:layout_marginRight="10dp"
+                android:onClick="play"
+                />
+            <Button
+                android:id="@+id/test_controls"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "confirm"
+                android:textSize="30dp"
+                android:onClick="closeAddMenu"
+                android:textColor="@color/white"
+                android:background="@color/purple"
+                />
+        </TableRow>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/mainMenu"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         >
-        <Button
-            android:layout_width="wrap_content"
-            android:id="@+id/add"
-            android:text="add"
-            android:layout_weight=".3"
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:background="@color/red"
-            android:layout_height="fill_parent"
-            android:contentDescription="add or change current room"
-            android:layout_marginRight="10dp"
-            android:onClick="add"
-            />
-        <TextView
-            android:id="@+id/roomName"
-            android:layout_width="wrap_content"
+        <TableRow
             android:layout_height="fill_parent"
             android:layout_weight="0.3"
-            android:text="Name of room"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:background="@color/blue"
-            android:layout_marginRight="10dp"
-            android:maxWidth="110dip"
-            android:maxLines="4"
-            />
-        <Button
-            android:id="@+id/save"
-            android:layout_weight="0.3"
-            android:layout_width="wrap_content"
-            android:text="save"
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:background="@color/green"
-            android:layout_height="fill_parent"
-            android:contentDescription="save current setup"
-            android:onClick="save"
-            />
-    </TableRow>
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/prevRoom"
+                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.3"
+                android:text="&lt;"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"
+                android:contentDescription="previous room"
+                android:layout_marginRight="10dp"
+                android:onClick="prevRoom"
+                />
+            <TextView
+                android:id="@+id/roomNum"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="Room 1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:textSize="30sp"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/nextRoom"
+                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.3"
+                android:text="&gt;"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/black"
+                android:contentDescription="next room"
+                android:onClick="nextRoom"
+                />
+        </TableRow>
 
-    <TableRow
-        android:layout_height="fill_parent"
-        android:layout_weight="0.3"
-        >
-        <Button
-            android:id="@+id/remove"
-            android:layout_width="wrap_content"
-            android:text="remove"
-            android:layout_weight="0.3"
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:background="@color/blue"
+        <TableRow
             android:layout_height="fill_parent"
-            android:contentDescription="remove contents of current room"
-            android:layout_marginRight="10dp"
-            android:onClick="remove"
-            />
-        <Button
-            android:id="@+id/play"
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:text="play"
-            android:textSize="30sp"
             android:layout_weight="0.3"
-            android:background="@color/black"
-            android:textColor="@color/white"
-            android:contentDescription="play room audio"
-            android:layout_marginRight="10dp"
-            android:onClick="play"
-            />
-        <Button
-            android:id="@+id/back"
-            android:text="back"
-            android:textSize="30dp"
-            android:layout_weight="0.3"
-            android:textColor="@color/white"
-            android:background="@color/purple"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:id="@+id/add"
+                android:text="add"
+                android:layout_weight=".3"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:layout_height="fill_parent"
+                android:contentDescription="add or change current room"
+                android:layout_marginRight="10dp"
+                android:onClick="add"
+                />
+            <TextView
+                android:id="@+id/roomName"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                android:text="Name of room"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:layout_marginRight="10dp"
+                android:maxWidth="110dip"
+                android:maxLines="4"
+                />
+            <Button
+                android:id="@+id/save"
+                android:layout_weight="0.3"
+                android:layout_width="wrap_content"
+                android:text="save"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:layout_height="fill_parent"
+                android:contentDescription="save current setup"
+                android:onClick="save"
+                />
+        </TableRow>
+
+        <TableRow
             android:layout_height="fill_parent"
-            />
-    </TableRow>
-</TableLayout>
+            android:layout_weight="0.3"
+            >
+            <Button
+                android:id="@+id/remove"
+                android:layout_width="wrap_content"
+                android:text="remove"
+                android:layout_weight="0.3"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:layout_height="fill_parent"
+                android:contentDescription="remove contents of current room"
+                android:layout_marginRight="10dp"
+                android:onClick="remove"
+                />
+            <Button
+                android:id="@+id/play"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:text="play"
+                android:textSize="30sp"
+                android:layout_weight="0.3"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                android:contentDescription="play room audio"
+                android:layout_marginRight="10dp"
+                android:onClick="play"
+                />
+            <Button
+                android:id="@+id/back"
+                android:text="back"
+                android:textSize="30dp"
+                android:layout_weight="0.3"
+                android:textColor="@color/white"
+                android:background="@color/purple"
+                android:layout_height="fill_parent"
+                android:onClick="back"
+                />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>
