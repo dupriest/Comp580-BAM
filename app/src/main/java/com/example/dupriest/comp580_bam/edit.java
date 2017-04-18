@@ -198,6 +198,7 @@ public class edit extends AppCompatActivity {
         originalRoomString = roomString;
         mainMenu.setVisibility(mainMenu.INVISIBLE);
         addMenu.setVisibility(addMenu.VISIBLE);
+        view.announceForAccessibility("Select which room to add");
         sort(findViewById(R.id.sort));
         //addMenu.getVisibility();
     }
@@ -323,8 +324,11 @@ public class edit extends AppCompatActivity {
         if(sorts[currentSort].equals("ALL PREMADE"))
         {
             Button b = (Button)view;
-            b.setText("sort\nall premade");
-            view.announceForAccessibility("sort all premade");
+            if(!b.getText().equals("sort\nall premade"))
+            {
+                b.setText("sort\nall premade");
+                view.announceForAccessibility("sort all premade");
+            }
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
