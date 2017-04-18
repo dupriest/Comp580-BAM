@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_select"
     android:layout_width="match_parent"
@@ -10,33 +10,77 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dupriest.comp580_bam.select">
 
+ <TableLayout
+     android:id="@+id/deleteMenu"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:visibility="invisible"
+     >
 
+     <TableRow
+         android:layout_marginBottom="10dp"
+         >
+         <TextView
+             android:id="@+id/deleteMenuDisclaimer"
+             android:layout_width="match_parent"
+             android:layout_weight="1"
+             android:text="Do you really want to delete this saved slot?  Select NO to cancel."
+             android:textSize="40dp"
+             android:textColor="@color/black"
+             />
+     </TableRow>
+     <Button
+         android:id="@+id/yes"
+         android:layout_weight="0.5"
+         android:textSize="40dp"
+         android:text="yes"
+         android:textColor="@color/white"
+         android:background="@color/green"
+         android:layout_marginBottom="10dp"
+         android:onClick="yes"
+         />
+     <Button
+         android:id="@+id/no"
+         android:layout_weight="0.5"
+         android:textSize="40dp"
+         android:text="no"
+         android:textColor="@color/white"
+         android:background="@color/red"
+         android:onClick="no"
+         />
+
+ </TableLayout>
+<TableLayout
+    android:id="@+id/mainMenu"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
     <TableRow
         android:layout_weight="0.5"
         android:layout_marginBottom="10dp"
         >
-            <Button
-                android:id="@+id/edit"
-                android:text="edit"
-                android:textSize="40dp"
-                android:textColor="@color/white"
-                android:background="@color/red"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.5"
-                android:layout_height="fill_parent"
-                android:onClick="edit"
+        <Button
+            android:id="@+id/edit"
+            android:text="edit"
+            android:textSize="40dp"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.5"
+            android:layout_height="fill_parent"
+            android:onClick="edit"
 
-                />
-            <Button
-                android:id="@+id/play"
-                android:text="play"
-                android:textSize="40dp"
-                android:textColor="@color/white"
-                android:background="@color/blue"
-                android:layout_weight="0.5"
-                android:layout_height="fill_parent"
+            />
+        <Button
+            android:id="@+id/play"
+            android:text="play"
+            android:textSize="40dp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:layout_weight="0.5"
+            android:layout_height="fill_parent"
 
-                />
+            />
     </TableRow>
 
     <TableRow
@@ -66,5 +110,7 @@
 
             />
     </TableRow>
-
 </TableLayout>
+
+
+</RelativeLayout>
