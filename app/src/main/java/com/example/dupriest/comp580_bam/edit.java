@@ -313,6 +313,7 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\nall premade");
+            view.announceForAccessibility("sort all premade");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -326,12 +327,14 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\noriginal");
+            view.announceForAccessibility("sort original");
             choices.add(originalRoomString);
         }
         else if(sorts[currentSort].equals("A TO G PREMADE"))
         {
             Button b = (Button)view;
             b.setText("sort\na to g premade");
+            view.announceForAccessibility("sort a to g premade");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -345,6 +348,7 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\nh to m premade");
+            view.announceForAccessibility("sort h to m premade");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -358,6 +362,7 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\nn to s premade");
+            view.announceForAccessibility("sort n to s premade");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -371,6 +376,7 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\nt to z premade");
+            view.announceForAccessibility("sort t to z premade");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -384,6 +390,7 @@ public class edit extends AppCompatActivity {
         {
             Button b = (Button)view;
             b.setText("sort\nuser made");
+            view.announceForAccessibility("sort user made");
             for (int i = 0; i < fields.length - 1; i++)
             {
                 String name = fields[i].getName();
@@ -404,6 +411,7 @@ public class edit extends AppCompatActivity {
         }
         Button b = (Button) findViewById(R.id.select);
         b.setText("select\n" + getRoomName(roomString));
+
     }
 
     public void selectRoom(View view)
@@ -430,6 +438,7 @@ public class edit extends AppCompatActivity {
         }
         Button b = (Button) findViewById(R.id.select);
         b.setText("select\n" + getRoomName(roomString));
+        view.announceForAccessibility(getRoomName(roomString));
 
     }
 
@@ -443,6 +452,7 @@ public class edit extends AppCompatActivity {
         queue.set(roomNum, roomString);
         introQueue.set(roomNum, getRoomIntroString(roomString));
         setTextName();
+        view.announceForAccessibility("Room " + (roomNum+1) + "is now " + getRoomName(roomString));
         addMenu.setVisibility(addMenu.INVISIBLE);
         mainMenu.setVisibility(mainMenu.VISIBLE);
     }
