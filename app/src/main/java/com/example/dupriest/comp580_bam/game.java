@@ -132,6 +132,10 @@ public class game extends AppCompatActivity implements SensorEventListener {
             Collections.shuffle(introQueue, new Random(seed));
             runRoom();
         }
+        if(type.equals("slot 1") | type.equals("slot 2") | type.equals("slot 3"))
+        {
+            // TODO: ADD THIS IN
+        }
     }
 
     @Override
@@ -329,6 +333,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
         right.setVisibility(right.INVISIBLE);
         action.setVisibility(action.INVISIBLE);
         pause.setVisibility(pause.INVISIBLE);
+        /**
         menuSound = MediaPlayer.create(getApplicationContext(), R.raw.beep);
         menuSound.start();
         menuSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
@@ -343,7 +348,12 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 resume.setVisibility(resume.VISIBLE);
             }
         });
-
+         **/
+        view.announceForAccessibility("Pause menu");
+        Button mainmenu = (Button)findViewById(R.id.mainmenu);
+        Button resume = (Button)findViewById(R.id.resume);
+        mainmenu.setVisibility(mainmenu.VISIBLE);
+        resume.setVisibility(resume.VISIBLE);
 
     }
 

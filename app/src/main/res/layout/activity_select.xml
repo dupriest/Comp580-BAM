@@ -51,6 +51,7 @@
             android:background="@color/green"
             android:layout_weight="0.5"
             android:layout_marginRight="10dp"
+            android:onClick="delete"
             />
         <Button
             android:id="@+id/back"

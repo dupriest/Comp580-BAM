@@ -106,16 +106,19 @@ public class difficulty extends AppCompatActivity {
             {
                 lives = 5;
                 livesButton.setText("lives\n" + String.valueOf(lives));
+                view.announceForAccessibility("lives set to " + lives);
             }
             else if(lives == 5)
             {
                 lives = 1;
                 livesButton.setText("lives\n" + String.valueOf(lives));
+                view.announceForAccessibility("lives set to " + lives);
             }
             else if(lives == 1)
             {
                 lives = -1;
                 livesButton.setText("lives\n" + "infinite");
+                view.announceForAccessibility("lives set to infinite");
             }
         }
         else if(text.equals("time"))
@@ -124,16 +127,19 @@ public class difficulty extends AppCompatActivity {
             {
                 time = 10000;
                 timeButton.setText("time\n" + String.valueOf(time/1000) + " sec");
+                view.announceForAccessibility("time set to " + time/1000 + " seconds");
             }
             else if(time == 10000)
             {
                 time = 2000;
                 timeButton.setText("time\n" + String.valueOf(time/1000) + " sec");
+                view.announceForAccessibility("time set to " + time/1000 + " seconds");
             }
             else if(time == 2000)
             {
                 time = -1;
                 timeButton.setText("time\n" + "infinite");
+                view.announceForAccessibility("time set to infinite");
             }
         }
         else if(text.equals("control"))
@@ -148,6 +154,7 @@ public class difficulty extends AppCompatActivity {
                 control = "buttons";
             }
             controlButton.setText("control\n" + control);
+            view.announceForAccessibility("Control set to " + control);
         }
 
 
