@@ -293,8 +293,11 @@ public class edit extends AppCompatActivity {
         {
             play(findViewById(R.id.play));
         }
-        Intent X = new Intent(this, select.class);
-        startActivity(X);
+        TableLayout mainMenu = (TableLayout)findViewById(R.id.mainMenu);
+        TableLayout exitMenu = (TableLayout)findViewById(R.id.exitMenu);
+        mainMenu.setVisibility(mainMenu.INVISIBLE);
+        exitMenu.setVisibility(exitMenu.VISIBLE);
+        view.announceForAccessibility("Would you like to save before exiting?");
     }
 
     public void sort(View view)
@@ -463,5 +466,18 @@ public class edit extends AppCompatActivity {
         view.announceForAccessibility("Room " + (roomNum+1) + "is now " + getRoomName(roomString));
         addMenu.setVisibility(addMenu.INVISIBLE);
         mainMenu.setVisibility(mainMenu.VISIBLE);
+    }
+
+    public void yes(View view)
+    {
+        save(findViewById(R.id.save));
+        Intent X = new Intent(this, select.class);
+        startActivity(X);
+    }
+
+    public void no(View view)
+    {
+        Intent X = new Intent(this, select.class);
+        startActivity(X);
     }
 }

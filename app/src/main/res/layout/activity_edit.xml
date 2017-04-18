@@ -14,6 +14,44 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/exitMenu"
+        android:visibility="invisible"
+        >
+        <TableRow
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:id="@+id/askToSave"
+                android:layout_weight="1"
+                android:text="Would you like to save before exiting?"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                />
+        </TableRow>
+        <Button
+            android:id="@+id/yes"
+            android:text="yes"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:background="@color/green"
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            android:onClick="yes"
+            />
+        <Button
+            android:id="@+id/no"
+            android:text="no"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:background="@color/red"
+            android:layout_weight="0.5"
+            android:onClick="no"
+            />
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/addMenu"
         android:visibility="invisible"
         >
