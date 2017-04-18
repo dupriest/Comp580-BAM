@@ -85,7 +85,8 @@ public class MainMenu extends AppCompatActivity {
 
     void create(View view)
     {
-        Intent X = new Intent(this, create.class);
+        Intent X = new Intent(this, roomRecord.class);
+        //Intent X = new Intent(this, create.class);
         startActivity(X);
     }
 
