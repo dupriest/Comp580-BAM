@@ -45,7 +45,10 @@
             android:name=".edit"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".roomRecord"></activity>
+        <activity android:name=".roomRecord"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

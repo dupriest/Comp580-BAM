@@ -25,8 +25,8 @@ public class roomRecord extends AppCompatActivity {
         setContentView(R.layout.activity_room_record);
 
         // Record to the external cache directory for visibility
-        mFileName = getExternalCacheDir().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        mFileName = getFilesDir().getAbsolutePath();
+        mFileName += "/audiorecordtest.3gp"; // would change this to be unique to each
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
