@@ -133,9 +133,41 @@ public class game extends AppCompatActivity implements SensorEventListener {
             Collections.shuffle(introQueue, new Random(seed));
             runRoom();
         }
-        if(type.equals("slot 1") | type.equals("slot 2") | type.equals("slot 3"))
+
+        if(type.equals("slot"))
         {
             // TODO: ADD THIS IN
+            String slot = sharedPref.getString("slot", "slot 1").toUpperCase();
+            setTitle("PLAY " + slot);
+            context = getApplicationContext();
+            SharedPreferences sharedPref2;
+            if(slot.equals("SLOT 1"))
+            {
+                sharedPref2 = context.getSharedPreferences(getString(R.string.slot1_file_key), Context.MODE_PRIVATE);
+            }
+            else if(slot.equals("SLOT 2"))
+            {
+                sharedPref2 = context.getSharedPreferences(getString(R.string.slot2_file_key), Context.MODE_PRIVATE);
+            }
+            else
+            {
+                sharedPref2 = context.getSharedPreferences(getString(R.string.slot3_file_key), Context.MODE_PRIVATE);
+            }
+
+            String key;
+            String value;
+            for(int i = 0; i < 20; i++)
+            {
+                key = String.valueOf(i);
+                value = sharedPref2.getString(key, "empty");
+                if(!value.equals("empty"))
+                {
+                    queue.add(value);
+                    key = key + "i";
+                    introQueue.add(sharedPref2.getString(key, "empty"));
+                }
+            }
+            runRoom();
         }
     }
 
