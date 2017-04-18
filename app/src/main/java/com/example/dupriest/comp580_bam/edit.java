@@ -131,6 +131,7 @@ public class edit extends AppCompatActivity {
 
     public void setTextName()
     {
+        roomString = queue.get(roomNum);
         if(!roomString.equals("empty"))
         {
             textName.setText(getRoomName(queue.get(roomNum)).toUpperCase());
@@ -152,6 +153,7 @@ public class edit extends AppCompatActivity {
             roomNum = roomNum - 1;
             setTextNum();
             setTextName();
+            view.announceForAccessibility("Room " + (roomNum+1) + ", " + getRoomName(queue.get(roomNum)));
         }
     }
 
@@ -166,6 +168,7 @@ public class edit extends AppCompatActivity {
             roomNum = roomNum + 1;
             setTextNum();
             setTextName();
+            view.announceForAccessibility("Room " + (roomNum+1) + ", " + getRoomName(queue.get(roomNum)));
         }
     }
 
@@ -179,6 +182,7 @@ public class edit extends AppCompatActivity {
         queue.set(roomNum, roomString);
         introQueue.set(roomNum, roomString);
         setTextName();
+        view.announceForAccessibility("Room " + (roomNum+1) + " is now empty");
     }
 
     public void add(View view)
@@ -245,6 +249,10 @@ public class edit extends AppCompatActivity {
                         });
                     }
                 });
+            }
+            else
+            {
+                view.announceForAccessibility("room empty. no audio.");
             }
         }
     }
