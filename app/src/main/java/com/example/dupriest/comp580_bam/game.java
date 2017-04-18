@@ -412,19 +412,20 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
         TableLayout pauseMenu = (TableLayout)findViewById(R.id.pauseMenu);
         pauseMenu.setVisibility(pauseMenu.INVISIBLE);
+        TableLayout activityMenu = (TableLayout)findViewById(R.id.activityMenu);
+        activityMenu.setVisibility(activityMenu.VISIBLE);
 
         Button pause = (Button)(Button)findViewById(R.id.pause);
-        if(control.equals("buttons"))
+        if(control.equals("screentilt"))
         {
             Button left = (Button)findViewById(R.id.left);
             Button right = (Button)findViewById(R.id.right);
             Button action = (Button)(Button)findViewById(R.id.action);
 
-            left.setVisibility(left.VISIBLE);
-            right.setVisibility(right.VISIBLE);
-            action.setVisibility(action.VISIBLE);
+            left.setVisibility(left.INVISIBLE);
+            right.setVisibility(right.INVISIBLE);
+            action.setVisibility(action.INVISIBLE);
         }
-        pause.setVisibility(pause.VISIBLE);
     }
 
     public void mainmenu(View view)

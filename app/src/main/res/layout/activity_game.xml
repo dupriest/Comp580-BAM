@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/pauseMenu"
+        android:visibility="invisible"
         >
 
         <TableRow
@@ -28,7 +29,6 @@
                 android:text="resume"
                 android:textSize="60dp"
                 android:layout_weight="0.5"
-                android:visibility="invisible"
                 android:onClick="resume"
                 android:textColor="@color/white"
                 android:background="@color/blue"
@@ -45,7 +45,6 @@
                 android:textSize="60dp"
                 android:layout_weight="0.5"
                 android:onClick="mainmenu"
-                android:visibility="invisible"
                 android:textColor="@color/white"
                 android:background="@color/red"
                 />
