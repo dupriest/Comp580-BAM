@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
@@ -325,14 +326,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
         }
         Button pause = (Button)view;
 
-        Button left = (Button)findViewById(R.id.left);
-        Button right = (Button)findViewById(R.id.right);
-        Button action = (Button)(Button)findViewById(R.id.action);
-
-        left.setVisibility(left.INVISIBLE);
-        right.setVisibility(right.INVISIBLE);
-        action.setVisibility(action.INVISIBLE);
-        pause.setVisibility(pause.INVISIBLE);
+        TableLayout mainMenu = (TableLayout)findViewById(R.id.activityMenu);
+        mainMenu.setVisibility(mainMenu.INVISIBLE);
         /**
         menuSound = MediaPlayer.create(getApplicationContext(), R.raw.beep);
         menuSound.start();
@@ -350,11 +345,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
         });
          **/
         view.announceForAccessibility("Pause menu");
-        Button mainmenu = (Button)findViewById(R.id.mainmenu);
-        Button resume = (Button)findViewById(R.id.resume);
-        mainmenu.setVisibility(mainmenu.VISIBLE);
-        resume.setVisibility(resume.VISIBLE);
-
+        TableLayout pauseMenu = (TableLayout)findViewById(R.id.pauseMenu);
+        pauseMenu.setVisibility(pauseMenu.VISIBLE);
     }
 
     public void resume(View view)
@@ -418,11 +410,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
         }
 
 
-        Button resume = (Button)view;
-        Button mainmenu = (Button)findViewById(R.id.mainmenu);
-
-        mainmenu.setVisibility(mainmenu.INVISIBLE);
-        resume.setVisibility(resume.INVISIBLE);
+        TableLayout pauseMenu = (TableLayout)findViewById(R.id.pauseMenu);
+        pauseMenu.setVisibility(pauseMenu.INVISIBLE);
 
         Button pause = (Button)(Button)findViewById(R.id.pause);
         if(control.equals("buttons"))
@@ -430,6 +419,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
             Button left = (Button)findViewById(R.id.left);
             Button right = (Button)findViewById(R.id.right);
             Button action = (Button)(Button)findViewById(R.id.action);
+
             left.setVisibility(left.VISIBLE);
             right.setVisibility(right.VISIBLE);
             action.setVisibility(action.VISIBLE);
@@ -484,6 +474,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 {
                     TextView t = (TextView)findViewById(R.id.lives);
                     t.setText("LIVES = " + String.valueOf(lives));
+                    view.announceForAccessibility("Lives equals " + lives);
                 }
                 if(lives == 0)
                 {
@@ -561,6 +552,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     {
                         TextView t = (TextView)findViewById(R.id.lives);
                         t.setText("LIVES = " + String.valueOf(lives));
+                        findViewById(R.id.activity_main_menu).announceForAccessibility("Lives equals " + lives);
                     }
                     if(lives == 0)
                     {
