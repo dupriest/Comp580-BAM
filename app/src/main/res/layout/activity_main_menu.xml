@@ -24,7 +24,7 @@
             android:textSize="30dp"
             android:onClick="play"
             android:textColor="@color/white"
-            android:background="@color/red"
+            android:background="@color/green"
             android:layout_marginRight="10dp"
             />
         <Button
@@ -62,7 +62,7 @@
             android:textSize="30dp"
             android:onClick="play"
             android:textColor="@color/white"
-            android:background="@color/green"
+            android:background="@color/red"
             />
     </TableRow>
 

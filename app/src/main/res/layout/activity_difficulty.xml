@@ -22,7 +22,7 @@
             android:onClick="change"
             android:textSize="30dp"
             android:textColor="@color/white"
-            android:background="@color/red"
+            android:background="@color/green"
             android:layout_marginRight="10dp"
             />
         <Button
@@ -50,7 +50,7 @@
                 android:onClick="change"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/purple"
                 android:layout_marginRight="10dp"
                 />
             <Button
@@ -61,7 +61,7 @@
                 android:layout_weight="0.5"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/purple"
+                android:background="@color/red"
                 />
 
         </TableRow>

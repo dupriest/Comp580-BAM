@@ -33,7 +33,7 @@
             android:text="yes"
             android:textColor="@color/white"
             android:textSize="40dp"
-            android:background="@color/green"
+            android:background="@color/blue"
             android:layout_weight="0.5"
             android:layout_marginBottom="10dp"
             android:onClick="yes"
@@ -68,7 +68,7 @@
                 android:textSize="30dp"
                 android:onClick="sort"
                 android:textColor="@color/white"
-                android:background="@color/red"
+                android:background="@color/green"
                 android:layout_marginRight="10dp"
                 />
             <Button
@@ -79,7 +79,7 @@
                 android:text = "select\nname of room"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/blue"
                 android:onClick="selectRoom"
                 />
         </TableRow>
@@ -93,7 +93,7 @@
                 android:text = "play"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/blue"
+                android:background="@color/purple"
                 android:layout_marginRight="10dp"
                 android:onClick="play"
                 />
@@ -106,7 +106,7 @@
                 android:textSize="30dp"
                 android:onClick="closeAddMenu"
                 android:textColor="@color/white"
-                android:background="@color/purple"
+                android:background="@color/red"
                 />
         </TableRow>
     </TableLayout>
@@ -141,7 +141,7 @@
                 android:text="Room 1"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@color/blue"
+                android:background="@color/purple"
                 android:textSize="30sp"
                 android:layout_marginRight="10dp"
                 />
@@ -171,7 +171,7 @@
                 android:layout_weight=".3"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/red"
+                android:background="@color/green"
                 android:layout_height="fill_parent"
                 android:contentDescription="add or change current room"
                 android:layout_marginRight="10dp"
@@ -186,7 +186,7 @@
                 android:gravity="center"
                 android:textSize="30sp"
                 android:textColor="@color/white"
-                android:background="@color/blue"
+                android:background="@color/purple"
                 android:layout_marginRight="10dp"
                 android:maxWidth="110dip"
                 android:maxLines="4"
@@ -198,7 +198,7 @@
                 android:text="save"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/blue"
                 android:layout_height="fill_parent"
                 android:contentDescription="save current setup"
                 android:onClick="save"
@@ -216,7 +216,7 @@
                 android:layout_weight="0.3"
                 android:textSize="30dp"
                 android:textColor="@color/white"
-                android:background="@color/blue"
+                android:background="@color/purple"
                 android:layout_height="fill_parent"
                 android:contentDescription="remove contents of current room"
                 android:layout_marginRight="10dp"
@@ -241,7 +241,7 @@
                 android:textSize="30dp"
                 android:layout_weight="0.3"
                 android:textColor="@color/white"
-                android:background="@color/purple"
+                android:background="@color/red"
                 android:layout_height="fill_parent"
                 android:onClick="back"
                 />

@@ -2,6 +2,7 @@ package com.example.dupriest.comp580_bam;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -19,58 +20,46 @@ import java.io.IOException;
 
 public class roomRecord extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_record);
-
-        // Record to the external cache directory for visibility
-        mFileName = getFilesDir().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp"; // would change this to be unique to each
-
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-
-        LinearLayout ll = new LinearLayout(this);
-        mRecordButton = new RecordButton(this);
-        ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
-        mPlayButton = new PlayButton(this);
-        ll.addView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
-        setContentView(ll);
-    }
-
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static String mFileName = null;
 
-    private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
 
-    private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
+    boolean mStartRecording = true;
+    boolean mStartPlaying = true;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_room_record);
+        setTitle("SELECT OR RECORD ROOM DESCRIPTION");
+
+        // Record to the external cache directory for visibility
+        mFileName = getFilesDir().getAbsolutePath();
+        mFileName += "/slot1.3gp"; // would change this to be unique to each
+
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.v("MEGAN DUPRIEST", "OnRequestPermission");
+
         switch (requestCode){
             case REQUEST_RECORD_AUDIO_PERMISSION:
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
         if (!permissionToRecordAccepted ) finish();
-        Log.v("MEGAN DUPRIEST", "After permission request");
+
     }
 
     private void onRecord(boolean start) {
@@ -127,48 +116,28 @@ public class roomRecord extends AppCompatActivity {
         mRecorder = null;
     }
 
-    class RecordButton extends Button {
-        boolean mStartRecording = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    setText("Stop recording");
-                } else {
-                    setText("Start recording");
-                }
-                mStartRecording = !mStartRecording;
-            }
-        };
-
-        public RecordButton(Context ctx) {
-            super(ctx);
-            setText("Start recording");
-            setOnClickListener(clicker);
+    public void record(View view)
+    {
+        Button b = (Button)view;
+        onRecord(mStartRecording);
+        if (mStartRecording) {
+            b.setText("Stop recording");
+        } else {
+            b.setText("Start recording");
         }
+        mStartRecording = !mStartRecording;
     }
 
-    class PlayButton extends Button {
-        boolean mStartPlaying = true;
-
-        OnClickListener clicker = new OnClickListener() {
-            public void onClick(View v) {
-                onPlay(mStartPlaying);
-                if (mStartPlaying) {
-                    setText("Stop playing");
-                } else {
-                    setText("Start playing");
-                }
-                mStartPlaying = !mStartPlaying;
-            }
-        };
-
-        public PlayButton(Context ctx) {
-            super(ctx);
-            setText("Start playing");
-            setOnClickListener(clicker);
+    public void play(View view)
+    {
+        Button b = (Button)view;
+        onPlay(mStartPlaying);
+        if (mStartPlaying) {
+            b.setText("Stop playing");
+        } else {
+            b.setText("Start playing");
         }
+        mStartPlaying = !mStartPlaying;
     }
 
     @Override
@@ -183,5 +152,12 @@ public class roomRecord extends AppCompatActivity {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    void back(View view)
+    {
+        // TODO: CHANGE THIS TO WHATEVER PAGE IT SHOULD GO TO
+        Intent X = new Intent(this, MainMenu.class);
+        startActivity(X);
     }
 }

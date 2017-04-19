@@ -71,7 +71,7 @@
                 android:visibility="visible"
                 android:onClick="buttonClick"
                 android:textColor="@color/white"
-                android:background="@color/red"
+                android:background="@color/green"
                 android:layout_marginRight="5dp"
                 />
 
@@ -132,7 +132,7 @@
                 android:textSize="50dp"
                 android:onClick="buttonClick"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/red"
                 />
         </TableRow>
 

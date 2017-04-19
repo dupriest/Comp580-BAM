@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">COMP580-BAM</string>
+    <string name="app_name">Over Hear!</string>
     <string name="preference_file_key">comp580bampreferences</string>
     <string name="slot1_file_key">comp580slot1</string>
     <string name="slot2_file_key">comp580slot2</string>
