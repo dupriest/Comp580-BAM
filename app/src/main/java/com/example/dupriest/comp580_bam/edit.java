@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -483,5 +484,14 @@ public class edit extends AppCompatActivity {
     {
         Intent X = new Intent(this, select.class);
         startActivity(X);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back(findViewById(R.id.back));
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

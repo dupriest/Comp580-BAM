@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,13 +36,15 @@ public class roomRecord extends AppCompatActivity {
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
 
+    String state;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_record);
         setTitle("SELECT OR RECORD ROOM DESCRIPTION");
-
+        state = "mainMenu";
         // Record to the external cache directory for visibility
         mFileName = getFilesDir().getAbsolutePath();
         mFileName += "/slot1.3gp"; // would change this to be unique to each
@@ -157,7 +160,82 @@ public class roomRecord extends AppCompatActivity {
     void back(View view)
     {
         // TODO: CHANGE THIS TO WHATEVER PAGE IT SHOULD GO TO
-        Intent X = new Intent(this, MainMenu.class);
+        Intent X = new Intent(this, create.class);
         startActivity(X);
+    }
+
+    void selectRoom(View view)
+    {
+        LinearLayout mainMenu = (LinearLayout)findViewById(R.id.mainMenu);
+        LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+        mainMenu.setVisibility(mainMenu.INVISIBLE);
+        choiceMenu.setVisibility(choiceMenu.VISIBLE);
+        state = "choiceMenu";
+        view.announceForAccessibility("Would you like to select a premade room or record your own?");
+    }
+
+    void recordYourOwn(View view)
+    {
+        LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+        LinearLayout recordMenu = (LinearLayout)findViewById(R.id.recordMenu);
+
+        choiceMenu.setVisibility(choiceMenu.INVISIBLE);
+        recordMenu.setVisibility(recordMenu.VISIBLE);
+        state = "recordMenu";
+        view.announceForAccessibility("Record Menu");
+    }
+
+    void selectYourOwn(View view)
+    {
+        LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+        LinearLayout premadeMenu = (LinearLayout)findViewById(R.id.premadeMenu);
+
+        choiceMenu.setVisibility(choiceMenu.INVISIBLE);
+        premadeMenu.setVisibility(premadeMenu.VISIBLE);
+        state = "premadeMenu";
+        view.announceForAccessibility("Select Premade Room Menu");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            if(state.equals("mainMenu"))
+            {
+                return super.onKeyDown(keyCode, event);
+            }
+            else if(state.equals("choiceMenu"))
+            {
+                LinearLayout mainMenu = (LinearLayout)findViewById(R.id.mainMenu);
+                LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+                mainMenu.setVisibility(mainMenu.VISIBLE);
+                choiceMenu.setVisibility(choiceMenu.INVISIBLE);
+                state = "mainMenu";
+                findViewById(R.id.mainMenu).announceForAccessibility("SELECT OR RECORD ROOM DESCRIPTION");
+                return true;
+            }
+            else if(state.equals("recordMenu"))
+            {
+                LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+                LinearLayout recordMenu = (LinearLayout)findViewById(R.id.recordMenu);
+
+                choiceMenu.setVisibility(choiceMenu.VISIBLE);
+                recordMenu.setVisibility(recordMenu.INVISIBLE);
+                state = "choiceMenu";
+                findViewById(R.id.choiceMenu).announceForAccessibility("Would you like to select a premade room or record your own?");
+                return true;
+            }
+            else if(state.equals("premadeMenu"))
+            {
+                LinearLayout choiceMenu = (LinearLayout)findViewById(R.id.choiceMenu);
+                LinearLayout premadeMenu = (LinearLayout)findViewById(R.id.premadeMenu);
+
+                choiceMenu.setVisibility(choiceMenu.VISIBLE);
+                premadeMenu.setVisibility(premadeMenu.INVISIBLE);
+                state = "choiceMenu";
+                findViewById(R.id.choiceMenu).announceForAccessibility("Would you like to select a premade room or record your own?");
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

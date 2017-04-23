@@ -32,34 +32,8 @@ public class MainMenu extends AppCompatActivity {
         // default = no time limit
         control = sharedPref.getString("control", "buttons");
         // default = use buttons to control game
-        //setDifficultyText();
     }
 
-    /*
-    void setDifficultyText()
-    {
-        Button difficulty = (Button)findViewById(R.id.difficulty);
-        String text = "difficulty\n";
-        if(lives == -1)
-        {
-            text = text + "lives = unlimited";
-        }
-        else
-        {
-            text = text + "lives = " + String.valueOf(lives);
-        }
-        text = text + "\n";
-        if(time == -1)
-        {
-            text = text + "time = unlimited";
-        }
-        else
-        {
-            text = text + "time = " + String.valueOf(time / 1000) +  " seconds";
-        }
-        difficulty.setText(text);
-    }
-    */
     void play(View view)
     {
         Button button = (Button)view;
@@ -85,7 +59,7 @@ public class MainMenu extends AppCompatActivity {
 
     void create(View view)
     {
-        Intent X = new Intent(this, roomRecord.class);
+        Intent X = new Intent(this, create2.class);
         //Intent X = new Intent(this, create.class);
         startActivity(X);
     }

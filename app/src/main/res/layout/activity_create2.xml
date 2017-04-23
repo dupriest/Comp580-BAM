@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.dupriest.comp580_bam.create2">
+
+    <TableLayout
+        android:id="@+id/choiceMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TableRow
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/createGame"
+                android:text="create game"
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                android:onClick="createGame"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/tutorials"
+                android:text="tutorials"
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:onClick="tutorials"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_weight="0.5"
+            >
+            <Button
+                android:id="@+id/createRoom"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="create room"
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:background="@color/purple"
+                android:onClick="createRoom"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:id="@+id/back"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="back"
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                android:onClick="back"
+                />
+        </TableRow>
+
+
+    </TableLayout>
+
+</RelativeLayout>

@@ -10,11 +10,74 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dupriest.comp580_bam.roomRecord">
 
+
+
     <TableLayout
-        android:id="@+id/mainMenu"
+        android:id="@+id/premadeMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
+        >
 
+        <TableRow
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/sort"
+                android:text="sort\nall premade"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:background="@color/green"
+                android:layout_marginRight="10dp"
+                android:onClick="record"
+                />
+            <Button
+                android:id="@+id/select3"
+                android:text="select\nempty"
+                android:clickable="false"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:background="@color/blue"
+                android:onClick="select2"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_weight="0.5"
+            >
+            <Button
+                android:id="@id/play"
+                android:text="play"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/purple"
+                android:layout_marginRight="10dp"
+                android:onClick="record"
+                />
+            <Button
+                android:id="@+id/confirm"
+                android:text="confirm"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/red"
+                android:onClick="record"
+                />
+        </TableRow>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/recordMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
         >
 
         <TableRow
@@ -24,16 +87,111 @@
             <Button
                 android:id="@+id/record"
                 android:text="record"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/green"
+                android:layout_marginRight="10dp"
+                android:onClick="record"
+                />
+            <Button
+                android:id="@+id/select2"
+                android:text="00:00"
+                android:clickable="false"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/blue"
+                android:onClick="select2"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_weight="0.5"
+            >
+            <Button
+                android:id="@id/play"
+                android:text="play"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/purple"
+                android:layout_marginRight="10dp"
+                android:onClick="record"
+                />
+            <Button
+                android:id="@id/confirm"
+                android:text="confirm"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:background="@color/red"
+                android:onClick="record"
+                />
+        </TableRow>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/choiceMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        >
+
+        <TextView
+            android:id="@+id/selectType"
+            android:text="Would you like to select a premade room description or record your own?"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:layout_marginBottom="10dp"
+            />
+        <Button
+            android:id="@+id/selectRecord"
+            android:text="record your own"
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:onClick="recordYourOwn"
+            />
+        <Button
+            android:id="@+id/selectPremade"
+            android:text="select premade"
+            android:layout_weight="0.5"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:onClick="selectYourOwn"
+            />
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/mainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TableRow
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/selectRoom"
+                android:text="select room"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:background="@color/green"
                 android:layout_marginRight="10dp"
+                android:onClick="selectRoom"
                 />
             <Button
-                android:id="@+id/confirm"
-                android:text="none\nconfirm"
+                android:id="@+id/confirm2"
+                android:text="confirm"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
@@ -47,14 +205,15 @@
             android:layout_weight="0.5"
             >
             <Button
-                android:id="@+id/select"
-                android:text="select from list"
+                android:id="@+id/play"
+                android:text="play"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
+                android:onClick="play"
                 />
             <Button
                 android:id="@+id/back"
