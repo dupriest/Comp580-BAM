@@ -3,6 +3,7 @@ package com.example.dupriest.comp580_bam;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -38,16 +39,25 @@ public class roomRecord extends AppCompatActivity {
 
     String state;
 
+    Context context;
+    SharedPreferences sharedPref;
+
+    String slot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_record);
         setTitle("SELECT OR RECORD ROOM DESCRIPTION");
+
+        context = getApplicationContext();
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        slot = sharedPref.getString("slot", "slot 1");
         state = "mainMenu";
         // Record to the external cache directory for visibility
         mFileName = getFilesDir().getAbsolutePath();
-        mFileName += "/slot1.3gp"; // would change this to be unique to each
+        mFileName = mFileName + "/" + slot + ".3gp"; // would change this to be unique to each
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
     }
@@ -87,6 +97,30 @@ public class roomRecord extends AppCompatActivity {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();
             mPlayer.start();
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+            {
+
+                @Override
+                public void onCompletion(MediaPlayer mp)
+                {
+                    Button b;
+                    if(state.equals("mainMenu"))
+                    {
+                        b = (Button)findViewById(R.id.play);
+                    }
+                    else if(state.equals("recordMenu"))
+                    {
+                        Log.v("MEGAN DUPRIEST", "not");
+                        b = (Button)findViewById(R.id.play3);
+                    }
+                    else
+                    {
+                        b = (Button)findViewById(R.id.play2);
+                    }
+                    b.setText("play");
+                    mStartPlaying = !mStartPlaying;
+                }
+            });
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
@@ -134,11 +168,14 @@ public class roomRecord extends AppCompatActivity {
     public void play(View view)
     {
         Button b = (Button)view;
+        Log.v("MEGAN DUPRIEST", (String)b.getText());
+        Log.v("MEGAN DUPRIEST", (String)getResources().getResourceName(b.getId()));
+        Log.v("MEGAN DUPRIEST", "BEFORE ONPLAY" + mStartPlaying);
         onPlay(mStartPlaying);
         if (mStartPlaying) {
-            b.setText("Stop playing");
+            b.setText("stop");
         } else {
-            b.setText("Start playing");
+            b.setText("play");
         }
         mStartPlaying = !mStartPlaying;
     }

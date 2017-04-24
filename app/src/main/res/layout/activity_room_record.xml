@@ -51,7 +51,7 @@
             android:layout_weight="0.5"
             >
             <Button
-                android:id="@id/play"
+                android:id="@+id/play2"
                 android:text="play"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -59,7 +59,7 @@
                 android:textSize="40sp"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
-                android:onClick="record"
+                android:onClick="play"
                 />
             <Button
                 android:id="@+id/confirm"
@@ -69,7 +69,6 @@
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:background="@color/red"
-                android:onClick="record"
                 />
         </TableRow>
     </TableLayout>
@@ -86,7 +85,7 @@
             >
             <Button
                 android:id="@+id/record"
-                android:text="record"
+                android:text="start recording"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:textColor="@color/white"
@@ -112,7 +111,7 @@
             android:layout_weight="0.5"
             >
             <Button
-                android:id="@id/play"
+                android:id="@+id/play3"
                 android:text="play"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -120,7 +119,7 @@
                 android:textSize="40sp"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
-                android:onClick="record"
+                android:onClick="play"
                 />
             <Button
                 android:id="@id/confirm"
@@ -130,7 +129,6 @@
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:background="@color/red"
-                android:onClick="record"
                 />
         </TableRow>
     </TableLayout>
@@ -190,8 +188,8 @@
                 android:onClick="selectRoom"
                 />
             <Button
-                android:id="@+id/confirm2"
-                android:text="confirm"
+                android:id="@+id/next"
+                android:text="next"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
