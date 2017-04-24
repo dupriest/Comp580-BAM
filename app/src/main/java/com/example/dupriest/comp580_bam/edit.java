@@ -38,7 +38,7 @@ public class edit extends AppCompatActivity {
     SharedPreferences sharedPref;
     ArrayList<String> introQueue;
     ArrayList<String> queue;
-    String[] sorts = {"ALL PREMADE", "ORIGINAL", "A TO G PREMADE", "H TO M PREMADE", "N TO S PREMADE", "T TO Z PREMADE", "USER MADE"};
+    String[] sorts = {"ORIGINAL", "REMOVE", "ALL PREMADE", "A TO G PREMADE", "H TO M PREMADE", "N TO S PREMADE", "T TO Z PREMADE", "USER MADE"};
     ArrayList<String> choices;
 
     int currentChoice;
@@ -63,7 +63,7 @@ public class edit extends AppCompatActivity {
         currentSort = -1;
 
         textNum = (TextView)findViewById(R.id.roomNum);
-        textName = (TextView)findViewById(R.id.roomName);
+        //textName = (TextView)findViewById(R.id.roomName);
 
         mainMenu = (TableLayout)findViewById(R.id.mainMenu);
         addMenu = (TableLayout)findViewById(R.id.addMenu);
@@ -127,19 +127,21 @@ public class edit extends AppCompatActivity {
 
     public void setTextNum()
     {
-        textNum.setText("ROOM " + String.valueOf(roomNum+1));
+        String[] oldText = ((String)textNum.getText()).split("\n");
+        textNum.setText("ROOM " + String.valueOf(roomNum+1) + "\n" + oldText[1]);
     }
 
     public void setTextName()
     {
         roomString = queue.get(roomNum);
+        String[] oldText = ((String)textNum.getText()).split("\n");
         if(!roomString.equals("empty"))
         {
-            textName.setText(getRoomName(queue.get(roomNum)).toUpperCase());
+            textNum.setText(oldText[0] + " \n" + getRoomName(queue.get(roomNum)).toUpperCase());
         }
         else
         {
-            textName.setText(queue.get(roomNum).toUpperCase());
+            textNum.setText(oldText[0] + " \n" + queue.get(roomNum).toUpperCase());
         }
     }
 
@@ -259,7 +261,7 @@ public class edit extends AppCompatActivity {
         }
     }
 
-    public void save(View view)
+    public void save()
     {
         // TODO: uses SharedPref to save values in queue and introQueue to the file
         if(isPlaying)
@@ -338,6 +340,12 @@ public class edit extends AppCompatActivity {
                     choices.add(name);
                 }
             }
+        }
+        if(sorts[currentSort].equals("REMOVE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nremove");
+            view.announceForAccessibility("sort remove");
         }
         if(sorts[currentSort].equals("ORIGINAL"))
         {
@@ -475,7 +483,7 @@ public class edit extends AppCompatActivity {
 
     public void yes(View view)
     {
-        save(findViewById(R.id.save));
+        save();
         Intent X = new Intent(this, select.class);
         startActivity(X);
     }
