@@ -51,10 +51,13 @@
             android:name=".roomRecord"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".create2"
+        <activity
+            android:name=".create2"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            ></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".roomRecord2" />
+        <activity android:name=".roomRecord3" />
+        <activity android:name=".roomRecord4"></activity>
     </application>
 
 </manifest>

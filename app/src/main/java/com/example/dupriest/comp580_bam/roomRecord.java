@@ -49,7 +49,7 @@ public class roomRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_record);
-        setTitle("SELECT OR RECORD ROOM DESCRIPTION");
+        setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM DESCRIPTION");
 
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -274,5 +274,15 @@ public class roomRecord extends AppCompatActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void selectRecord(View view)
+    {
+
+    }
+
+    public void selectPremade(View view)
+    {
+
     }
 }

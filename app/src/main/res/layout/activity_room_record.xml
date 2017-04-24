@@ -178,22 +178,24 @@
             >
             <Button
                 android:id="@+id/selectRoom"
-                android:text="select room"
+                android:text="record"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:background="@color/green"
                 android:layout_marginRight="10dp"
-                android:onClick="selectRoom"
+                android:onClick="selectRecord"
                 />
-            <Button
+
+            <TextView
                 android:id="@+id/next"
-                android:text="next"
+                android:text="Choose to record\n or select premade\n for intro"
+                android:gravity="center"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:background="@color/blue"
                 />
 
@@ -203,15 +205,15 @@
             android:layout_weight="0.5"
             >
             <Button
-                android:id="@+id/play"
-                android:text="play"
+                android:id="@+id/select"
+                android:text="select\n premade"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
                 android:textSize="40sp"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
-                android:onClick="play"
+                android:onClick="selectPremade"
                 />
             <Button
                 android:id="@+id/back"

@@ -11,63 +11,64 @@
     tools:context="com.example.dupriest.comp580_bam.create2">
 
     <TableLayout
-        android:id="@+id/choiceMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
         <TableRow
             android:layout_weight="0.5"
             android:layout_marginBottom="10dp"
             >
             <Button
-                android:id="@+id/createGame"
-                android:text="create game"
-                android:textSize="40sp"
+                android:layout_height="fill_parent"
+                android:id="@+id/slot1"
+                android:text="slot 1"
+                android:textSize="40dp"
                 android:textColor="@color/white"
                 android:background="@color/green"
-                android:onClick="createGame"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
                 android:layout_marginRight="10dp"
+                android:layout_weight="0.5"
+                android:onClick="select"
+
                 />
             <Button
-                android:id="@+id/tutorials"
-                android:text="tutorials"
-                android:textSize="40sp"
+                android:id="@+id/slot3"
+                android:layout_height="fill_parent"
+                android:text="slot 3"
+                android:textSize="40dp"
                 android:textColor="@color/white"
                 android:background="@color/blue"
-                android:onClick="tutorials"
-                android:layout_height="match_parent"
                 android:layout_weight="0.5"
+                android:onClick="select"
+
                 />
         </TableRow>
         <TableRow
             android:layout_weight="0.5"
             >
             <Button
-                android:id="@+id/createRoom"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="create room"
-                android:textSize="40sp"
+                android:id="@+id/slot2"
+                android:layout_height="fill_parent"
+                android:text="slot 2"
+                android:textSize="40dp"
                 android:textColor="@color/white"
                 android:background="@color/purple"
-                android:onClick="createRoom"
+                android:layout_weight="0.5"
+                android:onClick="select"
                 android:layout_marginRight="10dp"
+
                 />
             <Button
                 android:id="@+id/back"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
+                android:layout_height="fill_parent"
                 android:text="back"
-                android:textSize="40sp"
+                android:textSize="40dp"
                 android:textColor="@color/white"
                 android:background="@color/red"
+                android:layout_width="match_parent"
+                android:layout_weight="0.5"
                 android:onClick="back"
+
                 />
         </TableRow>
-
-
     </TableLayout>
 
 </RelativeLayout>
