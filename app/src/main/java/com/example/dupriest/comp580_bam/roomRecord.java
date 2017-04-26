@@ -168,9 +168,6 @@ public class roomRecord extends AppCompatActivity {
     public void play(View view)
     {
         Button b = (Button)view;
-        Log.v("MEGAN DUPRIEST", (String)b.getText());
-        Log.v("MEGAN DUPRIEST", (String)getResources().getResourceName(b.getId()));
-        Log.v("MEGAN DUPRIEST", "BEFORE ONPLAY" + mStartPlaying);
         onPlay(mStartPlaying);
         if (mStartPlaying) {
             b.setText("stop");
@@ -196,8 +193,7 @@ public class roomRecord extends AppCompatActivity {
 
     void back(View view)
     {
-        // TODO: CHANGE THIS TO WHATEVER PAGE IT SHOULD GO TO
-        Intent X = new Intent(this, create.class);
+        Intent X = new Intent(this, create2.class);
         startActivity(X);
     }
 
@@ -278,12 +274,18 @@ public class roomRecord extends AppCompatActivity {
 
     public void selectRecord(View view)
     {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("roomRecordMethod", "record");
+        editor.commit();
         Intent X = new Intent(this, roomRecord2.class);
         startActivity(X);
     }
 
     public void selectPremade(View view)
     {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("roomRecordMethod", "premade");
+        editor.commit();
         Intent X = new Intent(this, roomRecord2.class);
         startActivity(X);
     }
