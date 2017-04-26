@@ -278,11 +278,13 @@ public class roomRecord extends AppCompatActivity {
 
     public void selectRecord(View view)
     {
-
+        Intent X = new Intent(this, roomRecord2.class);
+        startActivity(X);
     }
 
     public void selectPremade(View view)
     {
-
+        Intent X = new Intent(this, roomRecord2.class);
+        startActivity(X);
     }
 }
