@@ -14,6 +14,7 @@ public class roomRecord2 extends AppCompatActivity {
     SharedPreferences sharedPref;
     String slot;
     String roomRecordMethod;
+    int cycle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class roomRecord2 extends AppCompatActivity {
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         slot = sharedPref.getString("slot", "slot 1");
+        cycle = sharedPref.getInt("cycle", 1);
         roomRecordMethod = sharedPref.getString("roomRecordMethod", "record");
 
         if(roomRecordMethod.equals("record"))

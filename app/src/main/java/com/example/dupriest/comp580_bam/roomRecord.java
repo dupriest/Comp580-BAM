@@ -43,17 +43,27 @@ public class roomRecord extends AppCompatActivity {
     SharedPreferences sharedPref;
 
     String slot;
+    int cycle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_record);
-        setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM DESCRIPTION");
 
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         slot = sharedPref.getString("slot", "slot 1");
+        cycle = sharedPref.getInt("cycle", 1);
+
+        if(cycle==2)
+        {
+            setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM SOUND EFFECT");
+        }
+        else
+        {
+            setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM DESCRIPTION");
+        }
         state = "mainMenu";
         // Record to the external cache directory for visibility
         mFileName = getFilesDir().getAbsolutePath();
@@ -193,7 +203,19 @@ public class roomRecord extends AppCompatActivity {
 
     void back(View view)
     {
-        Intent X = new Intent(this, create2.class);
+        Intent X;
+        if(cycle==1)
+        {
+            X = new Intent(this, create2.class);
+        }
+        else
+        {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("cycle", 1);
+            editor.commit();
+            X = new Intent(this, roomRecord3.class);
+        }
+
         startActivity(X);
     }
 

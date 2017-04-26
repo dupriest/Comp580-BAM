@@ -41,6 +41,9 @@ public class create2 extends AppCompatActivity {
         }
         else
         {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("cycle", 1);
+            editor.commit();
             X = new Intent(this, roomRecord.class);
         }
 
