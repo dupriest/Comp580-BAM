@@ -65,8 +65,16 @@ public class roomRecord2 extends AppCompatActivity {
             premadeMenu.setVisibility(premadeMenu.INVISIBLE);
         }
 
-        mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_1.3gp";
-        pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_2.3gp";
+        if(cycle==1)
+        {
+            mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_1.3gp";
+            pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_2.3gp";
+        }
+        else
+        {
+            mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_3.3gp";
+            pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_4.3gp";
+        }
 
         Log.v("MEGAN DUPRIEST", "mFileName = " + mFileName);
         Log.v("MEGAN DUPRIEST", "pFileName = " + pFileName);
@@ -230,6 +238,16 @@ public class roomRecord2 extends AppCompatActivity {
 
     public void next(View view)
     {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if(cycle==1)
+        {
+            editor.putString(slot + " intro", mFileName);
+        }
+        else if(cycle==2)
+        {
+            editor.putString(slot, mFileName);
+        }
+        editor.commit();
         Intent X = new Intent(this, roomRecord3.class);
         startActivity(X);
     }
