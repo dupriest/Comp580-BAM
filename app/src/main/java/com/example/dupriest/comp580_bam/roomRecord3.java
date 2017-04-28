@@ -28,20 +28,22 @@ public class roomRecord3 extends AppCompatActivity {
         setContentView(R.layout.activity_room_record3);
         buttonChoicesPointer = 0;
         buttonChoices = new ArrayList<>();
-        buttonChoices.add("action");
+
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         slot = sharedPref.getString("slot", "slot 1");
         cycle = sharedPref.getInt("cycle", 1);
         if(cycle==1)
         {
+
+            buttonChoices.add("action");
             buttonChoices.add("left");
             buttonChoices.add("right");
             buttonChoices.add("left or right");
         }
         else
         {
-            soundDirection = sharedPref.getString("soundDirection", "action");
+            soundDirection = sharedPref.getString(slot + " soundDirection", "action");
             buttonChoices.add("towards sound");
             if(soundDirection.equals("left") | soundDirection.equals("right") | soundDirection.equals("left or right"))
             {
@@ -49,34 +51,23 @@ public class roomRecord3 extends AppCompatActivity {
             }
         }
         selected = "";
+        Button b = (Button)findViewById(R.id.select);
+        b.setText(buttonChoices.get(buttonChoicesPointer));
     }
 
     public void select(View view)
     {
         Button b = (Button)view;
-        b.setBackgroundResource(R.color.black);
-
-        if(((String)selectedButton.getText()).equals("left"))
+        if(buttonChoicesPointer < buttonChoices.size()-1)
         {
-            selectedButton.setBackgroundResource(R.color.red);
-        }
-        else if(((String)selectedButton.getText()).equals("right"))
-        {
-            selectedButton.setBackgroundResource(R.color.green);
-        }
-        else if(((String)selectedButton.getText()).equals("action"))
-        {
-            selectedButton.setBackgroundResource(R.color.blue);
-        }
-
-        if(selected.equals((String)b.getText()))
-        {
-            selected = "";
+            buttonChoicesPointer = buttonChoicesPointer + 1;
         }
         else
         {
-            selected = (String)b.getText();
+            buttonChoicesPointer = 0;
         }
+        b.setText(buttonChoices.get(buttonChoicesPointer));
+        view.announceForAccessibility(buttonChoices.get(buttonChoicesPointer));
     }
 
     public void back(View view)
@@ -88,18 +79,19 @@ public class roomRecord3 extends AppCompatActivity {
     public void next(View view)
     {
         Intent X;
+        SharedPreferences.Editor editor = sharedPref.edit();
         if(cycle==1)
         {
-            SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("cycle", 2);
-            editor.commit();
+            editor.putString(slot + " soundDirection", buttonChoices.get(buttonChoicesPointer));
             X = new Intent(this, roomRecord.class);
         }
         else
         {
+            editor.putString(slot + " button", buttonChoices.get(buttonChoicesPointer));
             X = new Intent(this, roomRecord4.class);
         }
-
+        editor.commit();
         startActivity(X);
     }
 

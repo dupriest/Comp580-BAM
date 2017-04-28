@@ -54,6 +54,7 @@
                 android:textColor="@color/white"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
+                android:onClick="select"
                 />
             <Button
                 android:id="@+id/back"

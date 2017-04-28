@@ -11,15 +11,21 @@
     android:orientation="horizontal"
     tools:context="com.example.dupriest.comp580_bam.roomRecord4">
 
-    <TextView
-        android:text="All appropriate text goes here!"
+    <Button
+        android:id="@+id/testPlay"
+        android:text="play entire room"
         android:layout_height="match_parent"
-        android:layout_width="fill_parent"
-        android:layout_weight="0.5"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:layout_weight="0.3"
         android:textSize="40sp"
+        android:layout_marginRight="10dp"
+        android:onClick="playRoom"
         />
     <TableLayout
         android:layout_width="wrap_content"
+        android:layout_weight="0.7"
         android:layout_height="match_parent">
 
         <Button
