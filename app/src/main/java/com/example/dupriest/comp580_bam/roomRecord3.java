@@ -40,10 +40,28 @@ public class roomRecord3 extends AppCompatActivity {
             buttonChoices.add("left");
             buttonChoices.add("right");
             buttonChoices.add("left or right");
+            String prev = sharedPref.getString(slot + " soundDirection", "empty");
+            if(prev.equals("left"))
+            {
+                buttonChoicesPointer = 1;
+            }
+            else if(prev.equals("right"))
+            {
+                buttonChoicesPointer = 2;
+            }
+            else if(prev.equals("left or right"))
+            {
+                buttonChoicesPointer = 3;
+            }
         }
         else
         {
             soundDirection = sharedPref.getString(slot + " soundDirection", "action");
+            String prev = sharedPref.getString(slot + " button", "empty");
+            if(prev.equals("away from sound"))
+            {
+                buttonChoicesPointer = 1;
+            }
             buttonChoices.add("towards sound");
             if(soundDirection.equals("left") | soundDirection.equals("right") | soundDirection.equals("left or right"))
             {

@@ -51,8 +51,16 @@ public class roomRecord4 extends AppCompatActivity {
     private void startPlaying() {
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(introRoom);
-            mPlayer.prepare();
+            if(introRoom.substring(0,5).equals("intro"))
+            {
+                int id = getResources().getIdentifier(introRoom,"raw", getPackageName());
+                mPlayer = MediaPlayer.create(getApplicationContext(), id);
+            }
+            else
+            {
+                mPlayer.setDataSource(introRoom);
+                mPlayer.prepare();
+            }
             mPlayer.start();
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
             {
@@ -74,8 +82,16 @@ public class roomRecord4 extends AppCompatActivity {
                         mPlayer.setVolume(1,1);
                     }
                     try {
-                        mPlayer.setDataSource(room);
-                        mPlayer.prepare();
+                        if(introRoom.substring(0,5).equals("intro"))
+                        {
+                            int id = getResources().getIdentifier(room,"raw", getPackageName());
+                            mPlayer = MediaPlayer.create(getApplicationContext(), id);
+                        }
+                        else
+                        {
+                            mPlayer.setDataSource(room);
+                            mPlayer.prepare();
+                        }
                         mPlayer.start();
                         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
                         {

@@ -18,6 +18,9 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class roomRecord2 extends AppCompatActivity {
 
@@ -46,6 +49,15 @@ public class roomRecord2 extends AppCompatActivity {
     String roomRecordMethod;
     int cycle;
 
+    String roomString = "empty";
+    String originalRoomString = "empty";
+
+    String[] sorts = {"ALL PREMADE", "A TO G PREMADE", "H TO M PREMADE", "N TO S PREMADE", "T TO Z PREMADE"};
+    ArrayList<String> choices;
+
+    int currentChoice;
+    int currentSort;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +76,35 @@ public class roomRecord2 extends AppCompatActivity {
             recordMenu.setVisibility(recordMenu.VISIBLE);
             premadeMenu.setVisibility(premadeMenu.INVISIBLE);
         }
+        else
+        {
+            currentSort = -1;
+            currentChoice = 0;
+            sort(findViewById(R.id.sort));
+        }
 
         if(cycle==1)
         {
+            String prev = sharedPref.getString(slot + " intro", "empty");
             mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_1.3gp";
             pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_2.3gp";
+            if(prev.equals(pFileName))
+            {
+                mFileName = pFileName;
+                pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_1.3gp";
+            }
         }
         else
         {
+            String prev = sharedPref.getString(slot, "empty");
             mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_3.3gp";
             pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_4.3gp";
+            if(prev.equals(pFileName))
+            {
+                mFileName = pFileName;
+                pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_3.3gp";
+            }
+
         }
 
         Log.v("MEGAN DUPRIEST", "mFileName = " + mFileName);
@@ -113,11 +144,51 @@ public class roomRecord2 extends AppCompatActivity {
         }
     }
 
+    public String getRoomName(String roomString)
+    {
+        if(!roomString.equals("empty"))
+        {
+            return roomString.split("_")[1];
+        }
+        else
+        {
+            return "empty";
+        }
+    }
+
+    public String getRoomIntroString(String roomString)
+    {
+        if(!roomString.equals("empty"))
+        {
+            return "intro" + roomString.substring(4, roomString.length());
+        }
+        else
+        {
+            return "empty";
+        }
+    }
+
     private void startPlaying() {
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
+            if(roomRecordMethod.equals("record"))
+            {
+                mPlayer.setDataSource(mFileName);
+                mPlayer.prepare();
+            }
+            else
+            {
+                if(cycle==1)
+                {
+                    int id = getResources().getIdentifier(getRoomIntroString(roomString),"raw", getPackageName());
+                    mPlayer = MediaPlayer.create(getApplicationContext(), id);
+                }
+                else
+                {
+                    int id = getResources().getIdentifier(roomString,"raw", getPackageName());
+                    mPlayer = MediaPlayer.create(getApplicationContext(), id);
+                }
+            }
             mPlayer.start();
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
             {
@@ -241,16 +312,168 @@ public class roomRecord2 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         if(cycle==1)
         {
-            editor.putString(slot + " intro", mFileName);
+            if(roomRecordMethod.equals("record"))
+            {
+                editor.putString(slot + " intro", mFileName);
+            }
+            else
+            {
+                editor.putString(slot + " intro", getRoomIntroString(roomString));
+            }
+
         }
         else if(cycle==2)
         {
-            editor.putString(slot, mFileName);
+            if(roomRecordMethod.equals("record"))
+            {
+                editor.putString(slot, mFileName);
+            }
+            else
+            {
+                editor.putString(slot, roomString);
+            }
         }
         editor.commit();
         Intent X = new Intent(this, roomRecord3.class);
         startActivity(X);
     }
 
+    public void sort(View view)
+    {
+        //TODO: create sort function
+        /*
+        if(isPlaying)
+        {
+            play(findViewById(R.id.sound));
+        }*/
+        if(currentSort < sorts.length-1)
+        {
+            currentSort = currentSort + 1;
+        }
+        else
+        {
+            currentSort = 0;
+        }
+        currentChoice = 0;
+
+        Field[] fields = R.raw.class.getFields();
+        choices = new ArrayList<>();
+
+        if(sorts[currentSort].equals("ALL PREMADE"))
+        {
+            Button b = (Button)view;
+            if(!b.getText().equals("sort\nall premade"))
+            {
+                b.setText("sort\nall premade");
+                view.announceForAccessibility("sort all premade");
+            }
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room"))
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("A TO G PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\na to g premade");
+            view.announceForAccessibility("sort a to g premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("h") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("H TO M PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nh to m premade");
+            view.announceForAccessibility("sort h to m premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("h") >= 0 && name.substring(5,6).compareTo("n") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("N TO S PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nn to s premade");
+            view.announceForAccessibility("sort n to s premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("n") >= 0 && name.substring(5,6).compareTo("t") < 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+        else if(sorts[currentSort].equals("T TO Z PREMADE"))
+        {
+            Button b = (Button)view;
+            b.setText("sort\nt to z premade");
+            view.announceForAccessibility("sort t to z premade");
+            for (int i = 0; i < fields.length - 1; i++)
+            {
+                String name = fields[i].getName();
+                if(name.length() >= 4 && name.substring(0,4).equals("room") && name.substring(5,6).compareTo("t") >= 0 && name.substring(5,6).compareTo("z") <= 0)
+                {
+                    choices.add(name);
+                }
+            }
+        }
+
+        Collections.sort(choices);
+
+        if(!choices.isEmpty()) {
+            roomString = choices.get(currentChoice);
+        }
+        else
+        {
+            roomString = "empty";
+        }
+        Button b = (Button) findViewById(R.id.select);
+        b.setText("select\n" + getRoomName(roomString));
+
+    }
+
+    public void selectRoom(View view)
+    {
+        //TODO: create selectRoom function
+        /*
+        if(isPlaying)
+        {
+            play(findViewById(R.id.sound));
+        }*/
+        if(currentChoice < choices.size()-1)
+        {
+            currentChoice = currentChoice + 1;
+        }
+        else
+        {
+            currentChoice = 0;
+        }
+        if(!choices.isEmpty()) {
+            roomString = choices.get(currentChoice);
+        }
+        else
+        {
+            roomString = "empty";
+        }
+        Button b = (Button) findViewById(R.id.select);
+        b.setText("select\n" + getRoomName(roomString));
+        view.announceForAccessibility(getRoomName(roomString));
+
+    }
 
 }

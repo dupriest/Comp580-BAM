@@ -412,6 +412,7 @@ public class edit extends AppCompatActivity {
         }
         else if(sorts[currentSort].equals("USER MADE"))
         {
+            // TODO: FIX THIS
             Button b = (Button)view;
             b.setText("sort\nuser made");
             view.announceForAccessibility("sort user made");
