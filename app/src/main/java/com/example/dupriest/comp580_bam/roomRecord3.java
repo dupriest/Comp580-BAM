@@ -36,7 +36,7 @@ public class roomRecord3 extends AppCompatActivity {
         if(cycle==1)
         {
 
-            buttonChoices.add("action");
+            buttonChoices.add("center");
             buttonChoices.add("left");
             buttonChoices.add("right");
             buttonChoices.add("left or right");
@@ -49,7 +49,7 @@ public class roomRecord3 extends AppCompatActivity {
             {
                 buttonChoicesPointer = 2;
             }
-            else if(prev.equals("left or right"))
+            else if(prev.equals("leftright"))
             {
                 buttonChoicesPointer = 3;
             }
@@ -63,7 +63,7 @@ public class roomRecord3 extends AppCompatActivity {
                 buttonChoicesPointer = 1;
             }
             buttonChoices.add("towards sound");
-            if(soundDirection.equals("left") | soundDirection.equals("right") | soundDirection.equals("left or right"))
+            if(soundDirection.equals("left") | soundDirection.equals("right") | soundDirection.equals("leftright"))
             {
                 buttonChoices.add("away from sound");
             }
@@ -100,13 +100,61 @@ public class roomRecord3 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         if(cycle==1)
         {
+            String sD = buttonChoices.get(buttonChoicesPointer);
+            if(sD.equals("left or right"))
+            {
+                sD = "leftright";
+            }
             editor.putInt("cycle", 2);
-            editor.putString(slot + " soundDirection", buttonChoices.get(buttonChoicesPointer));
+            editor.putString(slot + " soundDirection", sD);
             X = new Intent(this, roomRecord.class);
         }
         else
         {
-            editor.putString(slot + " button", buttonChoices.get(buttonChoicesPointer));
+            String sD = sharedPref.getString(slot + " soundDirection", "empty");
+            String button = buttonChoices.get(buttonChoicesPointer);
+
+            if(sD.equals("left"))
+            {
+                if(button.equals("towards sound"))
+                {
+                    button = "left";
+                }
+                else
+                {
+                    button = "right";
+                }
+            }
+            if(sD.equals("right"))
+            {
+                if(button.equals("towards sound"))
+                {
+                    button = "right";
+                }
+                else
+                {
+                    button = "left";
+                }
+            }
+            if(sD.equals("leftright"))
+            {
+                if(button.equals("towards sound"))
+                {
+                    button = "leftright";
+                }
+                else
+                {
+                    button = "leftright";
+                    sD = "rightleft";
+                }
+            }
+            if(sD.equals("center"))
+            {
+                button = "action";
+            }
+
+            editor.putString(slot + " button", button);
+            editor.putString(slot + " soundDirection", sD);
             X = new Intent(this, roomRecord4.class);
         }
         editor.commit();

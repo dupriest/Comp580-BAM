@@ -36,6 +36,41 @@ public class roomRecord4 extends AppCompatActivity {
         room = sharedPref.getString(slot, "empty");
         soundDirection = sharedPref.getString(slot + " soundDirection", "empty");
         button = sharedPref.getString(slot + " button", "empty");
+        Log.v("MEGAN DUPRIEST", "room = " + room);
+        Log.v("MEGAN DUPRIEST", "introRoom = " + introRoom);
+        Log.v("MEGAN DUPRIEST", "soundDirection = " + soundDirection);
+        Log.v("MEGAN DUPRIEST", "button = " + button);
+
+        if(button.equals("left or right"))
+        {
+            int num = (int)Math.round(Math.random());
+            if(num == 0)
+            {
+                button = "left";
+                if(soundDirection.equals("towards sound"))
+                {
+                    soundDirection = "left";
+                }
+                else
+                {
+                    soundDirection = "right";
+                }
+            }
+            else
+            {
+                button = "right";
+
+                if(soundDirection.equals("towards sound"))
+                {
+                    soundDirection = "right";
+                }
+                else
+                {
+                    soundDirection = "left";
+                }
+            }
+        }
+
     }
 
     public void playRoom(View view)
