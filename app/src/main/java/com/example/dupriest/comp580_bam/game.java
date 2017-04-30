@@ -352,13 +352,16 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     mediaPlayer.start();
                     if(time > -1)
                     {
-                        timer = new CountDownTimer(time, 100) {
+                        timer = new CountDownTimer(time, 100)
+                        {
 
-                            public void onTick(long millisUntilFinished) {
+                            public void onTick(long millisUntilFinished)
+                            {
                                 timeLeft = millisUntilFinished;
                             }
 
-                            public void onFinish() {
+                            public void onFinish()
+                            {
                                 mediaPlayer.stop();
                                 mediaPlayer.release();
                                 isPlaying = false;
@@ -368,10 +371,31 @@ public class game extends AppCompatActivity implements SensorEventListener {
                                 {
                                     lives = lives - 1;
                                 }
+
                                 if(lives >= 0)
                                 {
                                     TextView t = (TextView)findViewById(R.id.lives);
                                     t.setText("LIVES = " + String.valueOf(lives));
+                                    int id = getResources().getIdentifier("shortfailure","raw", getPackageName());
+                                    mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                                    mediaPlayer.start();
+                                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                                    {
+
+                                        @Override
+                                        public void onCompletion(MediaPlayer mp)
+                                        {
+                                            View view = findViewById(R.id.activity_main_menu);
+                                            view.announceForAccessibility("LIVES = " + String.valueOf(lives));
+                                            introQueue.add(0, currentIntro);
+                                            queue.add(0, currentRoom);
+                                            if (type.equals("slot"))
+                                            {
+                                                isUserMadeQueue.add(0, isUserMade);
+                                            }
+                                            runRoom();
+                                        }
+                                    });
                                 }
                                 if(lives == 0)
                                 {
@@ -382,17 +406,6 @@ public class game extends AppCompatActivity implements SensorEventListener {
                                     Intent X = new Intent(game.this, endgame.class);
                                     startActivity(X);
                                 }
-                                else
-                                {
-                                    introQueue.add(0, currentIntro);
-                                    queue.add(0, currentRoom);
-                                    if(type.equals("slot"))
-                                    {
-                                        isUserMadeQueue.add(0, isUserMade);
-                                    }
-                                    runRoom();
-                                }
-
                             }
                         }.start();
                     }
@@ -489,10 +502,31 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     {
                         lives = lives - 1;
                     }
+
                     if(lives >= 0)
                     {
                         TextView t = (TextView)findViewById(R.id.lives);
                         t.setText("LIVES = " + String.valueOf(lives));
+                        int id = getResources().getIdentifier("shortfailure","raw", getPackageName());
+                        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                        mediaPlayer.start();
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                        {
+
+                            @Override
+                            public void onCompletion(MediaPlayer mp)
+                            {
+                                View view = findViewById(R.id.activity_main_menu);
+                                view.announceForAccessibility("LIVES = " + String.valueOf(lives));
+                                introQueue.add(0, currentIntro);
+                                queue.add(0, currentRoom);
+                                if (type.equals("slot"))
+                                {
+                                    isUserMadeQueue.add(0, isUserMade);
+                                }
+                                runRoom();
+                            }
+                        });
                     }
                     if(lives == 0)
                     {
@@ -502,13 +536,6 @@ public class game extends AppCompatActivity implements SensorEventListener {
                         editor.commit();
                         Intent X = new Intent(game.this, endgame.class);
                         startActivity(X);
-                    }
-                    else
-                    {
-                        introQueue.add(0, currentIntro);
-                        queue.add(0, currentRoom);
-                        isUserMadeQueue.add(0, isUserMade);
-                        runRoom();
                     }
 
                 }
@@ -580,11 +607,31 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 {
                     lives = lives - 1;
                 }
+
                 if(lives >= 0)
                 {
                     TextView t = (TextView)findViewById(R.id.lives);
                     t.setText("LIVES = " + String.valueOf(lives));
-                    view.announceForAccessibility("Lives equals " + lives);
+                    int id = getResources().getIdentifier("shortfailure","raw", getPackageName());
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                    {
+
+                        @Override
+                        public void onCompletion(MediaPlayer mp)
+                        {
+                            View view = findViewById(R.id.activity_main_menu);
+                            view.announceForAccessibility("LIVES = " + String.valueOf(lives));
+                            introQueue.add(0, currentIntro);
+                            queue.add(0, currentRoom);
+                            if (type.equals("slot"))
+                            {
+                                isUserMadeQueue.add(0, isUserMade);
+                            }
+                            runRoom();
+                        }
+                    });
                 }
                 if(lives == 0)
                 {
@@ -594,13 +641,6 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     editor.commit();
                     Intent X = new Intent(game.this, endgame.class);
                     startActivity(X);
-                }
-                else
-                {
-                    introQueue.add(0, currentIntro);
-                    queue.add(0, currentRoom);
-                    isUserMadeQueue.add(0, isUserMade);
-                    runRoom();
                 }
             }
 
@@ -659,11 +699,31 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     {
                         lives = lives - 1;
                     }
+
                     if(lives >= 0)
                     {
                         TextView t = (TextView)findViewById(R.id.lives);
                         t.setText("LIVES = " + String.valueOf(lives));
-                        findViewById(R.id.activity_main_menu).announceForAccessibility("Lives equals " + lives);
+                        int id = getResources().getIdentifier("shortfailure","raw", getPackageName());
+                        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                        mediaPlayer.start();
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                        {
+
+                            @Override
+                            public void onCompletion(MediaPlayer mp)
+                            {
+                                View view = findViewById(R.id.activity_main_menu);
+                                view.announceForAccessibility("LIVES = " + String.valueOf(lives));
+                                introQueue.add(0, currentIntro);
+                                queue.add(0, currentRoom);
+                                if (type.equals("slot"))
+                                {
+                                    isUserMadeQueue.add(0, isUserMade);
+                                }
+                                runRoom();
+                            }
+                        });
                     }
                     if(lives == 0)
                     {
@@ -673,13 +733,6 @@ public class game extends AppCompatActivity implements SensorEventListener {
                         editor.commit();
                         Intent X = new Intent(game.this, endgame.class);
                         startActivity(X);
-                    }
-                    else
-                    {
-                        introQueue.add(0, currentIntro);
-                        queue.add(0, currentRoom);
-                        isUserMadeQueue.add(0, isUserMade);
-                        runRoom();
                     }
 
                 }
