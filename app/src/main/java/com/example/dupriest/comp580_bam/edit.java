@@ -16,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 public class edit extends AppCompatActivity {
 
+    private static final String LOG_TAG = "AudioRecordTest";
     int roomNum;
     String roomString;
     String originalRoomString;
@@ -36,8 +38,10 @@ public class edit extends AppCompatActivity {
 
     Context context;
     SharedPreferences sharedPref;
+    SharedPreferences sharedPref1;
     ArrayList<String> introQueue;
     ArrayList<String> queue;
+    ArrayList<Boolean> isUserMadeQueue;
     String[] sorts = {"ORIGINAL", "REMOVE", "ALL PREMADE", "A TO G PREMADE", "H TO M PREMADE", "N TO S PREMADE", "T TO Z PREMADE", "USER MADE"};
     ArrayList<String> choices;
 
@@ -53,7 +57,7 @@ public class edit extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         Context context = getApplicationContext();
-        SharedPreferences sharedPref1 = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPref1 = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String slot = sharedPref1.getString("slot", "slot 1");
         slot = "EDIT " + slot.toUpperCase();
         setTitle(slot);
@@ -70,6 +74,7 @@ public class edit extends AppCompatActivity {
 
         introQueue = new ArrayList<>();
         queue = new ArrayList<>();
+        isUserMadeQueue = new ArrayList<>();
         choices = new ArrayList<>();
 
         isPlaying = false;
@@ -95,6 +100,8 @@ public class edit extends AppCompatActivity {
             queue.add(sharedPref.getString(key, "empty"));
             key = key + "i";
             introQueue.add(sharedPref.getString(key, "empty"));
+            key = key + "u";
+            isUserMadeQueue.add(sharedPref.getBoolean(key, false));
         }
         roomString = queue.get(0); // ex: room_lotsofbats_right_left
         setTextNum();
@@ -105,6 +112,11 @@ public class edit extends AppCompatActivity {
     {
         if(!roomString.equals("empty"))
         {
+            int L = roomString.length();
+            if(roomString.substring(L-12, L-8).equals("slot"))
+            {
+                return roomString.substring(L-12, L-6);
+            }
             return roomString.split("_")[1];
         }
         else
@@ -117,6 +129,12 @@ public class edit extends AppCompatActivity {
     {
         if(!roomString.equals("empty"))
         {
+            int L = roomString.length();
+            if(roomString.substring(L-12, L-8).equals("slot"))
+            {
+                String s = roomString.substring(L-12, L-6);
+                return sharedPref1.getString(s + " intro", "empty");
+            }
             return "intro" + roomString.substring(4, roomString.length());
         }
         else
@@ -222,16 +240,48 @@ public class edit extends AppCompatActivity {
             {
                 Button b = (Button)view;
                 b.setText("pause");
-                int id = getResources().getIdentifier(getRoomIntroString(roomString), "raw", getPackageName());
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                Button bSort = (Button) findViewById(R.id.sort);
+                Log.v("MEGAN DUPRIEST", (String)(bSort.getText().subSequence(5,9)));
+                if((bSort.getText().subSequence(5,9).equals("user") && addMenu.getVisibility()==addMenu.VISIBLE) | (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)))
+                {
+                    mediaPlayer = new MediaPlayer();
+                    try {
+                        Log.v("MEGAN DUPRIEST", getRoomIntroString(roomString));
+                        mediaPlayer.setDataSource(getRoomIntroString(roomString));
+                        mediaPlayer.prepare();
+                    }
+                    catch (IOException e) {
+                        Log.e(LOG_TAG, "prepare() failed");
+                    }
+                }
+                else
+                {
+                    int id = getResources().getIdentifier(getRoomIntroString(roomString), "raw", getPackageName());
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                }
                 mediaPlayer.start();
                 isPlaying = true;
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        int id = getResources().getIdentifier(roomString, "raw", getPackageName());
-                        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                        Button bSort = (Button) findViewById(R.id.sort);
+                        if((bSort.getText().subSequence(5,9).equals("user") && addMenu.getVisibility()==addMenu.VISIBLE) | (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)))
+                        {
+                            mediaPlayer = new MediaPlayer();
+                            try {
+                                mediaPlayer.setDataSource(roomString);
+                                mediaPlayer.prepare();
+                            }
+                            catch (IOException e) {
+                                Log.e(LOG_TAG, "prepare() failed");
+                            }
+                        }
+                        else
+                        {
+                            int id = getResources().getIdentifier(roomString, "raw", getPackageName());
+                            mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                        }
                         mediaPlayer.start();
                         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
@@ -278,6 +328,8 @@ public class edit extends AppCompatActivity {
             editor.putString(key, queue.get(i));
             key = key + "i";
             editor.putString(key, introQueue.get(i));
+            key = key + "u";
+            editor.putBoolean(key, isUserMadeQueue.get(i));
         }
         editor.commit();
         back.setClickable(true);
@@ -416,12 +468,14 @@ public class edit extends AppCompatActivity {
             Button b = (Button)view;
             b.setText("sort\nuser made");
             view.announceForAccessibility("sort user made");
-            for (int i = 0; i < fields.length - 1; i++)
+
+            for(int i = 1 ; i < 4; i++)
             {
-                String name = fields[i].getName();
-                if(name.length() >= 5 && name.substring(0,5).equals("uroom"))
+                String slot = "slot " + String.valueOf(i);
+                boolean complete = sharedPref1.getBoolean(slot + " complete", false);
+                if(complete)
                 {
-                    choices.add(name);
+                    choices.add(sharedPref1.getString(slot, "empty"));
                 }
             }
         }
@@ -476,6 +530,14 @@ public class edit extends AppCompatActivity {
         }
         queue.set(roomNum, roomString);
         introQueue.set(roomNum, getRoomIntroString(roomString));
+        if(currentSort==7)
+        {
+            isUserMadeQueue.set(roomNum, true);
+        }
+        else
+        {
+            isUserMadeQueue.set(roomNum, false);
+        }
         setTextName();
         view.announceForAccessibility("Room " + (roomNum+1) + "is now " + getRoomName(roomString));
         addMenu.setVisibility(addMenu.INVISIBLE);
