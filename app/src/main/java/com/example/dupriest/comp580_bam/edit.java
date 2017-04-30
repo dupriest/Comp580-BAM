@@ -94,14 +94,29 @@ public class edit extends AppCompatActivity {
         }
 
         String key;
+        String value;
         for(int i = 0; i < 20; i++)
         {
             key = String.valueOf(i);
-            queue.add(sharedPref.getString(key, "empty"));
-            key = key + "i";
-            introQueue.add(sharedPref.getString(key, "empty"));
-            key = key + "u";
+            value = sharedPref.getString(key, "empty");
+
+            key = key + "iu";
             isUserMadeQueue.add(sharedPref.getBoolean(key, false));
+            if (sharedPref.getBoolean(key, false))
+            {
+                String newIntro = sharedPref1.getString(sharedPref1.getString("slot", "slot 1") + " intro", "empty");
+                String newSlot = sharedPref1.getString(sharedPref1.getString("slot", "slot 1"), "empty");
+                queue.add(newSlot);
+                introQueue.add(newIntro);
+
+            }
+            else
+            {
+                key = String.valueOf(i);
+                queue.add(value);
+                key = key + "i";
+                introQueue.add(sharedPref.getString(key, "empty"));
+            }
         }
         roomString = queue.get(0); // ex: room_lotsofbats_right_left
         setTextNum();

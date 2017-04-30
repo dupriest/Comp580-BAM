@@ -168,11 +168,22 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 value = sharedPref2.getString(key, "empty");
                 if(!value.equals("empty"))
                 {
-                    queue.add(value);
-                    key = key + "i";
-                    introQueue.add(sharedPref2.getString(key, "empty"));
-                    key = key + "u";
+                    key = key + "iu";
                     isUserMadeQueue.add(sharedPref2.getBoolean(key, false));
+                    if (sharedPref2.getBoolean(key, false))
+                    {
+                        String newIntro = sharedPref.getString(sharedPref.getString("slot", "slot 1") + " intro", "empty");
+                        String newSlot = sharedPref.getString(sharedPref.getString("slot", "slot 1"), "empty");
+                        queue.add(newSlot);
+                        introQueue.add(newIntro);
+
+                    }
+                    else
+                    {
+                        queue.add(value);
+                        key = key + "i";
+                        introQueue.add(sharedPref2.getString(key, "empty"));
+                    }
                 }
             }
             runRoom();
