@@ -257,7 +257,10 @@ public class edit extends AppCompatActivity {
                 b.setText("pause");
                 Button bSort = (Button) findViewById(R.id.sort);
                 Log.v("MEGAN DUPRIEST", (String)(bSort.getText().subSequence(5,9)));
-                if((bSort.getText().subSequence(5,9).equals("user") && addMenu.getVisibility()==addMenu.VISIBLE) | (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)))
+                int L = ((Button)findViewById(R.id.select)).getText().length();
+                if((addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("USER MADE")) |
+                        (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)) |
+                        (addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("ORIGINAL") &&((Button) findViewById(R.id.select)).getText().subSequence(L-6,L-2).equals("slot")))
                 {
                     mediaPlayer = new MediaPlayer();
                     try {
@@ -281,7 +284,10 @@ public class edit extends AppCompatActivity {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
                         Button bSort = (Button) findViewById(R.id.sort);
-                        if((bSort.getText().subSequence(5,9).equals("user") && addMenu.getVisibility()==addMenu.VISIBLE) | (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)))
+                        int L = ((Button)findViewById(R.id.select)).getText().length();
+                        if((addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("USER MADE")) |
+                                (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)) |
+                                (addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("ORIGINAL") &&((Button) findViewById(R.id.select)).getText().subSequence(L-6,L-2).equals("slot")))
                         {
                             mediaPlayer = new MediaPlayer();
                             try {
