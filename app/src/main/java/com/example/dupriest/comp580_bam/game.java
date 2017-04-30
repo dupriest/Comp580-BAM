@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,10 +27,13 @@ import java.util.Random;
 
 public class game extends AppCompatActivity implements SensorEventListener {
 
+    private static final String LOG_TAG = "AudioRecordTest";
     String type;
     CountDownTimer timer;
     ArrayList<String> introQueue;
     ArrayList<String> queue;
+    ArrayList<Boolean> isUserMadeQueue;
+    boolean isUserMade;
     String currentIntro;
     String currentRoom;
     String currentKey;
@@ -49,6 +53,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
     private List<Sensor> l;
     Context context;
     SharedPreferences sharedPref;
+    SharedPreferences sharedPref2;
 
 
     @Override
@@ -87,6 +92,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
         queue = new ArrayList<String>();
         introQueue = new ArrayList<String>();
+        isUserMadeQueue = new ArrayList<Boolean>();
+
         mediaPlayer = new MediaPlayer();
         menuSound = new MediaPlayer();
         actNow = false;
@@ -140,7 +147,6 @@ public class game extends AppCompatActivity implements SensorEventListener {
             String slot = sharedPref.getString("slot", "slot 1").toUpperCase();
             setTitle("PLAY " + slot);
             context = getApplicationContext();
-            SharedPreferences sharedPref2;
             if(slot.equals("SLOT 1"))
             {
                 sharedPref2 = context.getSharedPreferences(getString(R.string.slot1_file_key), Context.MODE_PRIVATE);
@@ -165,6 +171,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     queue.add(value);
                     key = key + "i";
                     introQueue.add(sharedPref2.getString(key, "empty"));
+                    key = key + "u";
+                    isUserMadeQueue.add(sharedPref2.getBoolean(key, false));
                 }
             }
             runRoom();
@@ -224,8 +232,29 @@ public class game extends AppCompatActivity implements SensorEventListener {
             actNow = false;
             currentIntro = introQueue.remove(0);
             currentRoom = queue.remove(0);
-            currentKey = currentRoom.split("_")[2];
-            currentSoundDirection = currentRoom.split("_")[3];
+            if(type.equals("slot"))
+            {
+                isUserMade = isUserMadeQueue.remove(0);
+            }
+            else
+            {
+                isUserMade = false;
+            }
+
+            if(isUserMade)
+            {
+                int L = currentRoom.length();
+                String slot = currentRoom.substring(L-12, L-6);
+                Log.v("MEGAN DUPRIEST", "slot = " + slot);
+                currentKey = sharedPref.getString(slot + " button", "empty");
+                currentSoundDirection = sharedPref.getString(slot +  " soundDirection", "empty");
+            }
+            else
+            {
+                currentKey = currentRoom.split("_")[2];
+                currentSoundDirection = currentRoom.split("_")[3];
+            }
+
             if(currentKey.equals("leftright"))
             {
                 int num = (int)Math.round(Math.random());
@@ -255,8 +284,23 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     }
                 }
             }
-            int id = getResources().getIdentifier(currentIntro,"raw", getPackageName());
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+            if(isUserMade)
+            {
+                mediaPlayer = new MediaPlayer();
+                try {
+                    Log.v("MEGAN DUPRIEST", currentIntro);
+                    mediaPlayer.setDataSource(currentIntro);
+                    mediaPlayer.prepare();
+                }
+                catch (IOException e) {
+                    Log.e(LOG_TAG, "prepare() failed");
+                }
+            }
+            else
+            {
+                int id = getResources().getIdentifier(currentIntro,"raw", getPackageName());
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+            }
             mediaPlayer.start();
             isPlaying = true;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -264,8 +308,23 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 @Override
                 public void onCompletion(MediaPlayer mp)
                 {
-                    int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                    if(isUserMade)
+                    {
+                        mediaPlayer = new MediaPlayer();
+                        try {
+                            Log.v("MEGAN DUPRIEST", currentRoom);
+                            mediaPlayer.setDataSource(currentRoom);
+                            mediaPlayer.prepare();
+                        }
+                        catch (IOException e) {
+                            Log.e(LOG_TAG, "prepare() failed");
+                        }
+                    }
+                    else
+                    {
+                        int id = getResources().getIdentifier(currentRoom,"raw", getPackageName());
+                        mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
+                    }
                     if(currentSoundDirection.equals("left"))
                     {
                         mediaPlayer.setVolume(1,0);
@@ -316,6 +375,10 @@ public class game extends AppCompatActivity implements SensorEventListener {
                                 {
                                     introQueue.add(0, currentIntro);
                                     queue.add(0, currentRoom);
+                                    if(type.equals("slot"))
+                                    {
+                                        isUserMadeQueue.add(0, isUserMade);
+                                    }
                                     runRoom();
                                 }
 
@@ -433,6 +496,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     {
                         introQueue.add(0, currentIntro);
                         queue.add(0, currentRoom);
+                        isUserMadeQueue.add(0, isUserMade);
                         runRoom();
                     }
 
@@ -499,6 +563,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
             }
             else
             {
+                Log.v("MEGAN DUPRIEST", "currentKey = " + currentKey);
+                Log.v("MEGAN DUPRIEST", "button text = " + text);
                 if(lives > 0)
                 {
                     lives = lives - 1;
@@ -522,6 +588,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 {
                     introQueue.add(0, currentIntro);
                     queue.add(0, currentRoom);
+                    isUserMadeQueue.add(0, isUserMade);
                     runRoom();
                 }
             }
@@ -600,6 +667,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     {
                         introQueue.add(0, currentIntro);
                         queue.add(0, currentRoom);
+                        isUserMadeQueue.add(0, isUserMade);
                         runRoom();
                     }
 
