@@ -59,8 +59,10 @@ public class edit extends AppCompatActivity {
         Context context = getApplicationContext();
         sharedPref1 = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String slot = sharedPref1.getString("slot", "slot 1");
+        String create = sharedPref1.getString("create", "game");
         slot = "EDIT " + slot.toUpperCase();
-        setTitle(slot);
+        String text = "EDIT " + create.toUpperCase() + " " + sharedPref1.getString("slot", "slot 1").toUpperCase() + ". 6 ITEMS ONSCREEN.";
+        setTitle(text);
 
         roomNum = 0; // display roomNum + 1
         currentChoice = 0;

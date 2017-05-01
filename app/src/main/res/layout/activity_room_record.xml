@@ -189,8 +189,9 @@
                 />
 
             <TextView
-                android:id="@+id/next"
-                android:text="Choose to record\n or select premade\n for intro"
+                android:id="@+id/text"
+                android:text="Choose to record\n or select premade\n for room description"
+                android:contentDescription="choose to record or select premade for room description"
                 android:gravity="center"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"

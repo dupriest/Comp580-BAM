@@ -22,7 +22,7 @@ public class create2 extends AppCompatActivity {
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         create = sharedPref.getString("create", "game");
-        setTitle("CREATE " + create.toUpperCase());
+        setTitle("CREATE " + create.toUpperCase() + ". SELECT SAVE SLOT. 4 ITEMS ON SCREEN.");
     }
 
     void back(View view)

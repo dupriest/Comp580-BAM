@@ -41,6 +41,7 @@ public class roomRecord4 extends AppCompatActivity {
         Log.v("MEGAN DUPRIEST", "soundDirection = " + soundDirection);
         Log.v("MEGAN DUPRIEST", "button = " + button);
 
+        setTitle("LISTEN TO YOUR ROOM. PRESS FINISH TO SAVE. 3 ITEMS ON SCREEN.");
         if(button.equals("left or right"))
         {
             int num = (int)Math.round(Math.random());
@@ -117,7 +118,7 @@ public class roomRecord4 extends AppCompatActivity {
                         mPlayer.setVolume(1,1);
                     }
                     try {
-                        if(introRoom.substring(0,5).equals("intro"))
+                        if(room.substring(0,4).equals("room"))
                         {
                             int id = getResources().getIdentifier(room,"raw", getPackageName());
                             mPlayer = MediaPlayer.create(getApplicationContext(), id);
@@ -134,7 +135,7 @@ public class roomRecord4 extends AppCompatActivity {
                             @Override
                             public void onCompletion(MediaPlayer mp)
                             {
-                                Log.v("MEGAN DUPRIEST", "DONE!");
+                                findViewById(R.id.testPlay).announceForAccessibility("button clicked for success is " + button);
                             }
                         });
                     } catch (IOException e) {

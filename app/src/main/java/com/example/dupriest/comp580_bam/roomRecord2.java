@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -85,6 +86,7 @@ public class roomRecord2 extends AppCompatActivity {
 
         if(cycle==1)
         {
+            setTitle("RECORD ROOM DESCRIPTION. 6 ITEMS ON SCREEN.");
             String prev = sharedPref.getString(slot + " intro", "empty");
             mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_1.3gp";
             pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_2.3gp";
@@ -96,6 +98,7 @@ public class roomRecord2 extends AppCompatActivity {
         }
         else
         {
+            setTitle("RECORD ROOM SOUND EFFECT. 6 ITEMS ON SCREEN.");
             String prev = sharedPref.getString(slot, "empty");
             mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_3.3gp";
             pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_4.3gp";
@@ -309,33 +312,73 @@ public class roomRecord2 extends AppCompatActivity {
 
     public void next(View view)
     {
+        File fileRecord = new File(mFileName);
+        boolean isNotEmpty = !roomString.equals("empty");
+
+
+
         SharedPreferences.Editor editor = sharedPref.edit();
-        if(cycle==1)
+
+        if (roomRecordMethod.equals("record") && (fileRecord.exists()))
         {
-            if(roomRecordMethod.equals("record"))
+            if (cycle == 1)
             {
                 editor.putString(slot + " intro", mFileName);
             }
             else
             {
-                editor.putString(slot + " intro", getRoomIntroString(roomString));
-            }
-
-        }
-        else if(cycle==2)
-        {
-            if(roomRecordMethod.equals("record"))
-            {
                 editor.putString(slot, mFileName);
+            }
+        }
+        else if(roomRecordMethod.equals("premade") && isNotEmpty)
+        {
+            if(cycle == 1)
+            {
+                editor.putString(slot + " intro", getRoomIntroString(roomString));
             }
             else
             {
                 editor.putString(slot, roomString);
             }
         }
-        editor.commit();
-        Intent X = new Intent(this, roomRecord3.class);
-        startActivity(X);
+
+        /*
+        if (cycle == 1)
+        {
+            if (roomRecordMethod.equals("record"))
+            {
+                editor.putString(slot + " intro", mFileName);
+            } else {
+                editor.putString(slot + " intro", getRoomIntroString(roomString));
+            }
+
+        }
+        else if (cycle == 2)
+        {
+            if (roomRecordMethod.equals("record"))
+            {
+                editor.putString(slot, mFileName);
+            } else
+            {
+                editor.putString(slot, roomString);
+            }
+        }
+        */
+        else
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "PLEASE SELECT OR RECORD SOUND BEFORE CONTINUING";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        if((roomRecordMethod.equals("record") && (fileRecord.exists())) | (roomRecordMethod.equals("premade") && isNotEmpty))
+        {
+            editor.commit();
+            Intent X = new Intent(this, roomRecord3.class);
+            startActivity(X);
+        }
     }
 
     public void sort(View view)

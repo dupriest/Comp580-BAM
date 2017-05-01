@@ -16,7 +16,7 @@ public class create extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
-        setTitle("SELECT CREATE GAME OR CREATE ROOM");
+        setTitle("CHOOSE TO CREATE GAME, ROOM OR VIEW TUTORIALS. 4 ITEMS ON SCREEN.");
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
     }

@@ -24,7 +24,8 @@ public class select extends AppCompatActivity {
         sharedPref1 = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         slot = sharedPref1.getString("slot", "slot 1");
         slot = slot.toUpperCase();
-        setTitle(slot);
+        String create = sharedPref1.getString("create", "game");
+        setTitle(create.toUpperCase() + " " + slot + ". 4 ITEMS ON SCREEN.");
     }
 
     void back(View view)

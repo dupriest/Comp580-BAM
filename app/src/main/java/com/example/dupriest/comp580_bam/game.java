@@ -71,7 +71,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        setTitle("TEST CONTROLS");
+        setTitle("TEST CONTROLS. 5 ITEMS ON SCREEN.");
 
         context = getApplicationContext();
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -429,7 +429,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
     {
         // stuff will happen to pause the game itself
         state = "menu";
-        setTitle("PAUSE MENU");
+        setTitle("PAUSE MENU. 2 ITEMS ON SCREEN.");
         if(control.equals("screentilt") && type.equals("play"))
         {
             sm.unregisterListener(this);
@@ -463,7 +463,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
             }
         });
          **/
-        view.announceForAccessibility("Pause menu");
+        view.announceForAccessibility("Pause menu.  2 items on screen.");
         TableLayout pauseMenu = (TableLayout)findViewById(R.id.pauseMenu);
         pauseMenu.setVisibility(pauseMenu.VISIBLE);
     }

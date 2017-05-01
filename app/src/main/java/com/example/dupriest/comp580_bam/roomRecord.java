@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -58,11 +59,13 @@ public class roomRecord extends AppCompatActivity {
 
         if(cycle==2)
         {
-            setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM SOUND EFFECT");
+            setTitle("RECORD OR SELECT PREMADE ROOM FOR ROOM SOUND EFFECT. 4 ITEMS ON SCREEN.");
+            ((TextView)findViewById(R.id.text)).setText("Choose to record\n or select premade\n for sound effect");
+            ((TextView)findViewById(R.id.text)).setContentDescription("Choose to record or select premade for sound effect");
         }
         else
         {
-            setTitle("CHOOSE TO RECORD OR SELECT PREMADE ROOM FOR ROOM DESCRIPTION");
+            setTitle("RECORD OR SELECT PREMADE ROOM FOR ROOM DESCRIPTION. 4 ITEMS ON SCREEN.");
         }
         state = "mainMenu";
         // Record to the external cache directory for visibility

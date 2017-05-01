@@ -115,10 +115,11 @@
                 />
             <Button
                 android:id="@+id/introRoom2"
-                android:text="intro\nroom"
+                android:text="room\ndescription"
+                android:contentDescription="room description"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"

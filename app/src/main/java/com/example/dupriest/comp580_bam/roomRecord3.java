@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,9 @@ public class roomRecord3 extends AppCompatActivity {
         cycle = sharedPref.getInt("cycle", 1);
         if(cycle==1)
         {
+            setTitle("SELECT SOUND DIRECTION OF SOUND EFFECT. 4 ITEMS ON SCREEN.");
+            ((TextView)findViewById(R.id.direction)).setText("Click below to select \nsound direction\nof sound effect");
+            ((TextView)findViewById(R.id.direction)).setContentDescription("Click below to select sound direction of sound effect");
 
             buttonChoices.add("center");
             buttonChoices.add("left");
@@ -56,6 +60,7 @@ public class roomRecord3 extends AppCompatActivity {
         }
         else
         {
+            setTitle("SELECT BUTTON TO PRESS ON SUCCESS. 4 ITEMS ON SCREEN.");
             soundDirection = sharedPref.getString(slot + " soundDirection", "action");
             String prev = sharedPref.getString(slot + " button", "empty");
             if(prev.equals("away from sound"))

@@ -32,6 +32,7 @@ public class MainMenu extends AppCompatActivity {
         // default = no time limit
         control = sharedPref.getString("control", "buttons");
         // default = use buttons to control game
+        setTitle("OVER HEAR! MAIN MENU. 4 ITEMS ON SCREEN.");
     }
 
     void play(View view)

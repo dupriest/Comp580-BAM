@@ -23,6 +23,7 @@
                 android:id="@+id/direction"
                 android:gravity="center"
                 android:text="Click below to select \nbutton to press \non success"
+                android:contentDescription="click below to select button to press on success"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
                 android:textSize="25sp"
