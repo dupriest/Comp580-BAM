@@ -23,7 +23,8 @@
             >
             <Button
                 android:id="@+id/prevRecord"
-                android:text="prev\nrecord"
+                android:text="previous\nrecord"
+                android:contentDescription="previous recording"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
                 android:textSize="40sp"
@@ -32,12 +33,14 @@
                 android:layout_marginRight="10dp"
                 android:onClick="prevRecord"
                 />
-            <Button
+            <TextView
                 android:id="@+id/introRoom"
-                android:text="intro\nroom"
+                android:text="ROOM\nDESCRIPTION"
+                android:gravity="center"
+                android:contentDescription="room description"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:background="@color/purple"
                 android:layout_marginRight="10dp"
@@ -113,9 +116,10 @@
                 android:layout_marginRight="10dp"
                 android:onClick="sort"
                 />
-            <Button
+            <TextView
                 android:id="@+id/introRoom2"
-                android:text="room\ndescription"
+                android:text="ROOM\nDESCRIPTION"
+                android:gravity="center"
                 android:contentDescription="room description"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"

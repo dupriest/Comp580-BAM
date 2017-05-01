@@ -49,6 +49,7 @@ public class edit extends AppCompatActivity {
     int currentSort;
 
     boolean isPlaying;
+    boolean isPaused;
     MediaPlayer mediaPlayer;
 
     @Override
@@ -80,6 +81,7 @@ public class edit extends AppCompatActivity {
         choices = new ArrayList<>();
 
         isPlaying = false;
+        isPaused = false;
 
         context = getApplicationContext();
         if(slot.equals("EDIT SLOT 1"))
@@ -243,8 +245,8 @@ public class edit extends AppCompatActivity {
         originalRoomString = roomString;
         mainMenu.setVisibility(mainMenu.INVISIBLE);
         addMenu.setVisibility(addMenu.VISIBLE);
-        view.announceForAccessibility("Select which room to add");
-        sort(findViewById(R.id.sort));
+        view.announceForAccessibility("Select which room to add. 4 items on screen.");
+        sort(null);
         //addMenu.getVisibility();
     }
 
@@ -263,7 +265,7 @@ public class edit extends AppCompatActivity {
             if(!getRoomIntroString(roomString).equals("empty"))
             {
                 Button b = (Button)view;
-                b.setText("pause");
+                b.setText("stop");
                 Button bSort = (Button) findViewById(R.id.sort);
                 int L = getRoomIntroString(roomString).length();
                 Log.v("MEGAN DUPRIEST", getRoomString(roomString));
@@ -428,9 +430,17 @@ public class edit extends AppCompatActivity {
         }
         if(sorts[currentSort].equals("ORIGINAL"))
         {
-            Button b = (Button)view;
-            b.setText("sort\noriginal");
-            view.announceForAccessibility("sort original");
+            if(view != null)
+            {
+                Button b = (Button)view;
+                b.setText("sort\noriginal");
+                view.announceForAccessibility("sort original");
+            }
+            else
+            {
+                Button b = (Button)findViewById(R.id.sort);
+                b.setText("sort\noriginal");
+            }
             choices.add(originalRoomString);
         }
         else if(sorts[currentSort].equals("A TO G PREMADE"))
@@ -599,5 +609,29 @@ public class edit extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if(isPlaying)
+        {
+            mediaPlayer.pause();
+            isPaused = true;
+            isPlaying = false;
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if(isPaused && !isPlaying)
+        {
+            mediaPlayer.start();
+            isPlaying = true;
+            isPaused = false;
+        }
     }
 }

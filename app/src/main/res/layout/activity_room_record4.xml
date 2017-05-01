@@ -20,12 +20,12 @@
             android:layout_marginBottom="10dp"
             >
             <TextView
-                android:text="LISTEN TO YOUR ROOM\nPRESS FINISH TO SAVE."
+                android:text="CLICK BELOW TO LISTEN\n TO YOUR ROOM\nPRESS FINISH TO SAVE."
                 android:contentDescription="listen to your room. press finish to save."
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="0.5"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textColor="@color/white"
                 android:background="@color/green"
                 android:layout_marginRight="10dp"

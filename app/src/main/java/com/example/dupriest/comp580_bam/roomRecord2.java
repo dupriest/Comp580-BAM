@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -41,6 +42,10 @@ public class roomRecord2 extends AppCompatActivity {
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
+
+    boolean isPlaying;
+    boolean isPaused;
+    boolean isRecording;
 
     String state;
 
@@ -69,6 +74,10 @@ public class roomRecord2 extends AppCompatActivity {
         slot = sharedPref.getString("slot", "slot 1");
         cycle = sharedPref.getInt("cycle", 1);
         roomRecordMethod = sharedPref.getString("roomRecordMethod", "record");
+
+        isPlaying = false;
+        isPaused = false;
+        isRecording = false;
 
         if(roomRecordMethod.equals("record"))
         {
@@ -99,6 +108,8 @@ public class roomRecord2 extends AppCompatActivity {
         else
         {
             setTitle("RECORD ROOM SOUND EFFECT. 6 ITEMS ON SCREEN.");
+            ((TextView)findViewById(R.id.introRoom)).setText("SOUND\nEFFECT");
+            ((TextView)findViewById(R.id.introRoom)).setContentDescription("sound effect");
             String prev = sharedPref.getString(slot, "empty");
             mFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_3.3gp";
             pFileName = getFilesDir().getAbsolutePath() + "/" + slot + "_4.3gp";
@@ -193,6 +204,7 @@ public class roomRecord2 extends AppCompatActivity {
                 }
             }
             mPlayer.start();
+            isPlaying = true;
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
             {
 
@@ -200,6 +212,7 @@ public class roomRecord2 extends AppCompatActivity {
                 public void onCompletion(MediaPlayer mp)
                 {
                     Button b;
+                    isPlaying = false;
                     if(roomRecordMethod.equals("record"))
                     {
                         b = (Button)findViewById(R.id.play);
@@ -218,8 +231,10 @@ public class roomRecord2 extends AppCompatActivity {
     }
 
     private void stopPlaying() {
+        mPlayer.stop();
         mPlayer.release();
         mPlayer = null;
+        isPlaying = false;
     }
 
     private void startRecording() {
@@ -236,12 +251,14 @@ public class roomRecord2 extends AppCompatActivity {
         }
 
         mRecorder.start();
+        isRecording = true;
     }
 
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
+        isRecording = false;
     }
 
     public void record(View view)
@@ -258,20 +275,44 @@ public class roomRecord2 extends AppCompatActivity {
             b.setText("stop");
         } else {
             b.setText("record");
+            view.announceForAccessibility("recording stopped");
         }
         mStartRecording = !mStartRecording;
     }
 
     public void play(View view)
     {
-        Button b = (Button)view;
-        onPlay(mStartPlaying);
-        if (mStartPlaying) {
-            b.setText("stop");
-        } else {
-            b.setText("play");
+        boolean isPlayable;
+        File fileRecord = new File(mFileName);
+        boolean isNotEmpty = !roomString.equals("empty");
+        if(roomRecordMethod.equals("record") && (fileRecord.exists()))
+        {
+            isPlayable = true;
         }
-        mStartPlaying = !mStartPlaying;
+        else if(roomRecordMethod.equals("premade") && isNotEmpty)
+        {
+            isPlayable = true;
+        }
+        else
+        {
+            isPlayable = false;
+        }
+        if(isPlayable)
+        {
+            Button b = (Button)view;
+            onPlay(mStartPlaying);
+            if (mStartPlaying) {
+                b.setText("stop");
+            } else {
+                b.setText("play");
+            }
+            mStartPlaying = !mStartPlaying;
+        }
+        else
+        {
+            view.announceForAccessibility("room empty. no audio.");
+        }
+
     }
 
     @Override
@@ -516,6 +557,42 @@ public class roomRecord2 extends AppCompatActivity {
         Button b = (Button) findViewById(R.id.select);
         b.setText("select\n" + getRoomName(roomString));
         view.announceForAccessibility(getRoomName(roomString));
+
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if(isPlaying)
+        {
+            mPlayer.pause();
+            isPaused = true;
+            isPlaying = false;
+        }
+        if(isRecording)
+        {
+            mRecorder.stop();
+            mRecorder.release();
+            mRecorder = null;
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if(isPaused && !isPlaying)
+        {
+            mPlayer.start();
+            isPlaying = true;
+            isPaused = false;
+        }
+        if(isRecording)
+        {
+            findViewById(R.id.recordMenu).announceForAccessibility("recording stopped");
+            isRecording = false;
+        }
 
     }
 

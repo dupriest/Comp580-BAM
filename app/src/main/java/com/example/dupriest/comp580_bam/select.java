@@ -86,6 +86,14 @@ public class select extends AppCompatActivity {
             Intent X = new Intent(this, game.class);
             startActivity(X);
         }
+        else
+        {
+            CharSequence text = "SLOT IS EMPTY. CREATE A GAME TO PLAY.";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
     }
 

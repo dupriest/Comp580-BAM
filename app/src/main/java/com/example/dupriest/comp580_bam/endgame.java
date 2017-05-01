@@ -18,6 +18,8 @@ public class endgame extends AppCompatActivity {
     String control;
     Context context;
     SharedPreferences sharedPref;
+    boolean isPlaying;
+    boolean isPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class endgame extends AppCompatActivity {
         setContentView(R.layout.activity_endgame);
 
         context = getApplicationContext();
+        isPlaying = false;
+        isPaused = false;
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         lives = sharedPref.getInt("lives", -1);
         // default = infinity
@@ -44,12 +48,14 @@ public class endgame extends AppCompatActivity {
         }
 
         mediaPlayer.start();
+        isPlaying = true;
     }
 
     public void mainmenu(View view)
     {
         mediaPlayer.stop();
         mediaPlayer.release();
+        isPlaying = false;
         Intent X = new Intent(this, MainMenu.class);
         startActivity(X);
     }
@@ -58,8 +64,33 @@ public class endgame extends AppCompatActivity {
     {
         mediaPlayer.stop();
         mediaPlayer.release();
+        isPlaying = false;
         Intent X = new Intent(this, game.class);
         startActivity(X);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if(isPlaying)
+        {
+            mediaPlayer.pause();
+            isPaused = true;
+            isPlaying = false;
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if(isPaused && !isPlaying)
+        {
+            mediaPlayer.start();
+            isPlaying = true;
+            isPaused = false;
+        }
     }
 
 

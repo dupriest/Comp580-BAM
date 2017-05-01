@@ -208,6 +208,7 @@
             <Button
                 android:id="@+id/select"
                 android:text="select\n premade"
+                android:contentDescription="select premade"
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
