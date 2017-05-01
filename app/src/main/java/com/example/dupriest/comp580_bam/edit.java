@@ -106,8 +106,8 @@ public class edit extends AppCompatActivity {
             isUserMadeQueue.add(sharedPref.getBoolean(key, false));
             if (sharedPref.getBoolean(key, false))
             {
-                String newIntro = sharedPref1.getString(sharedPref1.getString("slot", "slot 1") + " intro", "empty");
-                String newSlot = sharedPref1.getString(sharedPref1.getString("slot", "slot 1"), "empty");
+                String newIntro = sharedPref1.getString("slot", "slot 1");
+                String newSlot = sharedPref1.getString("slot", "slot 1");
                 queue.add(newSlot);
                 introQueue.add(newIntro);
 
@@ -129,10 +129,9 @@ public class edit extends AppCompatActivity {
     {
         if(!roomString.equals("empty"))
         {
-            int L = roomString.length();
-            if(roomString.substring(L-12, L-8).equals("slot"))
+            if(roomString.substring(0,4).equals("slot"))
             {
-                return roomString.substring(L-12, L-6);
+                return roomString;
             }
             return roomString.split("_")[1];
         }
@@ -147,10 +146,9 @@ public class edit extends AppCompatActivity {
         if(!roomString.equals("empty"))
         {
             int L = roomString.length();
-            if(roomString.substring(L-12, L-8).equals("slot"))
+            if(roomString.substring(0,4).equals("slot"))
             {
-                String s = roomString.substring(L-12, L-6);
-                return sharedPref1.getString(s + " intro", "empty");
+                return sharedPref1.getString(roomString + " intro", "empty");
             }
             return "intro" + roomString.substring(4, roomString.length());
         }
@@ -158,6 +156,15 @@ public class edit extends AppCompatActivity {
         {
             return "empty";
         }
+    }
+
+    public String getRoomString(String roomString)
+    {
+        if(roomString.substring(0,4).equals("slot"))
+        {
+            return sharedPref1.getString(roomString, "empty");
+        }
+        return roomString;
     }
 
     public void setTextNum()
@@ -258,11 +265,9 @@ public class edit extends AppCompatActivity {
                 Button b = (Button)view;
                 b.setText("pause");
                 Button bSort = (Button) findViewById(R.id.sort);
-                Log.v("MEGAN DUPRIEST", (String)(bSort.getText().subSequence(5,9)));
-                int L = ((Button)findViewById(R.id.select)).getText().length();
-                if((addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("USER MADE")) |
-                        (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)) |
-                        (addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("ORIGINAL") &&((Button) findViewById(R.id.select)).getText().subSequence(L-6,L-2).equals("slot")))
+                int L = getRoomIntroString(roomString).length();
+                Log.v("MEGAN DUPRIEST", getRoomString(roomString));
+                if(getRoomIntroString(roomString).substring(L-4,L-3).equals("."))
                 {
                     mediaPlayer = new MediaPlayer();
                     try {
@@ -276,6 +281,7 @@ public class edit extends AppCompatActivity {
                 }
                 else
                 {
+                    Log.v("MEGAN DUPRIEST", getRoomIntroString(roomString));
                     int id = getResources().getIdentifier(getRoomIntroString(roomString), "raw", getPackageName());
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
                 }
@@ -286,14 +292,12 @@ public class edit extends AppCompatActivity {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
                         Button bSort = (Button) findViewById(R.id.sort);
-                        int L = ((Button)findViewById(R.id.select)).getText().length();
-                        if((addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("USER MADE")) |
-                                (mainMenu.getVisibility()==mainMenu.VISIBLE && isUserMadeQueue.get(roomNum)) |
-                                (addMenu.getVisibility()==addMenu.VISIBLE && sorts[currentSort].equals("ORIGINAL") &&((Button) findViewById(R.id.select)).getText().subSequence(L-6,L-2).equals("slot")))
+                        int L = getRoomString(roomString).length();
+                        if(getRoomString(roomString).substring(L-4,L-3).equals("."))
                         {
                             mediaPlayer = new MediaPlayer();
                             try {
-                                mediaPlayer.setDataSource(roomString);
+                                mediaPlayer.setDataSource(getRoomString(roomString));
                                 mediaPlayer.prepare();
                             }
                             catch (IOException e) {
@@ -302,7 +306,7 @@ public class edit extends AppCompatActivity {
                         }
                         else
                         {
-                            int id = getResources().getIdentifier(roomString, "raw", getPackageName());
+                            int id = getResources().getIdentifier(getRoomString(roomString), "raw", getPackageName());
                             mediaPlayer = MediaPlayer.create(getApplicationContext(), id);
                         }
                         mediaPlayer.start();
@@ -498,7 +502,7 @@ public class edit extends AppCompatActivity {
                 boolean complete = sharedPref1.getBoolean(slot + " complete", false);
                 if(complete)
                 {
-                    choices.add(sharedPref1.getString(slot, "empty"));
+                    choices.add(slot);
                 }
             }
         }
@@ -552,7 +556,15 @@ public class edit extends AppCompatActivity {
             play(findViewById(R.id.sound));
         }
         queue.set(roomNum, roomString);
-        introQueue.set(roomNum, getRoomIntroString(roomString));
+        if(roomString.substring(0,4).equals("slot"))
+        {
+            introQueue.set(roomNum, roomString);
+        }
+        else
+        {
+            introQueue.set(roomNum, getRoomIntroString(roomString));
+        }
+
         if(currentSort==7)
         {
             isUserMadeQueue.set(roomNum, true);
