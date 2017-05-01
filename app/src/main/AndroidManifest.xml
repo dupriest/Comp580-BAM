@@ -55,18 +55,19 @@
             android:name=".create2"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".roomRecord2"
+        <activity
+            android:name=".roomRecord2"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            />
-        <activity android:name=".roomRecord3"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".roomRecord3"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            />
-        <activity android:name=".roomRecord4"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".roomRecord4"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            ></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".tutorials"></activity>
     </application>
 
 </manifest>
