@@ -168,22 +168,11 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 value = sharedPref2.getString(key, "empty");
                 if(!value.equals("empty"))
                 {
-                    key = key + "iu";
+                    queue.add(value);
+                    key = key + "i";
+                    introQueue.add(sharedPref2.getString(key, "empty"));
+                    key = key + "u";
                     isUserMadeQueue.add(sharedPref2.getBoolean(key, false));
-                    if (sharedPref2.getBoolean(key, false))
-                    {
-                        String newIntro = sharedPref.getString(sharedPref.getString("slot", "slot 1") + " intro", "empty");
-                        String newSlot = sharedPref.getString(sharedPref.getString("slot", "slot 1"), "empty");
-                        queue.add(newSlot);
-                        introQueue.add(newIntro);
-
-                    }
-                    else
-                    {
-                        queue.add(value);
-                        key = key + "i";
-                        introQueue.add(sharedPref2.getString(key, "empty"));
-                    }
                 }
             }
             runRoom();
@@ -254,11 +243,11 @@ public class game extends AppCompatActivity implements SensorEventListener {
 
             if(isUserMade)
             {
-                int L = currentRoom.length();
-                String slot = currentRoom.substring(L-12, L-6);
-                Log.v("MEGAN DUPRIEST", "slot = " + slot);
-                currentKey = sharedPref.getString(slot + " button", "empty");
-                currentSoundDirection = sharedPref.getString(slot +  " soundDirection", "empty");
+                Log.v("MEGAN DUPRIEST", "currentRoom = " + currentRoom);
+                currentKey = sharedPref.getString(currentRoom + " button", "empty");
+                currentSoundDirection = sharedPref.getString(currentRoom +  " soundDirection", "empty");
+                currentIntro = sharedPref.getString(currentRoom +  " intro", "empty");
+                currentRoom = sharedPref.getString(currentRoom, "empty");
             }
             else
             {
@@ -295,7 +284,8 @@ public class game extends AppCompatActivity implements SensorEventListener {
                     }
                 }
             }
-            if(isUserMade)
+            Log.v("MEGAN DUPRIEST", currentIntro);
+            if(currentIntro.substring(currentIntro.length()-4,currentIntro.length()-3).equals("."))
             {
                 mediaPlayer = new MediaPlayer();
                 try {
@@ -319,7 +309,7 @@ public class game extends AppCompatActivity implements SensorEventListener {
                 @Override
                 public void onCompletion(MediaPlayer mp)
                 {
-                    if(isUserMade)
+                    if(currentRoom.substring(currentRoom.length()-4,currentRoom.length()-3).equals("."))
                     {
                         mediaPlayer = new MediaPlayer();
                         try {
