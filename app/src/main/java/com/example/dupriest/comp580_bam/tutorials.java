@@ -82,7 +82,7 @@ public class tutorials extends AppCompatActivity {
         {
             page = 0;
         }
-        //textView.setText(tutorialTexts[page]);
+        textView.setText(tutorialTexts[page]);
         setTitle(tutorialTitles[page].toUpperCase());
         view.announceForAccessibility(tutorialTitles[page]);
     }
@@ -98,7 +98,7 @@ public class tutorials extends AppCompatActivity {
             page = 7;
         }
 
-        //textView.setText(tutorialTexts[page]);
+        textView.setText(tutorialTexts[page]);
         setTitle(tutorialTitles[page].toUpperCase());
         view.announceForAccessibility(tutorialTitles[page]);
     }
