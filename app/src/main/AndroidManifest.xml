@@ -67,7 +67,10 @@
             android:name=".roomRecord4"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".tutorials"></activity>
+        <activity android:name=".tutorials"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

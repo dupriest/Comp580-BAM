@@ -44,4 +44,10 @@ public class create extends AppCompatActivity {
         Intent X = new Intent(this, MainMenu.class);
         startActivity(X);
     }
+
+    void tutorials(View view)
+    {
+        Intent X = new Intent(this, tutorials.class);
+        startActivity(X);
+    }
 }

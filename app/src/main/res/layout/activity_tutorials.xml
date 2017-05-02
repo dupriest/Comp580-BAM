@@ -10,4 +10,67 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.dupriest.comp580_bam.tutorials">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_weight = "0.5"
+            android:layout_marginBottom="10dp"
+            >
+            <TextView
+                android:id="@+id/text"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:scrollbars="vertical"
+                android:gravity="center_vertical"
+                android:maxWidth="10dip"
+                android:maxLines="3"
+                android:text = "Welcome to the tutorials for Over Hear! a thrilling sound adventure game.  Below, we'll list the different tutorial sections in order of appearance. Use next and back to navigate through them and main menu to exit the tutorials. Their text will appear in this area of the screen.\nTutorials\n1 Basic Navigation Tips\n2 Play Game\n3 Difficulty Settings\n4 Test Controls\n5 Create Game\n6 Create Room\n7 Using Created Rooms in Create Game "
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:background="@color/green"
+                />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "next"
+                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:background="@color/blue"
+                android:onClick="next"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_weight = "0.5">
+            <Button
+                android:id="@+id/mainmenu"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "main menu"
+                android:textSize="40dp"
+                android:textColor="@color/white"
+                android:background="@color/purple"
+                android:layout_marginRight="10dp"
+                android:onClick="mainMenu"
+                />
+            <Button
+                android:id="@+id/test_controls"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:text = "back"
+                android:textSize="40dp"
+                android:onClick="back"
+                android:textColor="@color/white"
+                android:background="@color/red"
+                />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
